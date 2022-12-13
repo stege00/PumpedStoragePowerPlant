@@ -1,11 +1,11 @@
 package PumpedStoragePowerPlant
-    package UsersGuide "User's Guide"
-  extends Modelica.Icons.Information;
+  package UsersGuide "User's Guide"
+    extends Modelica.Icons.Information;
 
-class Overview "Overview of Modelica Library"
-  extends Modelica.Icons.Information;
-
- annotation (Documentation(info="<html>
+    class Overview "Overview of Modelica Library"
+      extends Modelica.Icons.Information;
+      annotation(
+        Documentation(info = "<html>
 <p>
 The Modelica Standard Library consists of the following
 main sub-libraries:
@@ -192,12 +192,12 @@ Matrices.eigenValues(A);
 </table>
 
 </html>"));
-end Overview;
+    end Overview;
 
-class Connectors "Connectors"
-  extends Modelica.Icons.Information;
-
- annotation (Documentation(info="<html>
+    class Connectors "Connectors"
+      extends Modelica.Icons.Information;
+      annotation(
+        Documentation(info = "<html>
 
 <p>
 The Modelica standard library defines the most important
@@ -471,19 +471,21 @@ c1.p = c3.p;
 </pre></blockquote>
 
 </html>"));
-end Connectors;
+    end Connectors;
 
-  package Conventions "Conventions"
-    extends Modelica.Icons.Information;
-    package Documentation "HTML documentation"
+    package Conventions "Conventions"
       extends Modelica.Icons.Information;
 
-      package Format "Format"
+      package Documentation "HTML documentation"
         extends Modelica.Icons.Information;
 
-        class Cases "Cases"
+        package Format "Format"
           extends Modelica.Icons.Information;
-          annotation (Documentation(info="<html>
+
+          class Cases "Cases"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 
 <p>In the Modelica documentation sometimes different cases have to be distinguished. If the case distinction refers to Modelica parameters or variables (Boolean expressions) the comparisons should be written in the style of Modelica code within <code>&lt;code&gt;</code> and <code>&lt;/code&gt;</code>
 </p>
@@ -561,12 +563,12 @@ In a more equation oriented case, additional equations or code segments can be a
 </ul>
 
 </html>"));
-        end Cases;
+          end Cases;
 
-        class Code "Code"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Code "Code"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <p>
 <a href=\"modelica://Modelica.UsersGuide.Conventions.ModelicaCode\">Modelica code</a> conventions of class and instance names,
 parameters and variables are specified separately. In this section it is summarized how to refer to
@@ -620,12 +622,12 @@ Modelica code in the HTML documentation.
 <strong>parameter</strong> Modelica.Units.SI.Conductance G=1 &quot;Conductance&quot;;
 </pre></blockquote>
 </html>"));
-        end Code;
+          end Code;
 
-        class Equations "Equations"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Equations "Equations"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 
 <p>
 In the context of <a href=\"http://www.w3c.org/\">HTML</a> documentation
@@ -692,12 +694,12 @@ Vector and array indices should be typeset as subscripts using the
 </table>
 
 </html>"));
-        end Equations;
+          end Equations;
 
-        class Figures "Figures"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Figures "Figures"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <p>
 Figures should in particular be included to examples to discuss the problems and results of the respective model. The library developers are yet encouraged to add figures to the documentation of other components to support the understanding of the users of the library.
 </p>
@@ -763,12 +765,12 @@ The <code>PNG</code> files should be placed in a folder which exactly represents
 &lt;/table&gt;
 </pre></blockquote>
 </html>"));
-        end Figures;
+          end Figures;
 
-        class Hyperlinks "Hyperlinks"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Hyperlinks "Hyperlinks"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <ol>
 <li> Hyperlinks should always be made when referring to a component or package.</li>
 <li> The hyperlink text in between <code>&lt;a href=&quot;...&quot;&gt;</code> and <code>&lt;/a&gt;</code> should include the full main package name.</li>
@@ -806,12 +808,12 @@ The <code>PNG</code> files should be placed in a folder which exactly represents
   induction machine</a>.
 </p>
 </html>"));
-        end Hyperlinks;
+          end Hyperlinks;
 
-        class Lists "Lists"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Lists "Lists"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <ol>
 <li> Lists have to be placed <strong>outside</strong> of paragraphs to be HTML compliant.</li>
 <li> Items of a list shall start with
@@ -855,12 +857,12 @@ The <code>PNG</code> files should be placed in a folder which exactly represents
   <li>item 2</li>
 </ul>
 </html>"));
-        end Lists;
+          end Lists;
 
-        class References "References"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class References "References"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <ol>
 <li> Refer to references by [1], [Andronov1973], etc. by hyperlink and summarize literature in the references subsection of
      <a href=\"modelica://Modelica.UsersGuide.Conventions.UsersGuide.References\">Conventions.UsersGuide.References</a>.</li>
@@ -887,12 +889,12 @@ and
 [<a href=\"modelica://Modelica.UsersGuide.Conventions.UsersGuide.References\">Kral2018</a>, p. 149].
 </p>
 </html>"));
-        end References;
+          end References;
 
-        class Tables "Tables"
-          extends Modelica.Icons.Information;
-
-          annotation (Documentation(info="<html>
+          class Tables "Tables"
+            extends Modelica.Icons.Information;
+            annotation(
+              Documentation(info = "<html>
 <ol>
 <li> Tables should always be typeset with <code>&lt;table&gt;</code> and <code>&lt;/table&gt;</code>,
      not with <code>&lt;pre&gt;</code> and <code>&lt;/pre&gt;</code>.</li>
@@ -981,8 +983,9 @@ and enumeration should look like this: <strong>Tab. 1:</strong> Tables have to b
   </tr>
 </table>
 </html>"));
-        end Tables;
-        annotation (Documentation(info="<html>
+          end Tables;
+          annotation(
+            Documentation(info = "<html>
 
 <p>
 In this section the format UsersGuide of the HTML documentation are specified.
@@ -1018,12 +1021,12 @@ The <a href=\"modelica://Modelica.UsersGuide.Conventions.Documentation.Structure
 </ol>
 
 </html>"));
-      end Format;
+        end Format;
 
-      class Structure "Structure"
-        extends Modelica.Icons.Information;
-
-        annotation (Documentation(info="<html>
+        class Structure "Structure"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 <ol>
 <li> In the HTML documentation of any Modelica library, the headings <code>&lt;h1&gt;</code>,
      <code>&lt;h2&gt;</code> and <code>&lt;h3&gt;</code> should not be used, because they are utilized by
@@ -1100,19 +1103,20 @@ This example shows a more complex structure with enumeration.
 For parameters, connectors, as well as inputs and outputs of function automatic documentation is generated by the tool from the quoted comments.
 </p>
 </html>"));
-      end Structure;
-      annotation (Documentation(info="<html>
+        end Structure;
+        annotation(
+          Documentation(info = "<html>
 <a href=\"http://www.w3c.org/\">HTML</a> documentation of Modelica classes.
 </html>"));
-    end Documentation;
+      end Documentation;
 
-    package Terms "Terms and spelling"
-      extends Modelica.Icons.Information;
-
-      class Electrical "Electrical terms"
+      package Terms "Terms and spelling"
         extends Modelica.Icons.Information;
 
-        annotation (Documentation(info="<html>
+        class Electrical "Electrical terms"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 
 <p>The terms listed in this package shall be in accordance with <a href=\"http://www.electropedia.org/\">Electropedia</a>.</p>
 
@@ -1169,12 +1173,12 @@ For parameters, connectors, as well as inputs and outputs of function automatic 
 </table>
 
 </html>"));
-      end Electrical;
+        end Electrical;
 
-      class Magnetic "Magnetic terms"
-        extends Modelica.Icons.Information;
-
-        annotation (Documentation(info="<html>
+        class Magnetic "Magnetic terms"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 
 <p>The terms listed in this package shall be in accordance with <a href=\"http://www.electropedia.org/\">Electropedia</a>.</p>
 
@@ -1199,21 +1203,22 @@ For parameters, connectors, as well as inputs and outputs of function automatic 
 </table>
 
 </html>"));
-      end Magnetic;
-      annotation (Documentation(info="<html>
+        end Magnetic;
+        annotation(
+          Documentation(info = "<html>
 
 <p>This is the documentation of terms to be used in the Modelica Standard Library.</p>
 
 </html>"));
-    end Terms;
+      end Terms;
 
-    package ModelicaCode "Modelica code"
-      extends Modelica.Icons.Information;
+      package ModelicaCode "Modelica code"
+        extends Modelica.Icons.Information;
 
-       class Format "Format"
-         extends Modelica.Icons.Information;
-
-        annotation (Documentation(info="<html>
+        class Format "Format"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 
 <h4>Comments and Annotations</h4>
 <p>
@@ -1223,12 +1228,12 @@ For Boolean parameters, the description string should start with &quot;= true, &
 <code><strong>parameter</strong> Boolean useHeatPort = false &quot;= true, if heatPort is enabled&quot;;</code>.
 </p>
 </html>"));
-       end Format;
+        end Format;
 
-      class Naming "Naming convention"
-        extends Modelica.Icons.Information;
-
-        annotation (Documentation(info="<html>
+        class Naming "Naming convention"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 
 <ol>
 <li> <strong>Class and instance names</strong> are usually written in upper and lower case
@@ -1412,12 +1417,12 @@ For Boolean parameters, the description string should start with &quot;= true, &
     </tr>
 </table>
 </html>"));
-      end Naming;
+        end Naming;
 
-    class ParameterDefaults "Parameter defaults"
-      extends Modelica.Icons.Information;
-
-     annotation (Documentation(info="<html>
+        class ParameterDefaults "Parameter defaults"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 
 <p>
 In this section the convention is summarized how default parameters are
@@ -1505,21 +1510,22 @@ instead of a warning.
 </p>
 
 </html>"));
-    end ParameterDefaults;
-      annotation (Documentation(info="<html>
+        end ParameterDefaults;
+        annotation(
+          Documentation(info = "<html>
 
 <p>In this section guidelines on creating Modelica code are provided.</p>
 
 </html>"));
-    end ModelicaCode;
+      end ModelicaCode;
 
-    package UsersGuide "User's Guide"
-      extends Modelica.Icons.Information;
-
-      class Implementation "Implementation notes"
+      package UsersGuide "User's Guide"
         extends Modelica.Icons.Information;
 
-        annotation (Documentation(info="<html>
+        class Implementation "Implementation notes"
+          extends Modelica.Icons.Information;
+          annotation(
+            Documentation(info = "<html>
 <p>
 This class summarizes general information about the implementation which is not stated elsewhere.
 </p>
@@ -1529,12 +1535,12 @@ This class summarizes general information about the implementation which is not 
 <li>The <code>&amp;prop;</code> symbol (i.e., '&prop;' ) is currently not supported in some tools.</li>
 </ol>
 </html>"));
-      end Implementation;
+        end Implementation;
 
-      class References "References"
-        extends Modelica.Icons.References;
-
-        annotation (Documentation(info="<html>
+        class References "References"
+          extends Modelica.Icons.References;
+          annotation(
+            Documentation(info = "<html>
 
 <ol>
 <li> Citation formats should be unified according to IEEE Transactions style.</li>
@@ -1656,12 +1662,12 @@ This class summarizes general information about the implementation which is not 
 </table>
 
 </html>"));
-      end References;
+        end References;
 
-      class Contact "Contact"
-        extends Modelica.Icons.Contact;
-
-        annotation (Documentation(info="<html>
+        class Contact "Contact"
+          extends Modelica.Icons.Contact;
+          annotation(
+            Documentation(info = "<html>
 
 <p>
 This class summarizes contact information of the contributing persons.
@@ -1758,12 +1764,12 @@ email: <a href=\"mailto:author2@example.org\">author2@example.org</a><br>
 The authors would like to thank following persons for their support ...
 </p>
 </html>"));
-      end Contact;
+        end Contact;
 
-      class RevisionHistory "Revision History"
-        extends Modelica.Icons.ReleaseNotes;
-
-        annotation (Documentation(info="<html>
+        class RevisionHistory "Revision History"
+          extends Modelica.Icons.ReleaseNotes;
+          annotation(
+            Documentation(info = "<html>
 
 <ol>
 <li> The revision history needs to answer the question:
@@ -1803,8 +1809,7 @@ The authors would like to thank following persons for their support ...
 
 <p>This code appears then as in the \"Revisions\" section below.</p>
 
-</html>",
-      revisions="<html>
+</html>", revisions = "<html>
 <table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">
     <tr>
       <th>Version</th>
@@ -1857,9 +1862,9 @@ The authors would like to thank following persons for their support ...
     </tr>
 </table>
 </html>"));
-      end RevisionHistory;
-
-    annotation (Documentation(info="<html>
+        end RevisionHistory;
+        annotation(
+          Documentation(info = "<html>
 <p>The UsersGuide of each package should consist of the following classes</p>
 <ol>
 <li> <a href=\"modelica://Modelica.UsersGuide.Conventions.UsersGuide.Contact\">Contact</a> information of
@@ -1869,11 +1874,12 @@ The authors would like to thank following persons for their support ...
 <li> <a href=\"modelica://Modelica.UsersGuide.Conventions.UsersGuide.RevisionHistory\">Revision history </a> to summarize the most important changes and improvements of the package</li>
 </ol>
 </html>"));
-    end UsersGuide;
+      end UsersGuide;
 
-    class Icons "Icon design"
-      extends Modelica.Icons.Information;
-      annotation (Documentation(info="<html>
+      class Icons "Icon design"
+        extends Modelica.Icons.Information;
+        annotation(
+          Documentation(info = "<html>
 
 <p>The icon of a Modelica class shall consider the following guidelines:</p>
 
@@ -2198,8 +2204,10 @@ design of sensors apply:
 In particular do not make the diagram layer a copy of the icon layer.
 Graphical illustrations shall not be added in the diagram layer, but can be added in the HTML documentation.</p>
 </html>"));
-    end Icons;
-    annotation (DocumentationClass=true,Documentation(info="<html>
+      end Icons;
+      annotation(
+        DocumentationClass = true,
+        Documentation(info = "<html>
 <p>A Modelica main package should be compliant with the UsersGuide stated in this documentation:</p>
 <ol>
 <li> Conventions of the <a href=\"modelica://Modelica.UsersGuide.Conventions.ModelicaCode\">Modelica code</a></li>
@@ -2218,15 +2226,15 @@ Graphical illustrations shall not be added in the diagram layer, but can be adde
 <li> These packages should appear in the listed order.</li>
 </ol>
 </html>"));
-  end Conventions;
+    end Conventions;
 
-package ReleaseNotes "Release notes"
-  extends Modelica.Icons.ReleaseNotes;
+    package ReleaseNotes "Release notes"
+      extends Modelica.Icons.ReleaseNotes;
 
-class VersionManagement "Version Management"
-  extends Modelica.Icons.ReleaseNotes;
-
-      annotation (Documentation(info="<html>
+      class VersionManagement "Version Management"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <h4>Development branches</h4>
 <p>
 Further development and maintenance of the Modelica Standard Library is performed with
@@ -2345,12 +2353,12 @@ more of the following changes.
          because a user might already extend from this class and already using the same name.</li>
 </ul>
 </html>"));
-end VersionManagement;
+      end VersionManagement;
 
-class Version_4_0_1 "Version 4.0.1 (Month D, 20YY)"
-  extends Modelica.Icons.ReleaseNotes;
-
-  annotation (Documentation(info="<html>
+      class Version_4_0_1 "Version 4.0.1 (Month D, 20YY)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 4.0.1 is the new bug-fix version.
 Short Overview:
@@ -2375,12 +2383,12 @@ that can lead to wrong simulation results):
     <td>The derivatives for one-sided extrapolation by constant continuation (i.e., extrapolation=Modelica.Blocks.Types.Extrapolation.HoldLastPoint) returned a constant zero value. This has been corrected.</td></tr>
 </table>
 </html>"));
-end Version_4_0_1;
+      end Version_4_0_1;
 
-class Version_4_0_0 "Version 4.0.0 (June 4, 2020)"
-  extends Modelica.Icons.ReleaseNotes;
-
-  annotation (Documentation(info="<html>
+      class Version_4_0_0 "Version 4.0.0 (June 4, 2020)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 4.0.0 is <strong>not</strong> backward compatible to previous versions.
 A tested conversion script is provided to transform models and libraries of previous versions 3.x.y to the new version.
@@ -2751,12 +2759,12 @@ that can lead to wrong simulation results):
     <td>The month and year was only correctly returned if the implementing source file (ModelicaInternal.c) was compiled for Windows OS. This has been corrected.</td></tr>
 </table>
 </html>"));
-end Version_4_0_0;
+      end Version_4_0_0;
 
-class Version_3_2_3 "Version 3.2.3 (January 23, 2019)"
-  extends Modelica.Icons.ReleaseNotes;
-
- annotation (Documentation(info="<html>
+      class Version_3_2_3 "Version 3.2.3 (January 23, 2019)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 3.2.3 is backward compatible to version 3.2.2, that is models developed with
 versions 3.0, 3.0.1, 3.1, 3.2, 3.2.1 or 3.2.2 will work without any changes also with version 3.2.3.
@@ -3073,12 +3081,12 @@ that can lead to wrong simulation results):
 </table>
 
 </html>"));
-end Version_3_2_3;
+      end Version_3_2_3;
 
-class Version_3_2_2 "Version 3.2.2 (April 3, 2016)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_2_2 "Version 3.2.2 (April 3, 2016)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 3.2.2 is backward compatible to version 3.2.1, that is models developed with
 versions 3.0, 3.0.1, 3.1, 3.2, or 3.2.1 will work without any changes also with version 3.2.2
@@ -3478,12 +3486,12 @@ The following <font color=\"blue\"><strong>existing components</strong></font> h
 </table>
 
 </html>"));
-end Version_3_2_2;
+      end Version_3_2_2;
 
-class Version_3_2_1 "Version 3.2.1 (August 14, 2013)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_2_1 "Version 3.2.1 (August 14, 2013)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 3.2.1 is backward compatible to version 3.2, that is models developed with
 versions 3.0, 3.0.1, 3.1, or 3.2 will work without any changes also with version 3.2.1.
@@ -3811,12 +3819,12 @@ to <font color=\"blue\"><strong>existing</strong></font> libraries:
     <td> New SI unit types </td></tr>
 </table>
 </html>"));
-end Version_3_2_1;
+      end Version_3_2_1;
 
-class Version_3_2 "Version 3.2 (Oct. 25, 2010)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_2 "Version 3.2 (Oct. 25, 2010)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p>
 Version 3.2 is backward compatible to version 3.1, i.e., models developed with
@@ -5055,12 +5063,12 @@ Note:
      the sublibrary Blocks is included in this version in an improved form.</li>
 </ul>
 </html>"));
-end Version_3_2;
+      end Version_3_2;
 
-class Version_3_1 "Version 3.1 (August 14, 2009)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_1 "Version 3.1 (August 14, 2009)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p>
 Version 3.1 is backward compatible to version 3.0 and 3.0.1,
@@ -5347,12 +5355,12 @@ units are wrong or errors in documentation):
 </table>
 
 </html>"));
-end Version_3_1;
+      end Version_3_1;
 
-class Version_3_0_1 "Version 3.0.1 (Jan. 27, 2009)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_0_1 "Version 3.0.1 (Jan. 27, 2009)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p>
 This Modelica package is provided under the Modelica License 2
@@ -5621,12 +5629,12 @@ units are wrong or errors in documentation):
 </table>
 
 </html>"));
-end Version_3_0_1;
+      end Version_3_0_1;
 
-class Version_3_0 "Version 3.0 (March 1, 2008)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_3_0 "Version 3.0 (March 1, 2008)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 3.0 is <strong>not</strong> backward compatible to previous versions.
 A conversion script is provided to transform models and libraries
@@ -6374,12 +6382,12 @@ units are wrong or errors in documentation):
 </table>
 
 </html>"));
-end Version_3_0;
+      end Version_3_0;
 
-class Version_2_2_2 "Version 2.2.2 (Aug. 31, 2007)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_2_2_2 "Version 2.2.2 (Aug. 31, 2007)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 <p>
 Version 2.2.2 is backward compatible to version 2.2.1 and 2.2 with
 the following exceptions:
@@ -7356,12 +7364,12 @@ units are wrong or errors in documentation):
 </table>
 
 </html>"));
-end Version_2_2_2;
+      end Version_2_2_2;
 
-class Version_2_2_1 "Version 2.2.1 (March 24, 2006)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_2_2_1 "Version 2.2.1 (March 24, 2006)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p>
 Version 2.2.1 is backward compatible to version 2.2.
@@ -7733,12 +7741,12 @@ The following <strong>errors</strong> have been fixed:
 
 </table>
 </html>"));
-end Version_2_2_1;
+      end Version_2_2_1;
 
-class Version_2_2 "Version 2.2 (April 6, 2005)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_2_2 "Version 2.2 (April 6, 2005)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p>
 Version 2.2 is backward compatible to version 2.1.
@@ -7800,12 +7808,12 @@ The following <strong>changes</strong> have been performed in the
          still remain valid.</li>
 </ul>
 </html>"));
-end Version_2_2;
+      end Version_2_2;
 
-class Version_2_1 "Version 2.1 (Nov. 11, 2004)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_2_1 "Version 2.1 (Nov. 11, 2004)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p> This is a major change with respect to previous versions of the
         Modelica Standard Library, because <strong>many new libraries</strong> and components
@@ -7993,12 +8001,12 @@ Other changes:
          blue to dark blue in order to distinguish them from electrical signals.</li>
 </ul>
 </html>"));
-end Version_2_1;
+      end Version_2_1;
 
-class Version_1_6 "Version 1.6 (June 21, 2004)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_1_6 "Version 1.6 (June 21, 2004)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p> Added 1 new library (Electrical.Polyphase), 17 new components,
         improved 3 existing components
@@ -8072,12 +8080,12 @@ with not much computational effort.</p>
           <td>min=0 added</td></tr>
 </table>
 </html>"));
-end Version_1_6;
+      end Version_1_6;
 
-class Version_1_5 "Version 1.5 (Dec. 16, 2002)"
-  extends Modelica.Icons.ReleaseNotes;
-
-   annotation (Documentation(info="<html>
+      class Version_1_5 "Version 1.5 (Dec. 16, 2002)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <p> Added 55 new components. In particular, added new package
         <strong>Thermal.HeatTransfer</strong> for modeling of lumped
@@ -8280,12 +8288,12 @@ filled with white and not transparent any more.</p>
 <p><em>MultiBody.Parts.InertialSystem</em></p>
 <p>Icon corrected.</p>
 </html>"));
-end Version_1_5;
+      end Version_1_5;
 
-class Version_1_4 "Version 1.4 (June 28, 2001)"
-  extends Modelica.Icons.ReleaseNotes;
-
-annotation (Documentation(info="<html>
+      class Version_1_4 "Version 1.4 (June 28, 2001)"
+        extends Modelica.Icons.ReleaseNotes;
+        annotation(
+          Documentation(info = "<html>
 
 <ul>
 <li>Several minor bugs fixed.</li>
@@ -8345,8 +8353,9 @@ Sine sin1(outPort(redeclare type SignalType=Modelica.SIunits.Torque))
 First official release of the library.
 </p>
 </html>"));
-end Version_1_4;
- annotation (Documentation(info="<html>
+      end Version_1_4;
+      annotation(
+        Documentation(info = "<html>
 
 <p>
 This section summarizes the changes that have been performed
@@ -8375,12 +8384,12 @@ main version number is not changed.
 <tr><td><a href=\"modelica://Modelica.UsersGuide.ReleaseNotes.Version_1_4\">Version 1.4</a></td><td>June 28, 2001</td></tr>
 </table>
 </html>"));
-end ReleaseNotes;
+    end ReleaseNotes;
 
-class Contact "Contact"
-  extends Modelica.Icons.Contact;
-
- annotation (Documentation(info="<html>
+    class Contact "Contact"
+      extends Modelica.Icons.Contact;
+      annotation(
+        Documentation(info = "<html>
 <dl><dt>The Modelica Standard Library (this Modelica package) is developed by contributors from different organizations (see list below). It is licensed under the <a href=\"https://modelica.org/licenses/modelica-3-clause-bsd\">BSD 3-Clause License</a> by:</dt>
 <dt><br /></dt>
 <dd>Modelica Association</dd>
@@ -8826,10 +8835,10 @@ of the Modelica package (many more people have contributed to the design):
 </table>
 
 </html>"));
-
-end Contact;
-
-annotation (DocumentationClass=true, Documentation(info="<html>
+    end Contact;
+    annotation(
+      DocumentationClass = true,
+      Documentation(info = "<html>
 <p>
 Package <strong>Modelica</strong> is a <strong>standardized</strong> and <strong>pre-defined</strong> package
 that is developed together with the Modelica language from the
@@ -8947,11 +8956,10 @@ User's Guides that can be accessed by the following links:
 </table>
 
 </html>"));
-end UsersGuide;
+  end UsersGuide;
 
-
-package Interfaces 
-connector HydraulicPort
+  package Interfaces
+    connector HydraulicPort
       Modelica.Units.SI.Pressure p;
       flow Modelica.Units.SI.VolumeFlowRate vflow;
       annotation(
@@ -8962,19 +8970,18 @@ connector HydraulicPort
       Modelica.Units.SI.Voltage v;
       flow Modelica.Units.SI.Current i;
       annotation(
-        Icon(graphics = {Ellipse( fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}));
+        Icon(graphics = {Ellipse(fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}));
     end ElectricalPort;
-    
-    connector FluidPort
-          Modelica.Units.SI.Pressure p;
-          flow Modelica.Units.SI.MassFlowRate mflow;
-          annotation(
-            Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}));
-        end FluidPort;
-  annotation(
-      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {20, 0}, lineColor = {64, 64, 64}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-10, 70}, {10, 70}, {40, 20}, {80, 20}, {80, -20}, {40, -20}, {10, -70}, {-10, -70}, {-10, 70}}), Polygon(fillColor = {102, 102, 102}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-100, 20}, {-60, 20}, {-30, 70}, {-10, 70}, {-10, -70}, {-30, -70}, {-60, -20}, {-100, -20}, {-100, 20}})}));
 
-end Interfaces;
+    connector FluidPort
+      Modelica.Units.SI.Pressure p;
+      flow Modelica.Units.SI.MassFlowRate mflow;
+      annotation(
+        Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}));
+    end FluidPort;
+    annotation(
+      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {20, 0}, lineColor = {64, 64, 64}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-10, 70}, {10, 70}, {40, 20}, {80, 20}, {80, -20}, {40, -20}, {10, -70}, {-10, -70}, {-10, 70}}), Polygon(fillColor = {102, 102, 102}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-100, 20}, {-60, 20}, {-30, 70}, {-10, 70}, {-10, -70}, {-30, -70}, {-60, -20}, {-100, -20}, {-100, 20}})}));
+  end Interfaces;
 
   package Examples
     model Test1
@@ -8987,114 +8994,131 @@ end Interfaces;
     end Test1;
 
     model TwoTankSysten
-    PumpedStoragePowerPlant.Components.OpenTank Tank1(altitude = 1000)  annotation(
+      PumpedStoragePowerPlant.Components.OpenTank Tank1(altitude = 1000) annotation(
         Placement(visible = true, transformation(origin = {-51, 35}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
-  PumpedStoragePowerPlant.Components.OpenTank Tank2 annotation(
+      PumpedStoragePowerPlant.Components.OpenTank Tank2 annotation(
         Placement(visible = true, transformation(origin = {52, 0}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
     equation
       connect(Tank2.fluidPort, Tank1.fluidPort) annotation(
         Line(points = {{52, -20}, {52, -50}, {-52, -50}, {-52, 14}}));
     end TwoTankSysten;
+
+    model test_tank_turbine
+      PumpedStoragePowerPlant.Components.OpenTank openTank1(A = 1000)  annotation(
+        Placement(visible = true, transformation(origin = {-47, 61}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
+  PumpedStoragePowerPlant.Components.OpenTank openTank2(levelInitial = 0)  annotation(
+        Placement(visible = true, transformation(origin = {90, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Components.Turbine_basic turbine_basic annotation(
+        Placement(visible = true, transformation(origin = {6, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    equation
+      connect(openTank1.fluidPort, turbine_basic.fluidPort_in) annotation(
+        Line(points = {{-48, 48}, {0, 48}, {0, 8}}));
+  connect(turbine_basic.fluidPort_out, openTank2.fluidPort) annotation(
+        Line(points = {{16, 0}, {90, 0}, {90, -8}}));
+    protected
+    end test_tank_turbine;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
 
-  package Components      model OpenTank
-//Connectors
-PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort annotation(
-          Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-1, -69}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));
-
-parameter Modelica.Units.SI.Area Nozzle = 1 "Nozzle Area";
-parameter Modelica.Units.SI.Area A = 10 "Tank Area";
-parameter Modelica.Units.SI.Height levelInitial = 100 "Initial Water Level";
-parameter Modelica.Units.SI.Height altitude = 0 "Geographic Altitude (Nozzle)";
-
-constant Modelica.Units.SI.Density roh = 1000;
-constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
-constant Real k = -0.125/1000; //constant value: -0,125/km
-
-//Variables
-Modelica.Units.SI.Velocity v; //Nozzle velocity
-Modelica.Units.SI.Height level(start = levelInitial); //Water level
-Modelica.Units.SI.Pressure relPressure; //Pressure considering altitutde
-     
-equation
-relPressure = p0 * exp(-k*(level+altitude)); //Atmospheric pressure
-g*level = fluidPort.p/roh - relPressure/roh - v*abs(v)*0.5; 
-v = fluidPort.mflow / (Nozzle*roh);
-der(level) = (v*Nozzle) / A;
-    
-annotation(
+  package Components
+    model OpenTank
+      //Connectors
+      PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort annotation(
+        Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-1, -69}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));
+      parameter Modelica.Units.SI.Area Nozzle = 1 "Nozzle Area";
+      parameter Modelica.Units.SI.Area A = 10 "Tank Area";
+      parameter Modelica.Units.SI.Height levelInitial = 100 "Initial Water Level";
+      parameter Modelica.Units.SI.Height altitude = 0 "Geographic Altitude (Nozzle)";
+      constant Modelica.Units.SI.Density roh = 1000;
+      constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
+      constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+      constant Real k = -0.125 / 1000;
+      //constant value: -0,125/km
+      //Variables
+      Modelica.Units.SI.Velocity v;
+      //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);
+      //Water level
+      Modelica.Units.SI.Pressure relPressure;
+      //Pressure considering altitutde
+    equation
+      relPressure = p0 * exp(-k * (level + altitude));
+//Atmospheric pressure
+      g * level = fluidPort.p / roh - relPressure / roh - v * abs(v) * 0.5;
+      v = fluidPort.mflow / (Nozzle * roh);
+      der(level) = v * Nozzle / A;
+      annotation(
         Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{24, 13}, {-24, -13}}, textString = "%name")}));
-end OpenTank;
+    end OpenTank;
 
     model OpenTankSimple
-    /* 
-    This is a simplified version of the OpenTank Model.
-    Not taking in account the atmospheric pressure
-    therefore neglecting the possibility of differnt height levels of tanks.
-    */
-    
-    //Connectors
-    PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort annotation(
-          Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-1, -69}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));
-    
-    parameter Modelica.Units.SI.Area Nozzle = 1 "Nozzle Area";
-    parameter Modelica.Units.SI.Area A = 10 "Tank Area";
-    parameter Modelica.Units.SI.Height levelInitial = 100 "Initial Water Level";
-    
-    constant Modelica.Units.SI.Density roh = 1000;
-    constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-    
-    //Variables
-    Modelica.Units.SI.Velocity v;     //Nozzle velocity
-    Modelica.Units.SI.Height level(start = levelInitial);   //Water level
-    
+      /* 
+          This is a simplified version of the OpenTank Model.
+          Not taking in account the atmospheric pressure
+          therefore neglecting the possibility of differnt height levels of tanks.
+          */
+      //Connectors
+      PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort annotation(
+        Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-1, -69}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));
+      parameter Modelica.Units.SI.Area Nozzle = 1 "Nozzle Area";
+      parameter Modelica.Units.SI.Area A = 10 "Tank Area";
+      parameter Modelica.Units.SI.Height levelInitial = 100 "Initial Water Level";
+      constant Modelica.Units.SI.Density roh = 1000;
+      constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
+      //Variables
+      Modelica.Units.SI.Velocity v;
+      //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);
+      //Water level
     equation
-    g*level = fluidPort.p/roh - v*abs(v)*0.5;
-    v = fluidPort.mflow / (Nozzle*roh);
-    der(level) = (v*Nozzle) / A;
-    
-    
-    annotation(
+      g * level = fluidPort.p / roh - v * abs(v) * 0.5;
+      v = fluidPort.mflow / (Nozzle * roh);
+      der(level) = v * Nozzle / A;
+      annotation(
         Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, lineColor = {85, 255, 255}, fillColor = {0, 170, 255}, pattern = LinePattern.None, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{24, 13}, {-24, -13}}, textString = "%name")}));
     end OpenTankSimple;
 
     model Turbine_basic
-    PumpedStoragePowerPlant.Interfaces.HydraulicPort hydraulicPort_in annotation(
-        Placement(visible = true, transformation(origin = {-78, 56}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-96, 96}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    PumpedStoragePowerPlant.Interfaces.ElectricalPort electricalPort_out annotation(
-        Placement(visible = true, transformation(origin = {98, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {98, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-    
-    parameter Real eta_turbine=0.9;
-    parameter Real eta_gear=0.9;
-    parameter Real eta_generator=0.9;
-    parameter Modelica.Units.SI.Density roh_fluid=1000;
-    parameter Modelica.Units.SI.Voltage v_net=230;
-    constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-    Modelica.Units.SI.Power p_turbine;
-    Modelica.Units.SI.Power p_electr;
-    Modelica.Units.SI.Height fall_height_water;
-    
-    equation 
-    
-    fall_height_water = fluidPort_in.p / (roh_fluid * g);
-    p_turbine = eta_turbine * g * fall_height_water * roh_fluid * hydraulicPort_in.vflow;
-    p_electr = eta_gear * eta_generator * p_turbine;
-    electricalPort_out.i = p_electr / v_net;
-    electricalPort_out.v = v_net;
-    
-    
-    annotation(
+      PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort_in annotation(
+        Placement(visible = true, transformation(origin = {-92, 54}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-54, 62}, extent = {{-32, -32}, {32, 32}}, rotation = 0)));
+      //PumpedStoragePowerPlant.Interfaces.ElectricalPort electricalPort_out annotation(
+        //Placement(visible = true, transformation(origin = {98, -14}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {98, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      PumpedStoragePowerPlant.Interfaces.FluidPort fluidPort_out annotation(
+        Placement(visible = true, transformation(origin = {97, -25}, extent = {{-11, -11}, {11, 11}}, rotation = 0), iconTransformation(origin = {96, -26}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      parameter Real eta_turbine = 0.9;
+      parameter Real eta_gear = 0.9;
+      parameter Real eta_generator = 0.9;
+      parameter Modelica.Units.SI.Density roh_fluid = 1000;
+      parameter Modelica.Units.SI.Voltage v_net = 230;
+      constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
+      
+      Modelica.Units.SI.Power p_turbine;
+      
+      Modelica.Units.SI.Power p_electr;
+      
+      Modelica.Units.SI.Height fall_height_water;
+    equation
+      fall_height_water = fluidPort_in.p / (roh_fluid * g);
+      
+      p_turbine = eta_turbine * g * fall_height_water * fluidPort_in.mflow;
+      //p_electr = eta_gear * eta_generator * eta_turbine * fluidPort_in.mflow * fluidPort_in.p / roh_fluid ;
+      
+      p_electr = eta_gear * eta_generator * p_turbine;
+      
+      //electricalPort_out.i = p_electr / v_net;
+      //electricalPort_out.v = v_net;
+      
+      fluidPort_out.p = (1 - eta_turbine) * fluidPort_in.p;
+      
+      fluidPort_out.mflow = -fluidPort_in.mflow;
+      annotation(
         Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Text(origin = {-74, 78}, extent = {{-20, 10}, {20, -10}}, textString = "ADD: 
     Hydraulic Port
     Electrical/Mech. Port", horizontalAlignment = TextAlignment.Left)}),
-        Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Ellipse(origin = {16, 52}, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-10, 10}, {10, -10}}), Rectangle(origin = {-22, 52}, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{38, 10}, {-38, -10}}), Rectangle(origin = {-22, 52}, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{38, 10}, {-38, -10}}), Rectangle(origin = {-80, 76}, rotation = -45, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{38, 10}, {-38, -10}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {98, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {102, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}})}));end Turbine_basic;
+        Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {98, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {102, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}})}));
+    end Turbine_basic;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
-
-
   end Components;
-
 end PumpedStoragePowerPlant;
