@@ -8996,7 +8996,7 @@ User's Guides that can be accessed by the following links:
     end TwoTankSysten;
 
     model test_tank_turbine
-      WaterPowerPlant.Components.OpenTank openTank1(A = 1000) annotation(
+      WaterPowerPlant.Components.OpenTank openTank1(A = 1000, altitude = 100, levelInitial = 100) annotation(
         Placement(visible = true, transformation(origin = {-47, 61}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
       WaterPowerPlant.Components.OpenTank openTank2(levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {90, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -9011,7 +9011,7 @@ User's Guides that can be accessed by the following links:
     end test_tank_turbine;
     
     model Test_TankTurbineGeneratorLoad
-    Components.OpenTank openTank(A = 1000, Nozzle = 0.1, altitude = 100, levelInitial = 100)  annotation(
+    Components.OpenTank openTank(A = 1000, Nozzle = 1, altitude = 100, levelInitial = 100)  annotation(
         Placement(visible = true, transformation(origin = {-62, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   WaterPowerPlant.Components.OpenTank openTank1(A = 10000000, Nozzle = 10, levelInitial = 0)  annotation(
         Placement(visible = true, transformation(origin = {2, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -9033,25 +9033,25 @@ User's Guides that can be accessed by the following links:
     end Test_TankTurbineGeneratorLoad;
     
     model Test_Turbine_Pelton
-    WaterPowerPlant.Components.OpenTank openTank(A = 1000, Nozzle = 0.1, altitude = 100, levelInitial = 100)  annotation(
-        Placement(visible = true, transformation(origin = {-19, 79}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
-    WaterPowerPlant.Components.OpenTank openTank1(A = 10000000, Nozzle = 10, levelInitial = 0)  annotation(
+    WaterPowerPlant.Components.OpenTank openTank(A = 1000, Nozzle = 1, altitude = 100, levelInitial = 100)  annotation(
+        Placement(visible = true, transformation(origin = {-19, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
+    WaterPowerPlant.Components.OpenTank openTank1(A = 10000, Nozzle = 1, level(start = 0), levelInitial = 0)  annotation(
         Placement(visible = true, transformation(origin = {33, 29}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
     WaterPowerPlant.Components.Generator_basic generator_basic annotation(
         Placement(visible = true, transformation(origin = {7, -23}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
     WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
         Placement(visible = true, transformation(origin = {65, -29}, extent = {{19, 19}, {-19, -19}}, rotation = 180)));
-  WaterPowerPlant.Components.Turbine_Pelton turbine_Pelton(F_2 = 0.9)  annotation(
-        Placement(visible = true, transformation(origin = {-29, 17}, extent = {{-19, -19}, {19, 19}}, rotation = -90)));
+  WaterPowerPlant.Components.Turbine_Pelton turbine_Pelton(F_2 = 0.9, Nozzle_Area = 0.1)  annotation(
+        Placement(visible = true, transformation(origin = {-31, 17}, extent = {{-19, -19}, {19, 19}}, rotation = -90)));
     equation
   connect(generator_basic.electricalPort_out, electrialLoad.electricalPort_in) annotation(
         Line(points = {{19, -18}, {53, -18}}));
   connect(turbine_Pelton.fluidPort_in, openTank.fluidPort) annotation(
-        Line(points = {{-18, 31}, {-18, 51.5}, {-19, 51.5}, {-19, 63}}));
+        Line(points = {{-20, 31}, {-20, 51.5}, {-19, 51.5}, {-19, 53}}));
   connect(openTank1.fluidPort, turbine_Pelton.fluidPort_out) annotation(
-        Line(points = {{33, 17}, {-12, 17}}));
+        Line(points = {{33, 17}, {-14, 17}}));
   connect(generator_basic.rotationalPort_in, turbine_Pelton.rotationalPort_out) annotation(
-        Line(points = {{-12, -18}, {-29, -18}, {-29, 0}}));
+        Line(points = {{-12, -18}, {-31, -18}, {-31, 0}}));
     end Test_Turbine_Pelton;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
@@ -9144,7 +9144,7 @@ User's Guides that can be accessed by the following links:
     parameter Modelica.Units.SI.Voltage v_net = 230;
     Modelica.Units.SI.Power P_mech, P_el;
     equation
-    P_mech = rotationalPort_in.M * rotationalPort_in.rps;
+    P_mech = - rotationalPort_in.M * rotationalPort_in.rps;
     P_el = P_mech * eta_gen;
 electricalPort_out.i = P_el / v_net;
 electricalPort_out.v = v_net;
@@ -9159,7 +9159,8 @@ electricalPort_out.v = v_net;
         Placement(visible = true, transformation(origin = {97, -25}, extent = {{-11, -11}, {11, 11}}, rotation = 0), iconTransformation(origin = {79, -63}, extent = {{-31, -31}, {31, 31}}, rotation = 0)));
       parameter Real eta_turbine = 0.9;
       parameter Modelica.Units.SI.Density roh_fluid = 1000;
-      parameter Modelica.Units.SI.Frequency f0 = 50;//umdrehungen pro sek
+      parameter Modelica.Units.SI.Frequency f0 = 50;
+  //umdrehungen pro sek
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
       Modelica.Units.SI.Power p_turbine;
       Modelica.Units.SI.Height fall_height_water;
@@ -9195,7 +9196,7 @@ electricalPort_out.v = v_net;
       constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
     
       
-      Modelica.Units.SI.Height fall_height_water; // virtual fall height of the water after consideration of Pipe, Friction etc.
+      Modelica.Units.SI.Height fall_height_water;       // virtual fall height of the water after consideration of Pipe, Friction etc.
       Modelica.Units.SI.Velocity c_water;
       Modelica.Units.SI.Velocity v_turbine;
     
@@ -9206,16 +9207,17 @@ electricalPort_out.v = v_net;
         Placement(visible = true, transformation(origin = {96, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {92, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
     
-      fall_height_water = fluidPort_in.p / (roh_fluid * g);
-      // E_kin = E_pot
-      c_water = sqrt(2 * g * fall_height_water); 
-      // F = F1 + F2
-      v_turbine = c_water / 2; // optimum speed for maximum Energy transfer. No Startup or Shutdown Simulation
+      fall_height_water = abs(fluidPort_in.p / (roh_fluid * g));
+    // E_kin = E_pot
+      c_water = sqrt(2 * g * fall_height_water);
+    // F = F1 + F2
+      v_turbine = c_water / 2;
+    // optimum speed for maximum Energy transfer. No Startup or Shutdown Simulation
       F_turbine = roh_fluid * Nozzle_Area * c_water * (c_water - v_turbine) * (F_1 + F_1 * F_2);
       P_turbine = F_turbine * v_turbine;
       rotationalPort_out.M = F_turbine * radius;
       rotationalPort_out.rps = P_turbine / rotationalPort_out.M;
-      fluidPort_out.p = p0;
+      fluidPort_out.p = 2*p0;
       fluidPort_out.mflow = -fluidPort_in.mflow;
       annotation(
         Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
@@ -9237,8 +9239,8 @@ electricalPort_out.v = v_net;
       constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
     
       
-      Modelica.Units.SI.Height fall_height_water; // virtual fall height of the water after consideration of Pipe, Friction etc.
-      Modelica.Units.SI.Height fall_height_water_after; // virtual fall height of the water after passing the Turbine.
+      Modelica.Units.SI.Height fall_height_water;       // virtual fall height of the water after consideration of Pipe, Friction etc.
+      Modelica.Units.SI.Height fall_height_water_after;       // virtual fall height of the water after passing the Turbine.
       Modelica.Units.SI.Velocity v_turbine;
     
       Modelica.Units.SI.Power P_turbine;
@@ -9276,7 +9278,7 @@ electricalPort_out.v = v_net;
     Modelica.Units.SI.Power P_load;
     equation
     
-    P_load = eta_load * electricalPort_in.v * electricalPort_in.i;
+    P_load = eta_load * electricalPort_in.v * (-1) * electricalPort_in.i;
     
     annotation(
         Icon(graphics = {Rectangle(origin = {0, -13}, fillPattern = FillPattern.Solid, extent = {{-20, 39}, {20, -39}}), Line(origin = {-31, 42}, points = {{-31, 16}, {31, 16}, {31, -14}, {31, -16}, {31, -16}}, thickness = 2.5), Line(origin = {0.5, -65}, points = {{-0.5, 13}, {-0.5, -13}, {-20.5, -13}, {19.5, -13}, {19.5, -13}}, thickness = 2.5)}));end ElectrialLoad;
