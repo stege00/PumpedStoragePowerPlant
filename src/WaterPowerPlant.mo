@@ -9097,6 +9097,28 @@ User's Guides that can be accessed by the following links:
   connect(generator_Synchron_new.electricalPort_out, electrialLoad.electricalPort_in) annotation(
         Line(points = {{44, 6}, {44, 8}, {62, 8}}));
     end Test_Generator_synchron;
+    
+    model Test_Generator_synchron2
+    WaterPowerPlant.Components.OpenTank openTank(A = 1000, Nozzle = 1, altitude = 100, levelInitial = 100)  annotation(
+        Placement(visible = true, transformation(origin = {-57, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
+    WaterPowerPlant.Components.OpenTank openTank1(A = 1000, Nozzle = 1, level(start = 0), levelInitial = 0)  annotation(
+        Placement(visible = true, transformation(origin = {23, -41}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
+    WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
+        Placement(visible = true, transformation(origin = {77, -7}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
+  Components.Turbine_advanced1 turbine_advanced1 annotation(
+        Placement(visible = true, transformation(origin = {-29, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
+  WaterPowerPlant.Components.Generator_Synchron_new2 generator_Synchron_new2 annotation(
+        Placement(visible = true, transformation(origin = {35, 11}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
+    equation
+      connect(turbine_advanced1.fluidPort_out, openTank1.fluidPort) annotation(
+        Line(points = {{-14, -4}, {22, -4}, {22, -52}}));
+      connect(openTank.fluidPort, turbine_advanced1.fluidPort_in) annotation(
+        Line(points = {{-58, 54}, {-44, 54}, {-44, 18}}));
+  connect(turbine_advanced1.rotationalPort_out, generator_Synchron_new2.rotationalPort_in) annotation(
+        Line(points = {{-12, 8}, {22, 8}, {22, 14}}));
+  connect(electrialLoad.electricalPort_in, generator_Synchron_new2.electricalPort_out) annotation(
+        Line(points = {{62, 8}, {44, 8}, {44, 14}}));
+    end Test_Generator_synchron2;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
@@ -9371,23 +9393,78 @@ User's Guides that can be accessed by the following links:
     parameter Modelica.Units.SI.Voltage U_nom = 230;            // volt. of electr. grid
     parameter Integer p = 1;                                    // number of pole pairs
     parameter Real cos_phi = 0.8;                               // power factor
-    parameter Modelica.Units.SI.Impedance X_d = 100;            // impedance of generator
+    parameter Modelica.Units.SI.Impedance X_d = 1.5;            // impedance of generator
+    parameter Modelica.Units.SI.Torque M_kipp = 10000;
+    
+    constant Real pi = Modelica.Constants.pi;
     
     Modelica.Units.SI.Voltage U_str;
     Modelica.Units.SI.Frequency n_s;
     Modelica.Units.SI.Power P, Q, S;
-    Modelica.Units.SI.Voltage U_p;
-    Modelica.Units.SI.Torque M_kipp;
+    Modelica.Units.SI.Voltage U_p(start=400);
+    //Modelica.Units.SI.Torque M_kipp;
     Modelica.Units.SI.Angle polradwinkel;
     
     equation
     //Synchronmaschine
-    U_str = sqrt(3) * U_nom;
+    U_str = U_nom;
     n_s = f0 / p;
     //M_kipp, polradwinkel, U_p berechnen
-    rotationalPort_in.M = 3 * U_p*U_str *Modelica.Math.sin(polradwinkel) / (2 * Modelica.Constants.pi * n_s*X_d*cos_phi);
-    polradwinkel = -rotationalPort_in.M / (2 * M_kipp / Modelica.Constants.pi);
-    M_kipp = 3 * U_str * U_p / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
+    M_kipp = 3 * U_str * U_p / (2 * pi * n_s * X_d * cos_phi);
+    polradwinkel = -rotationalPort_in.M / (2 * M_kipp / pi);
+    //rotationalPort_in.M = 3 * U_p*U_str *Modelica.Math.sin(polradwinkel) / (2 * pi * n_s*X_d*cos_phi);
+    
+    P = -(3 * U_str * U_p * Modelica.Math.sin(polradwinkel) / X_d);
+    Q = (3 * U_str / X_d) * (U_str - U_p * Modelica.Math.cos(polradwinkel));
+    S = sqrt(P*P+Q*Q);
+    
+    electricalPort_out.v = U_str;
+    electricalPort_out.i = S / U_str;
+    
+      annotation(
+        Icon(graphics = {Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-62, 21}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {-72, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-56, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-64, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-60, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-50, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-74, 25}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {1, 16}, fillPattern = FillPattern.Solid, extent = {{-51, 30}, {51, -30}}), Rectangle(origin = {-78, 19}, lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{4, 11}, {-4, -11}}), Polygon(origin = {1, 26}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(origin = {3, 24}, lineColor = {255, 255, 255}, lineThickness = 1, borderPattern = BorderPattern.Engraved, extent = {{-15, 20}, {15, -20}}, radius = 1)}));
+    end Generator_Synchron_new;
+    
+    model Generator_Synchron_new2
+    WaterPowerPlant.Interfaces.ElectricalPort electricalPort_out annotation(
+        Placement(visible = true, transformation(origin = {-16, 4}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {58, 20}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
+    WaterPowerPlant.Interfaces.RotationalPort rotationalPort_in annotation(
+        Placement(visible = true, iconTransformation(origin = {-80, 20}, extent = {{-32, -32}, {32, 32}}, rotation = 0)));
+    constant Real pi=Modelica.Constants.pi;
+    
+    parameter Modelica.Units.SI.Frequency f0 = 50;              // freq. of electr. grid
+    parameter Modelica.Units.SI.Voltage U_nom = 230;            // volt. of electr. grid
+    parameter Modelica.Units.SI.Current I_N = 100;
+    parameter Real cos_phi = 0.8;                               // power factor
+    parameter Modelica.Units.SI.Impedance X_d = 1.5;            // impedance of generator
+    Real p;                                                     // number of pole pairs
+    
+    Modelica.Units.SI.Voltage U_str;
+    Modelica.Units.SI.Frequency n_s;
+    Modelica.Units.SI.Power P, Q, S;
+    Modelica.Units.SI.Voltage U_p(start=400);
+    Modelica.Units.SI.Angle theta;                              // pole wheel angle
+    Modelica.Units.SI.Torque M;
+    equation
+    
+    p=AixLib.Utilities.Math.Functions.round(2*pi*f0/rotationalPort_in.omega, 0);
+    
+    //Synchronmaschine
+    n_s = f0 / p;
+    M=-rotationalPort_in.M;
+    U_str = sqrt(3) * U_nom;
+    
+    //Modelica.ComplexMath.j;
+    
+    
+    
+    
+    
+    
+    
+    //M_kipp, polradwinkel, U_p berechnen
+    U_p = (M*2 * Modelica.Constants.pi * n_s*X_d*cos_phi)/(3*U_str*Modelica.Math.sin(-M / (2 * 3 * U_str * U_p / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi) / Modelica.Constants.pi)));
+    polradwinkel = -M / (3 * U_str * U_p / (Modelica.Constants.pi * n_s * X_d * cos_phi) / Modelica.Constants.pi);
     
     P = -(3 * U_str * U_p * Modelica.Math.sin(polradwinkel) / X_d);
     Q = (3 * U_str / X_d) * (U_str - U_p * Modelica.Math.cos(polradwinkel));
@@ -9398,7 +9475,7 @@ User's Guides that can be accessed by the following links:
     
       annotation(
         Icon(graphics = {Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-62, 21}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {-72, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-56, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-64, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-60, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-50, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-74, 25}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {1, 16}, fillPattern = FillPattern.Solid, extent = {{-51, 30}, {51, -30}}), Rectangle(origin = {-78, 19}, lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{4, 11}, {-4, -11}}), Polygon(origin = {1, 26}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(origin = {3, 24}, lineColor = {255, 255, 255}, lineThickness = 1, borderPattern = BorderPattern.Engraved, extent = {{-15, 20}, {15, -20}}, radius = 1)}));
-    end Generator_Synchron_new;
+    end Generator_Synchron_new2;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
   end Components;
