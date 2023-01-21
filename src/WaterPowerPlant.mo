@@ -603,6 +603,72 @@ package WaterPowerPlant
       connect(TankSimple.fluidPort, sink.fluid_in) annotation(
         Line(points = {{-52, 44}, {51, 44}, {51, 7}}));
     end Test_Sink;
+	
+    model Example_Kavernenkraftwerk_Saeckingen
+    WaterPowerPlant.Components.OpenTank Eggbergbecken(A = 120000, Nozzle = 14.522, altitude = 400, levelInitial = 17.5)  annotation(
+        Placement(visible = true, transformation(origin = {-58, 84}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
+  WaterPowerPlant.Components.Pipe pipe1(d = 4.3, l = 400)  annotation(
+        Placement(visible = true, transformation(origin = {-58, 50}, extent = {{-12, -12}, {12, 12}}, rotation = -90)));
+  WaterPowerPlant.Components.Pipe pipe2(d = 5.5, l = 2000)  annotation(
+        Placement(visible = true, transformation(origin = {81, -47}, extent = {{-15, -15}, {15, 15}}, rotation = -90)));
+  WaterPowerPlant.Components.Turbine_Francis turbine_Francis1(n_turbine = 10, radius = 1.072)  annotation(
+        Placement(visible = true, transformation(origin = {-76, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
+  WaterPowerPlant.Components.Turbine_Francis turbine_Francis3(n_turbine = 10, radius = 1.072)  annotation(
+        Placement(visible = true, transformation(origin = {4, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
+  WaterPowerPlant.Components.Turbine_Francis turbine_Francis4(n_turbine = 10, radius = 1.072)  annotation(
+        Placement(visible = true, transformation(origin = {44, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
+  WaterPowerPlant.Components.Generator_Synchron generator_Synchron1(U0(displayUnit = "kV") = 235000, cos_phi = 0.76, p = 5)  annotation(
+        Placement(visible = true, transformation(origin = {-80, -48}, extent = {{-24, -24}, {24, 24}}, rotation = -90)));
+  WaterPowerPlant.Components.Generator_Synchron generator_Synchron2(U0(displayUnit = "kV") = 235000, cos_phi = 0.76, p = 5)  annotation(
+        Placement(visible = true, transformation(origin = {-40, -48}, extent = {{-24, -24}, {24, 24}}, rotation = -90)));
+  WaterPowerPlant.Components.Generator_Synchron generator_Synchron3(U0(displayUnit = "kV") = 235000, cos_phi = 0.76, p = 5)  annotation(
+        Placement(visible = true, transformation(origin = {0, -48}, extent = {{-24, -24}, {24, 24}}, rotation = -90)));
+  WaterPowerPlant.Components.Generator_Synchron generator_Synchron4(U0(displayUnit = "kV") = 235000, cos_phi = 0.76, p = 5)  annotation(
+        Placement(visible = true, transformation(origin = {40, -48}, extent = {{-24, -24}, {24, 24}}, rotation = -90)));
+  WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
+        Placement(visible = true, transformation(origin = {-85, -85}, extent = {{17, -17}, {-17, 17}}, rotation = 0)));
+  WaterPowerPlant.Components.OpenTank Rhein(A = 1000000000, Nozzle = 23.758, levelInitial = 0)  annotation(
+        Placement(visible = true, transformation(origin = {81, -75}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
+  WaterPowerPlant.Components.Turbine_Francis turbine_Francis2(n_turbine = 10, radius = 1.072) annotation(
+        Placement(visible = true, transformation(origin = {-36, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
+    equation
+  connect(Eggbergbecken.fluidPort, pipe1.fluidPort_in) annotation(
+        Line(points = {{-58, 69}, {-58, 61}}));
+  connect(turbine_Francis4.rotationalPort_out, generator_Synchron4.rotationalPort_in) annotation(
+        Line(points = {{43.78, -16.02}, {43.78, -40.04}, {44.56, -40.04}, {44.56, -29.04}}));
+  connect(generator_Synchron3.rotationalPort_in, turbine_Francis3.rotationalPort_out) annotation(
+        Line(points = {{4.8, -28.8}, {4.8, -39.8}, {4, -39.8}, {4, -16}}));
+  connect(generator_Synchron1.rotationalPort_in, turbine_Francis1.rotationalPort_out) annotation(
+        Line(points = {{-75.2, -28.8}, {-76, -28.8}, {-76, -16}}));
+  connect(generator_Synchron3.electricalPort_out, electrialLoad.electricalPort_in) annotation(
+        Line(points = {{5, -62}, {5, -75}, {-74, -75}}));
+  connect(generator_Synchron4.electricalPort_out, electrialLoad.electricalPort_in) annotation(
+        Line(points = {{45, -62}, {46, -62}, {46, -75}, {-74, -75}}));
+  connect(generator_Synchron2.rotationalPort_in, turbine_Francis2.rotationalPort_out) annotation(
+        Line(points = {{-35.2, -28.8}, {-35.2, -39.8}, {-36, -39.8}, {-36, -16}}));
+  connect(generator_Synchron2.electricalPort_out, electrialLoad.electricalPort_in) annotation(
+        Line(points = {{-35, -62}, {-35, -76}, {-74, -76}}));
+  connect(generator_Synchron1.electricalPort_out, electrialLoad.electricalPort_in) annotation(
+        Line(points = {{-75, -62}, {-68, -62}, {-68, -76}, {-74, -76}}));
+  connect(turbine_Francis1.fluidPort_out, pipe2.fluidPort_in) annotation(
+        Line(points = {{-88, -13}, {-88, -23.38}, {82.34, -23.38}, {82.34, -33.38}}));
+  connect(turbine_Francis2.fluidPort_out, pipe2.fluidPort_in) annotation(
+        Line(points = {{-47.66, -13.38}, {-47.66, -23.38}, {82.34, -23.38}, {82.34, -33.38}}));
+  connect(turbine_Francis3.fluidPort_out, pipe2.fluidPort_in) annotation(
+        Line(points = {{-7.66, -13.38}, {-7.66, -23.38}, {82.34, -23.38}, {82.34, -33.38}}));
+  connect(turbine_Francis4.fluidPort_out, pipe2.fluidPort_in) annotation(
+        Line(points = {{32.34, -13.38}, {32.34, -23.38}, {82.34, -23.38}, {82.34, -33.38}}));
+  connect(pipe2.fluidPort_out, Rhein.fluidPort) annotation(
+        Line(points = {{81, -60.5}, {81, -74.5}, {79, -74.5}, {79, -88.5}}));
+  connect(turbine_Francis1.fluidPort_in, pipe1.fluidPort_out) annotation(
+        Line(points = {{-64, 20}, {-64, 30}, {-58, 30}, {-58, 40}}));
+  connect(turbine_Francis2.fluidPort_in, pipe1.fluidPort_out) annotation(
+        Line(points = {{-24, 20}, {-24, 30}, {-58, 30}, {-58, 40}}));
+  connect(turbine_Francis3.fluidPort_in, pipe1.fluidPort_out) annotation(
+        Line(points = {{16, 20}, {16, 30}, {-58, 30}, {-58, 40}}));
+  connect(turbine_Francis4.fluidPort_in, pipe1.fluidPort_out) annotation(
+        Line(points = {{56, 20}, {56, 30}, {-58, 30}, {-58, 40}}));
+    end Example_Kavernenkraftwerk_Saeckingen;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
@@ -1014,8 +1080,9 @@ package WaterPowerPlant
       constant Real pi = 2 * Modelica.Math.asin(1.0);
       //  Variables
       Modelica.Units.SI.Area A;
-      Friction lambda;
-      Friction pLoss;
+      Real lambda;
+      Real pLoss;
+      Real v,Re;
      
     equation
 // Calculation of Area of the pipe
