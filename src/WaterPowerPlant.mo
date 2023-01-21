@@ -9162,6 +9162,16 @@ User's Guides that can be accessed by the following links:
   connect(Env.fluidPort, Tank2.fluidPort) annotation(
         Line(points = {{-36, -20}, {56, -20}, {56, -56}}));
     end Test_Environment;
+
+    model Test_Sink
+    WaterPowerPlant.Components.OpenTankSimple TankSimple annotation(
+        Placement(visible = true, transformation(origin = {-52, 56}, extent = {{-18, -18}, {18, 18}}, rotation = 0)));
+  WaterPowerPlant.Components.Sink sink annotation(
+        Placement(visible = true, transformation(origin = {51, -15}, extent = {{-27, -27}, {27, 27}}, rotation = 0)));
+    equation
+      connect(TankSimple.fluidPort, sink.fluid_in) annotation(
+        Line(points = {{-52, 44}, {51, 44}, {51, 7}}));
+    end Test_Sink;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
@@ -9180,12 +9190,12 @@ User's Guides that can be accessed by the following links:
       constant Modelica.Units.SI.Density roh = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
       constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
-      constant Real k = -0.125 / 1000; //constant value: -0,125/km
+      constant Real k = -0.1282 / 1000; //constant value: -1/7.8km (Scale height)
       //Variables
-      Modelica.Units.SI.Velocity v; //Nozzle velocity
-      Modelica.Units.SI.Height level(start = levelInitial); //Water level
-      Modelica.Units.SI.Pressure relPressure; //Pressure considering altitutde
-    
+      Modelica.Units.SI.Velocity v;       //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);       //Water level
+      Modelica.Units.SI.Pressure relPressure;   //Pressure considering altitutde
+
     equation
       relPressure = p0 * exp(-k * (level + altitude)); //Atmospheric pressure
       g * level = fluidPort.p / roh - relPressure / roh - v * abs(v) * 0.5;
@@ -9212,14 +9222,14 @@ User's Guides that can be accessed by the following links:
       constant Modelica.Units.SI.Density roh = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
       //Variables
-      Modelica.Units.SI.Velocity v; //Nozzle velocity
-      Modelica.Units.SI.Height level(start = levelInitial); //Water level
+      Modelica.Units.SI.Velocity v;       //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);     //Water level
     equation
       g * level = fluidPort.p / roh - v * abs(v) * 0.5;
       v = fluidPort.mflow / (Nozzle * roh);
       der(level) = v * Nozzle / A;
       annotation(
-        Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, lineColor = {85, 255, 255}, fillColor = {0, 170, 255}, pattern = LinePattern.None, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{24, 13}, {-24, -13}}, textString = "%name")}));
+        Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{24, 13}, {-24, -13}}, textString = "%name")}));
     end OpenTankSimple;
 
     model Turbine_basic
@@ -9554,54 +9564,42 @@ User's Guides that can be accessed by the following links:
     end Generator_dc;
 
     model Pipe
-    
-      //  Ports
+    //  Ports
       WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
         Placement(visible = true, transformation(origin = {-98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
       WaterPowerPlant.Interfaces.FluidPort fluidPort_out annotation(
         Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
-        
-      //  Parameters
+        //  Parameters
       parameter Modelica.Units.SI.Diameter d = 10 "Diameter of the Pipe [m]";
       parameter Modelica.Units.SI.Length l = 10 "Length of the Pipe [m]";
       parameter Modelica.Units.SI.Density roh = 997 "Density of the Fluid [kg/m^3]";
       parameter Modelica.Units.SI.KinematicViscosity vis = 1.0087 "Kinematic Viscosity [m^2/s]";
       //  Constants
       constant Real pi = 2 * Modelica.Math.asin(1.0);
-      
       //  Variables
       Modelica.Units.SI.Area A;
       Friction lambda;
       Friction pLoss;
      
     equation
-    
-      // Calculation of Area of the pipe
+// Calculation of Area of the pipe
       A = (d / 2) ^ 2 * pi;
-      
-      // Calculation of Speed of the fluid
+// Calculation of Speed of the fluid
       v = fluidport_in.mflow / (roh * A);
-      
-      // Calculation of Reynolds-Number of the fluid
+// Calculation of Reynolds-Number of the fluid
       Re = roh * v * l / vis;
-      
-      // Laminar Flow ->Hagen-Poiseuille Calculation
+// Laminar Flow ->Hagen-Poiseuille Calculation
       if Re < 2300 then
         lambda = 64 / Re;
-        
-      // Turbolent Flow ->Blasius Calculation
+// Turbolent Flow ->Blasius Calculation
       elseif Re < 10 ^ 5 and Re > 2300 then
         lambda = 0.3164 / Re ^ 0.25;
       end if;
-      
-      // Calculation of Pressure Loss
+// Calculation of Pressure Loss
       pLoss = lambda * (8 * roh * l / pi ^ 2) * ((fluidport_in.mflow / roh) ^ 2 / d ^ 4);
-      
-      // Ouput of Resulting Massflow
+// Ouput of Resulting Massflow
       fluidport_out.mflow = fluidport_in.mflow annotation(
         Icon(graphics = {Rectangle(origin = {0, 17}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Rectangle(fillColor = {85, 170, 255}, fillPattern = FillPattern.Forward, extent = {{-100, 14}, {100, -14}}), Rectangle(origin = {0, -17}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}})}));
-        
-        
     annotation(
         Diagram,
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, extent = {{-100, 20}, {100, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Text(origin = {0, -46},extent = {{24, 13}, {-24, -13}}, textString = "%name")}));end Pipe;
@@ -9617,16 +9615,32 @@ User's Guides that can be accessed by the following links:
       //Constants
       constant Modelica.Units.SI.Density roh = 1000;
       //Variables
-      output Modelica.Units.SI.MassFlowRate sourceFlow; //sourceFlow is unidirectional flowing out of the Environment
-    
+      output Modelica.Units.SI.MassFlowRate sourceFlow;     //sourceFlow is unidirectional flowing out of the Environment
+
     equation
       sourceFlow = (inlet+rain*area/1000/3600)*roh; //Conversion of the rain unit into SI massflowrate
       fluidPort.mflow = - sourceFlow; //flowing out of Environment
-      
     annotation(
         Icon(graphics = {Ellipse(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-70, 20}, {70, -20}}, closure = EllipseClosure.Radial), Text(origin = {0, -30}, extent = {{-13, 8}, {13, -8}}, textString = "%name"), Polygon(origin = {0, 42}, fillColor = {179, 179, 179}, fillPattern = FillPattern.Sphere, points = {{-34, -37}, {58, -37}, {72, -25}, {74, -7}, {60, -1}, {50, -3}, {40, 3}, {36, 17}, {22, 21}, {10, 17}, {2, 23}, {-6, 31}, {-26, 37}, {-42, 35}, {-50, 33}, {-60, 23}, {-54, 11}, {-56, -1}, {-66, -5}, {-76, -13}, {-78, -29}, {-64, -37}, {-34, -37}}, smooth = Smooth.Bezier)}));
 
     end Environment;
+
+    model Sink
+      // Connectors
+       WaterPowerPlant.Interfaces.FluidPort fluid_in annotation(
+        Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {1, 81}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));  
+      // Variables
+      Modelica.Units.SI.Power P_sink;
+      // Parameters
+      parameter Modelica.Units.SI.Density roh = 1000;
+    
+    equation
+      P_sink = fluid_in.mflow/roh * fluid_in.p; // Hydraulic Power = 0, since p=0
+      fluid_in.p = 0; //Sink should absorb all inflow
+      
+      annotation(
+        Icon(graphics = {Line(origin = {0.01, 42.15}, points = {{49.9925, 3.84543}, {25.9925, -4.15457}, {-0.0075231, 3.84543}, {-24.0075, -4.15457}, {-50.0075, 3.84543}, {-50.0075, 3.84543}}, color = {0, 170, 255}, thickness = 1.5, smooth = Smooth.Bezier), Line(origin = {40.19, 0.19}, points = {{19.8066, 59.8066}, {-20.1934, -0.193375}, {-20.1934, -60.1934}}, thickness = 1.5), Line(origin = {-40.19, 0.19}, points = {{-19.8066, 59.8066}, {20.1934, -0.193375}, {20.1934, -60.1934}}, thickness = 1.5), Rectangle(fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-5, 20}, {5, -20}}), Polygon(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-10, 10}, {10, 10}, {0, -10}, {-10, 10}}), Text(origin = {0, -78}, extent = {{20, -24}, {-20, 24}}, textString = "%name")}));
+    end Sink;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
   end Components;
