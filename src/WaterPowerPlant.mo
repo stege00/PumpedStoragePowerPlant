@@ -9106,7 +9106,7 @@ User's Guides that can be accessed by the following links:
         Placement(visible = true, transformation(origin = {77, -7}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
       WaterPowerPlant.Components.Turbine_advanced1 turbine_advanced1 annotation(
         Placement(visible = true, transformation(origin = {-29, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.Generator_Synchron_complex generator_Synchron_complex annotation(
+      WaterPowerPlant.Components.Generator_Synchron_complex generator_Synchron_complex(M_break = 100000)  annotation(
         Placement(visible = true, transformation(origin = {22, 4}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
     equation
       connect(openTank.fluidPort, turbine_advanced1.fluidPort_in) annotation(
@@ -9128,7 +9128,7 @@ User's Guides that can be accessed by the following links:
         Placement(visible = true, transformation(origin = {61, -69}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
       WaterPowerPlant.Components.Turbine_advanced1 turbine_advanced1 annotation(
         Placement(visible = true, transformation(origin = {-29, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.Generator_Synchron_complex3Phases generator_Synchron_complex3Phases annotation(
+      WaterPowerPlant.Components.Generator_Synchron_complex3Phases generator_Synchron_complex3Phases(U0(displayUnit = "kV") = 235000)  annotation(
         Placement(visible = true, transformation(origin = {28, 2.66454e-15}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
       WaterPowerPlant.Components.ElectrialLoad electrialLoad1 annotation(
         Placement(visible = true, transformation(origin = {73, -59}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
@@ -9453,7 +9453,7 @@ User's Guides that can be accessed by the following links:
       // Variables
       Modelica.Units.SI.Power P_load;
     equation
-      P_load = eta_load * electricalPort_in.v * (-1) * electricalPort_in.i;
+      P_load = eta_load * electricalPort_in.v * electricalPort_in.i;
       annotation(
         Icon(graphics = {Rectangle(origin = {0, -13}, fillPattern = FillPattern.Solid, extent = {{-20, 39}, {20, -39}}), Line(origin = {-31, 42}, points = {{-31, 16}, {31, 16}, {31, -14}, {31, -16}, {31, -16}}, thickness = 2.5), Line(origin = {0.5, -65}, points = {{-0.5, 13}, {-0.5, -13}, {-20.5, -13}, {19.5, -13}, {19.5, -13}}, thickness = 2.5), Text(origin = {0, -90}, extent = {{78, 7}, {-78, -7}}, textString = "%name")}));
     end ElectrialLoad;
@@ -9471,23 +9471,31 @@ User's Guides that can be accessed by the following links:
       parameter Modelica.Units.SI.Impedance X_d = 1.5 "Reactance of the machine";
       parameter Modelica.Units.SI.Torque M_break = 10000 "Breakdown torque of the machine (Kippmoment)";
       parameter Real cos_phi = 0.8 "power factor of the machine";
+      // Variables
       Modelica.Units.SI.Torque M;
       Modelica.Units.SI.Frequency n_s;
       //working frequency
       Modelica.Units.SI.Angle theta;
       //pole wheel angle
       Modelica.Units.SI.Voltage U_s, U_p;
-      Modelica.Units.SI.Power P, Q, S;
+      Modelica.Units.SI.Power P, Q, S_abs;
+      Complex S;
+      //Real star_config;
+      
     equation
       M = rotationalPort_in.M;
       n_s = f0 / p;
-      theta = -M / (2 * M_break / Modelica.Constants.pi);
+      -theta = M / (2 * M_break / Modelica.Constants.pi);
+      //star_config = 0.5 * abs(Modelica.Math.sin(3 * Modelica.Constants.pi * f0 * time)) + 0.5;
+      //U_s = sqrt(2) * U0 * star_config;
       U_s = U0;
-//U_s = sqrt(2) * U0 * Modelica.Math.sin(f0*time);
       M = 3 * U_p * U_s * Modelica.Math.sin(theta) / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
       P = -3 * U_s * U_p * Modelica.Math.sin(theta) / X_d;
       Q = -3 * U_s / X_d * (U_s - U_p * Modelica.Math.cos(theta));
-      S = -sqrt(P * P + Q * Q);
+    
+      S = P + Modelica.ComplexMath.j * Q;
+      S_abs = -sqrt(P * P + Q * Q);
+      
       electricalPort_out.v = U_s;
       electricalPort_out.i = P / U_s;
       annotation(
@@ -9514,21 +9522,24 @@ User's Guides that can be accessed by the following links:
       Modelica.Units.SI.Angle theta;
       //pole wheel angle
       Modelica.Units.SI.Voltage U_s, U_p;
-      Modelica.Units.SI.Power P, Q;
+      Modelica.Units.SI.Power P, Q, S_abs;
       Complex S;
-      Real phi, star_config;
+      //Real star_config;
+      
     equation
       M = rotationalPort_in.M;
       n_s = f0 / p;
       -theta = M / (2 * M_break / Modelica.Constants.pi);
-      star_config = 0.5 * abs(Modelica.Math.sin(3 * Modelica.Constants.pi * f0 * time)) + 0.5;
-      U_s = sqrt(2) * U0 * star_config;
-//U_s = U0;
+      //star_config = 0.5 * abs(Modelica.Math.sin(3 * Modelica.Constants.pi * f0 * time)) + 0.5;
+      //U_s = sqrt(2) * U0 * star_config;
+      U_s = U0;
       M = 3 * U_p * U_s * Modelica.Math.sin(theta) / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
       P = -3 * U_s * U_p * Modelica.Math.sin(theta) / X_d;
       Q = -3 * U_s / X_d * (U_s - U_p * Modelica.Math.cos(theta));
-      Modelica.Math.cos(phi) = cos_phi;
+    
       S = P + Modelica.ComplexMath.j * Q;
+      S_abs = -sqrt(P * P + Q * Q);
+      
       electricalPort_out.v = U_s;
       electricalPort_out.i = P / U_s;
       annotation(
