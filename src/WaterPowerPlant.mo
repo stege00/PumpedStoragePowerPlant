@@ -705,7 +705,7 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-51, 35}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
       WaterPowerPlant.Components.OpenTank Tank2 annotation(
         Placement(visible = true, transformation(origin = {50, -6}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
-      WaterPowerPlant.Components.Pipe pipe_connect(d = 5, hIN = 1000, hOUT = 0, ks = 0.025, l = 100) annotation(
+      WaterPowerPlant.Components.Pipe pipe_connect(d = 5, h_in = 1000, h_out = 0, ks = 0.025, l = 100) annotation(
         Placement(visible = true, transformation(origin = {-14, -24}, extent = {{-28, -28}, {28, 28}}, rotation = 0)));
     equation
       connect(Tank1.fluidPort, pipe_connect.fluidPort_in) annotation(
@@ -1183,7 +1183,8 @@ equation
         1/(lambda^0.25) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d);
       end if;
     // Calculation of Speed of the fluid
-      (-fluidPort_out.mflow/(roh*A)^2)/2 + (-fluidPort_out.p/roh) + g*h_out + ((lambda*l*(-fluidPort_out.mflow/roh*A)^2)/d*2) = (fluidPort_in.mflow/(roh*A)^2)/2 + (fluidPort_in.p/roh) + g*h_in;
+      (-fluidPort_out.mflow/(roh*A)^2)/2 + (-fluidPort_out.p/roh) + g*h_out + ((lambda*l*(-fluidPort_out.mflow/(roh*A))^2)/(d*2)) = (fluidPort_in.mflow/(roh*A)^2)/2 + (-fluidPort_in.p/roh) + g*h_in;
+      fluidPort_in.mflow+fluidPort_out.mflow=0;
       annotation(
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
         Diagram);
