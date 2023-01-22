@@ -391,7 +391,7 @@ package WaterPowerPlant
 
   package Interfaces
     connector RotationalPort
-      Modelica.Units.SI.Frequency omega;
+      Modelica.Units.SI.AngularVelocity omega;
       flow Modelica.Units.SI.Torque M;
       annotation(
         Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {255, 1, 5}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}));
@@ -727,15 +727,16 @@ package WaterPowerPlant
       // Constants
       constant Modelica.Units.SI.Density roh_fluid = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
+      constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
       // Variables
       Modelica.Units.SI.Power P_turbine;
       Modelica.Units.SI.Height fall_height_water;
       //virtual fall height of the water after losses
     equation
-      fall_height_water = fluidPort_in.p / (roh_fluid * g);
+      fall_height_water = (fluidPort_in.p-p0) / (roh_fluid * g);
       P_turbine = -eta_turbine * g * fall_height_water * fluidPort_in.mflow;
 // fluidPort_out
-      fluidPort_out.p = (1 - eta_turbine) * fluidPort_in.p;
+      fluidPort_out.p = (1 - eta_turbine) *(fluidPort_in.p-p0)+p0;
       fluidPort_out.mflow = -fluidPort_in.mflow;
       annotation(
         Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
@@ -756,15 +757,16 @@ package WaterPowerPlant
       // Constants
       constant Modelica.Units.SI.Density roh_fluid = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
+      constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
       // Variables
       Modelica.Units.SI.Power P_turbine;
       Modelica.Units.SI.Height fall_height_water;
       //virtual fall height of the water after losses
     equation
-      fall_height_water = fluidPort_in.p / (roh_fluid * g);
+      fall_height_water = (fluidPort_in.p-p0) / (roh_fluid * g);
       P_turbine = -eta_turbine * g * fall_height_water * fluidPort_in.mflow;
 // fluidPort_out
-      fluidPort_out.p = (1 - eta_turbine) * fluidPort_in.p;
+      fluidPort_out.p = (1 - eta_turbine) *(fluidPort_in.p-p0)+p0;
       fluidPort_out.mflow = -fluidPort_in.mflow;
 // rotationalPort_out
       rotationalPort_out.omega = 2 * Modelica.Constants.pi * f0;
@@ -800,7 +802,7 @@ package WaterPowerPlant
       Modelica.Units.SI.Force F_turbine;
       Modelica.Units.SI.Power P_turbine;
     equation
-      fall_height_water = abs(fluidPort_in.p / (roh_fluid * g));
+      fall_height_water = abs((fluidPort_in.p-p0) / (roh_fluid * g));
 // transform. E_kin = E_pot
       c_water = sqrt(2 * g * fall_height_water);
 // optimum speed for maximum Energy transfer. No Startup or Shutdown Simulation
@@ -809,9 +811,9 @@ package WaterPowerPlant
       P_turbine = F_turbine * v_turbine;
 // rotationalPort_out
       rotationalPort_out.M = -F_turbine * radius;
-      rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
+      - rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
 // fluidPort_out
-      fluidPort_out.p = 2 * p0;
+      fluidPort_out.p = p0;
       fluidPort_out.mflow = -fluidPort_in.mflow;
       annotation(
         Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
@@ -837,8 +839,8 @@ package WaterPowerPlant
       // Variables
       Modelica.Units.SI.Height fall_height_water;
       //virtual fall height of the water after losses
-      Modelica.Units.SI.Height fall_height_water_after;
-      //virtual fall height of the water after passing turbine
+      Modelica.Units.SI.Height fall_height_water_used;
+      //virtual fall height of the water "used" after passing turbine
       Modelica.Units.SI.SpecificEnergy a_u;
       Modelica.Units.SI.Velocity c_u1;
       //velocity of the water at the inner perimeter
@@ -846,17 +848,17 @@ package WaterPowerPlant
       //velocity of the turbine at the inner perimeter
       Modelica.Units.SI.Power P_turbine;
     equation
-      fall_height_water = fluidPort_in.p / (roh_fluid * g);
+      fall_height_water = (fluidPort_in.p-p0) / (roh_fluid * g);
       P_turbine = eta_turbine * g * fall_height_water * fluidPort_in.mflow;
-      fall_height_water_after = P_turbine / (fluidPort_in.mflow * g);
+      fall_height_water_used = P_turbine / (fluidPort_in.mflow * g);
       a_u = P_turbine / fluidPort_in.mflow;
       u1 = radius * 2 * Modelica.Constants.pi * n_turbine;
       c_u1 = a_u / u1;
 // rotationalPort_out
       rotationalPort_out.M = -fluidPort_in.mflow * c_u1 * radius;
-      rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
+      - rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
 // fluidPort_out
-      (fall_height_water - fall_height_water_after) * roh_fluid * g = fluidPort_out.p;
+      (fall_height_water - fall_height_water_used) * roh_fluid * g + p0 = fluidPort_out.p;
       fluidPort_out.mflow = -fluidPort_in.mflow;
       annotation(
         Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
@@ -875,8 +877,8 @@ package WaterPowerPlant
       // Variables
       Modelica.Units.SI.Power P_mech, P_el;
     equation
-      P_mech = rotationalPort_in.M * rotationalPort_in.omega;
-      P_el = P_mech * eta_gen;
+      P_mech = rotationalPort_in.M * rotationalPort_in.omega; // incoming power
+      P_el = - P_mech * eta_gen; // electr. power output
 // electricalPort_out
       electricalPort_out.i = P_el / v_net;
       electricalPort_out.v = v_net;
@@ -1113,10 +1115,11 @@ package WaterPowerPlant
       Modelica.Units.SI.Power P_sink;
       // Parameters
       parameter Modelica.Units.SI.Density roh = 1000;
-    
+      // Constants
+      constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
     equation
       P_sink = fluid_in.mflow/roh * fluid_in.p; // Hydraulic Power = 0, since p=0
-      fluid_in.p = 0; //Sink should absorb all inflow
+      fluid_in.p = p0; //Sink should absorb all inflow
       
       annotation(
         Icon(graphics = {Line(origin = {0.01, 42.15}, points = {{49.9925, 3.84543}, {25.9925, -4.15457}, {-0.0075231, 3.84543}, {-24.0075, -4.15457}, {-50.0075, 3.84543}, {-50.0075, 3.84543}}, color = {0, 170, 255}, thickness = 1.5, smooth = Smooth.Bezier), Line(origin = {40.19, 0.19}, points = {{19.8066, 59.8066}, {-20.1934, -0.193375}, {-20.1934, -60.1934}}, thickness = 1.5), Line(origin = {-40.19, 0.19}, points = {{-19.8066, 59.8066}, {20.1934, -0.193375}, {20.1934, -60.1934}}, thickness = 1.5), Rectangle(fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-5, 20}, {5, -20}}), Polygon(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-10, 10}, {10, 10}, {0, -10}, {-10, 10}}), Text(origin = {0, -78}, extent = {{20, -24}, {-20, 24}}, textString = "%name")}),
