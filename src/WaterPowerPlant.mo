@@ -651,6 +651,43 @@ package WaterPowerPlant
         Line(points = {{56, 20}, {56, 30}, {-58, 30}, {-58, 40}}));
     end Example_Kavernenkraftwerk_Saeckingen;
     
+    model test_tank_turbine_pipe
+      WaterPowerPlant.Components.OpenTank openTank1(A = 1000, altitude = 100, levelInitial = 100) annotation(
+        Placement(visible = true, transformation(origin = {-61, 59}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
+      WaterPowerPlant.Components.OpenTank openTank2(levelInitial = 0) annotation(
+        Placement(visible = true, transformation(origin = {72, 16}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+      WaterPowerPlant.Components.Turbine_basic turbine_basic annotation(
+        Placement(visible = true, transformation(origin = {-8, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+ Components.Pipe pipe_tank(ks = 0.025)  annotation(
+        Placement(visible = true, transformation(origin = {-36, 20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+ Components.Pipe pipe_turbine(ks = 0.025)  annotation(
+        Placement(visible = true, transformation(origin = {28, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+    equation
+      connect(pipe_tank.fluidPort_in, openTank1.fluidPort) annotation(
+        Line(points = {{-44, 20}, {-62, 20}, {-62, 46}}));
+ connect(pipe_tank.fluidPort_out, turbine_basic.fluidPort_in) annotation(
+        Line(points = {{-28, 20}, {-16, 20}, {-16, 6}}));
+ connect(pipe_turbine.fluidPort_in, turbine_basic.fluidPort_out) annotation(
+        Line(points = {{20, -10}, {0, -10}, {0, -6}}));
+ connect(pipe_turbine.fluidPort_out, openTank2.fluidPort) annotation(
+        Line(points = {{36, -10}, {72, -10}, {72, 9}}));
+    protected
+    end test_tank_turbine_pipe;
+    
+    model two_tanks_pipe
+      WaterPowerPlant.Components.OpenTank Tank1(altitude = 1000) annotation(
+        Placement(visible = true, transformation(origin = {-51, 35}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
+      WaterPowerPlant.Components.OpenTank Tank2 annotation(
+        Placement(visible = true, transformation(origin = {50, -6}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
+ WaterPowerPlant.Components.Pipe pipe_connect(d = 5, hIN = 1000, hOUT = 0, ks = 0.025, l = 100)  annotation(
+        Placement(visible = true, transformation(origin = {-14, -24}, extent = {{-28, -28}, {28, 28}}, rotation = 0)));
+    equation
+ connect(Tank1.fluidPort, pipe_connect.fluidPort_in) annotation(
+        Line(points = {{-52, 14}, {-36, 14}, {-36, -24}}));
+ connect(Tank2.fluidPort, pipe_connect.fluidPort_out) annotation(
+        Line(points = {{50, -26}, {8, -26}, {8, -24}}));
+    end two_tanks_pipe;
+    
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
@@ -1041,46 +1078,61 @@ package WaterPowerPlant
     end Generator_dc;
 
     model Pipe
-    //  Ports
+      //  Ports
       WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
-        Placement(visible = true, transformation(origin = {-98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-82, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
       WaterPowerPlant.Interfaces.FluidPort fluidPort_out annotation(
-        Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
-        //  Parameters
-      parameter Modelica.Units.SI.Diameter d = 10 "Diameter of the Pipe [m]";
-      parameter Modelica.Units.SI.Length l = 10 "Length of the Pipe [m]";
-      parameter Modelica.Units.SI.Density roh = 997 "Density of the Fluid [kg/m^3]";
-      parameter Modelica.Units.SI.KinematicViscosity vis = 1.0087 "Kinematic Viscosity [m^2/s]";
+        Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {82, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
+      
+      //  Parameters
+      parameter Modelica.Units.SI.Diameter d = 5 "Diameter of the Pipe [m]";
+      parameter Modelica.Units.SI.Length l = 100 "Length of the Pipe [m]";
+      parameter Modelica.Units.SI.Height h_in = 800 "Height of the input/beginning of the Pipe [m]";
+      parameter Modelica.Units.SI.Height h_out = 100 "Height of the output/ending of the Pipe [m]";
+      parameter Real ks = 0.025 "Roguhness of the steel pipe (new k=0.025mm, mortar lined, average finish k=0.1mm, heavy rust k=1mm) [mm]";
+    
       //  Constants
-      constant Real pi = 2 * Modelica.Math.asin(1.0);
+      constant Modelica.Units.SI.Acceleration g = 9.83 "Acceleration of earth [m/s^2]";
+      constant Modelica.Units.SI.Density roh = 1000 "Density of the Fluid [kg/m^3]";
+      constant Modelica.Units.SI.KinematicViscosity vis = 1.0087 "Kinematic Viscosity [m^2/s]";
+      
       //  Variables
       Modelica.Units.SI.Area A;
       Real lambda;
-      Real pLoss;
-      Real v,Re;
+      Real Re;
      
     equation
-// Calculation of Area of the pipe
-      A = (d / 2) ^ 2 * pi;
-// Calculation of Speed of the fluid
-      v = fluidport_in.mflow / (roh * A);
-// Calculation of Reynolds-Number of the fluid
-      Re = roh * v * l / vis;
-// Laminar Flow ->Hagen-Poiseuille Calculation
-      if Re < 2300 then
+    
+      // Calculation of Area of the pipe
+      A = (d / 2) ^ 2 * Modelica.Constants.pi;
+      
+      // Calculation of Reynolds Number
+      Re = (((fluidPort_in.mflow / roh * A) ^ 2) * d) / vis;
+      
+      lambda = 0;
+      // Hagen - Poiseuille (laminar flow)
+      if Re <= 2000 and not Re >= 0 then
         lambda = 64 / Re;
-// Turbolent Flow ->Blasius Calculation
-      elseif Re < 10 ^ 5 and Re > 2300 then
-        lambda = 0.3164 / Re ^ 0.25;
+      
+      // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
+      elseif Re > 2000 and Re < 4000 and not Re >= 0 then
+        1 / (lambda ^ 0.25) = 1.74 - 2 * Modelica.Math.log((2 * (ks / 1000) / d) + (18.7 / Re * (lambda ^ 0.25)));
+        
+      // v. Karman (turbolent flow, ks/d must be really high)
+      elseif Re >= 4000 and not Re >= 0 then
+        1 / (lambda ^ 0.25) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+        
       end if;
-// Calculation of Pressure Loss
-      pLoss = lambda * (8 * roh * l / pi ^ 2) * ((fluidport_in.mflow / roh) ^ 2 / d ^ 4);
-// Ouput of Resulting Massflow
-      fluidport_out.mflow = fluidport_in.mflow annotation(
-        Icon(graphics = {Rectangle(origin = {0, 17}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Rectangle(fillColor = {85, 170, 255}, fillPattern = FillPattern.Forward, extent = {{-100, 14}, {100, -14}}), Rectangle(origin = {0, -17}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}})}));
+      
+      // Calculation of Speed of the fluid
+      (fluidPort_out.mflow / (roh * A) ^ 2) / 2 + (fluidPort_out.p / roh) + g * h_out 
+      + ((lambda * l * (fluidPort_out.mflow / roh * A) ^ 2) / d * 2) = 
+      (fluidPort_in.mflow / (roh * A) ^ 2) / 2 + (fluidPort_in.p / roh) + g * h_in;
+    
+    
     annotation(
-        Diagram,
-        Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, extent = {{-100, 20}, {100, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-100, 3}, {100, -3}}), Text(origin = {0, -46},extent = {{24, 13}, {-24, -13}}, textString = "%name")}));end Pipe;
+        Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
+        Diagram);end Pipe;
 
     model Environment
       //Connestors
