@@ -528,36 +528,39 @@ package WaterPowerPlant
         Line(points = {{32, 10}, {62, 10}, {62, 8}}));
     end Test_Generator_synchron;
 
-    model Test_Generator_synchron_complex3Phases
+    model Test_Generator_synchron_3Phases
       WaterPowerPlant.Components.OpenTank openTank(A = 1000, Nozzle = 1, altitude = 100, levelInitial = 100) annotation(
-        Placement(visible = true, transformation(origin = {-57, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-75, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
       WaterPowerPlant.Components.OpenTank openTank1(A = 100000, Nozzle = 10, level(start = 0), levelInitial = 0) annotation(
-        Placement(visible = true, transformation(origin = {-13, -43}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-31, -43}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
       WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
         Placement(visible = true, transformation(origin = {61, -69}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
       WaterPowerPlant.Components.Turbine_advanced1 turbine_advanced1 annotation(
-        Placement(visible = true, transformation(origin = {-29, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.Generator_Synchron_complex3Phases generator_Synchron_complex3Phases(U0(displayUnit = "kV") = 235000)  annotation(
-        Placement(visible = true, transformation(origin = {28, 2.66454e-15}, extent = {{-34, -34}, {34, 34}}, rotation = 0)));
+        Placement(visible = true, transformation(origin = {-47, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
       WaterPowerPlant.Components.ElectrialLoad electrialLoad1 annotation(
         Placement(visible = true, transformation(origin = {73, -59}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
       WaterPowerPlant.Components.ElectrialLoad electrialLoad11 annotation(
         Placement(visible = true, transformation(origin = {85, -49}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
+  WaterPowerPlant.Components.Generator_Synchron_3Phases generator_Synchron_3Phases annotation(
+        Placement(visible = true, transformation(origin = {23, 19}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
     equation
       connect(openTank.fluidPort, turbine_advanced1.fluidPort_in) annotation(
-        Line(points = {{-58, 54}, {-44, 54}, {-44, 18}}));
+        Line(points = {{-75.23, 53.13}, {-61.23, 53.13}, {-61.23, 17.13}}));
       connect(turbine_advanced1.fluidPort_out, openTank1.fluidPort) annotation(
-        Line(points = {{-14, -4}, {-13, -4}, {-13, -55}}));
-      connect(electrialLoad.electricalPort_in, generator_Synchron_complex3Phases.electricalPort_out3) annotation(
-        Line(points = {{46, -54}, {42, -54}, {42, -24}, {60, -24}, {60, 0}, {47, 0}}));
-      connect(generator_Synchron_complex3Phases.rotationalPort_in, turbine_advanced1.rotationalPort_out) annotation(
-        Line(points = {{0, 6}, {-12, 6}, {-12, 8}}));
-      connect(generator_Synchron_complex3Phases.electricalPort_out2, electrialLoad1.electricalPort_in) annotation(
-        Line(points = {{48, 6}, {64, 6}, {64, -28}, {52, -28}, {52, -44}, {58, -44}}));
-      connect(generator_Synchron_complex3Phases.electricalPort_out1, electrialLoad11.electricalPort_in) annotation(
-        Line(points = {{48, 10}, {68, 10}, {68, -32}, {64, -32}, {64, -34.5}, {69, -34.5}}));
-    end Test_Generator_synchron_complex3Phases;
-
+        Line(points = {{-31.99, -4.97}, {-30.99, -4.97}, {-30.99, -55.97}}));
+  connect(turbine_advanced1.rotationalPort_out, generator_Synchron_3Phases.rotationalPort_in) annotation(
+        Line(points = {{-30, 8}, {0, 8}, {0, 24}}));
+  connect(generator_Synchron_3Phases.electricalPort_out3, electrialLoad.electricalPort_in) annotation(
+        Line(points = {{40, 18}, {46, 18}, {46, -54}}));
+  connect(generator_Synchron_3Phases.electricalPort_out2, electrialLoad1.electricalPort_in) annotation(
+        Line(points = {{40, 24}, {58, 24}, {58, -44}}));
+  connect(generator_Synchron_3Phases.electricalPort_out1, electrialLoad11.electricalPort_in) annotation(
+        Line(points = {{40, 28}, {70, 28}, {70, -34}}));
+    protected
+      annotation(
+        Diagram);
+    end Test_Generator_synchron_3Phases;
+  
     model Test_Environment
     WaterPowerPlant.Components.OpenTank Tank1(Nozzle = 1)  annotation(
         Placement(visible = true, transformation(origin = {56, 46}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
@@ -581,7 +584,7 @@ package WaterPowerPlant
       connect(TankSimple.fluidPort, sink.fluid_in) annotation(
         Line(points = {{-52, 44}, {51, 44}, {51, 7}}));
     end Test_Sink;
-	
+ 
     model Example_Kavernenkraftwerk_Saeckingen
     WaterPowerPlant.Components.OpenTank Eggbergbecken(A = 120000, Nozzle = 14.522, altitude = 400, levelInitial = 17.5)  annotation(
         Placement(visible = true, transformation(origin = {-58, 84}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
@@ -648,37 +651,6 @@ package WaterPowerPlant
         Line(points = {{56, 20}, {56, 30}, {-58, 30}, {-58, 40}}));
     end Example_Kavernenkraftwerk_Saeckingen;
     
-    model Test_Generator_synchron_3Phases
-      WaterPowerPlant.Components.OpenTank openTank(A = 1000, Nozzle = 1, altitude = 100, levelInitial = 100) annotation(
-        Placement(visible = true, transformation(origin = {-75, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
-      WaterPowerPlant.Components.OpenTank openTank1(A = 100000, Nozzle = 10, level(start = 0), levelInitial = 0) annotation(
-        Placement(visible = true, transformation(origin = {-31, -43}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
-        Placement(visible = true, transformation(origin = {61, -69}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
-      WaterPowerPlant.Components.Turbine_advanced1 turbine_advanced1 annotation(
-        Placement(visible = true, transformation(origin = {-47, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad1 annotation(
-        Placement(visible = true, transformation(origin = {73, -59}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad11 annotation(
-        Placement(visible = true, transformation(origin = {85, -49}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
-  WaterPowerPlant.Components.Generator_Synchron_3Phases generator_Synchron_3Phases annotation(
-        Placement(visible = true, transformation(origin = {23, 19}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
-    equation
-      connect(openTank.fluidPort, turbine_advanced1.fluidPort_in) annotation(
-        Line(points = {{-75.23, 53.13}, {-61.23, 53.13}, {-61.23, 17.13}}));
-      connect(turbine_advanced1.fluidPort_out, openTank1.fluidPort) annotation(
-        Line(points = {{-31.99, -4.97}, {-30.99, -4.97}, {-30.99, -55.97}}));
-  connect(turbine_advanced1.rotationalPort_out, generator_Synchron_3Phases.rotationalPort_in) annotation(
-        Line(points = {{-30, 8}, {0, 8}, {0, 24}}));
-  connect(generator_Synchron_3Phases.electricalPort_out3, electrialLoad.electricalPort_in) annotation(
-        Line(points = {{40, 18}, {46, 18}, {46, -54}}));
-  connect(generator_Synchron_3Phases.electricalPort_out2, electrialLoad1.electricalPort_in) annotation(
-        Line(points = {{40, 24}, {58, 24}, {58, -44}}));
-  connect(generator_Synchron_3Phases.electricalPort_out1, electrialLoad11.electricalPort_in) annotation(
-        Line(points = {{40, 28}, {70, 28}, {70, -34}}));
-    protected
-      annotation(
-        Diagram);end Test_Generator_synchron_3Phases;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
   end Examples;
@@ -984,6 +956,7 @@ package WaterPowerPlant
       parameter Modelica.Units.SI.Frequency f0 = 50 "Frequency of power grid";
       parameter Modelica.Units.SI.Voltage U0 = 230 "Voltage of power grid";
       parameter Modelica.Units.SI.Impedance X_d = 1.5 "Reactance of the machine";
+      parameter Modelica.Units.SI.Resistance R_e = 0.8 "Resistance of excitation winding";
       parameter Real cos_phi = 0.8 "power factor of the machine";
       parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi / 4;//pole wheel angle for desired working mode of machine
       // Variables
@@ -1015,9 +988,9 @@ package WaterPowerPlant
       U_str_2 = sqrt(2) * U0 * Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time+2*Modelica.Constants.pi/3));
       U_str_3 = sqrt(2) * U0 * Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time+4*Modelica.Constants.pi/3));
       
-      I_str_1 = U_p_1 * Modelica.Math.sin(theta) / (X_d * cos_phi);
-      I_str_2 = U_p_2 * Modelica.Math.sin(theta) / (X_d * cos_phi);
-      I_str_3 = U_p_3 * Modelica.Math.sin(theta) / (X_d * cos_phi);
+      I_str_1 = U_p_1 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
+      I_str_2 = U_p_2 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
+      I_str_3 = U_p_3 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
       
       S_str_1 = -U0 * sqrt(I_str_1.re^2 + I_str_1.im^2);
       P_str_1 = S_str_1*cos_phi;
