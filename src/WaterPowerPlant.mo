@@ -1157,7 +1157,7 @@ equation
       parameter Modelica.Units.SI.Length l = 100 "Length of the Pipe [m]";
       parameter Modelica.Units.SI.Height h_in = 800 "Height of the input/beginning of the Pipe [m]";
       parameter Modelica.Units.SI.Height h_out = 100 "Height of the output/ending of the Pipe [m]";
-      parameter Real ks = 0.025 "Roguhness of the steel pipe (new k=0.025mm, mortar lined, average finish k=0.1mm, heavy rust k=1mm) [mm]";
+      parameter Real ks = 0.025 "Roughness of the steel pipe (new k=0.025mm, mortar lined, average finish k=0.1mm, heavy rust k=1mm) [mm]";
       //  Constants
       constant Modelica.Units.SI.Acceleration g = 9.83 "Acceleration of earth [m/s^2]";
       constant Modelica.Units.SI.Density roh = 1000 "Density of the Fluid [kg/m^3]";
@@ -1173,18 +1173,18 @@ equation
       Re = (((fluidPort_in.mflow/roh*A)^2)*d)/vis;
       lambda = 0;
     // Hagen - Poiseuille (laminar flow)
-      if Re <= 2000 and not Re >= 0 then
+      if Re <= 2000 then
         lambda = 64/Re;
     // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
-      elseif Re > 2000 and Re < 4000 and not Re >= 0 then
+      elseif Re > 2000 and Re <= 4000 then
         1/(lambda^0.25) = 1.74 - 2*Modelica.Math.log((2*(ks/1000)/d) + (18.7/Re*(lambda^0.25)));
     // v. Karman (turbolent flow, ks/d must be really high)
       elseif Re >= 4000 and not Re >= 0 then
         1/(lambda^0.25) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d);
       end if;
-    // Calculation of Speed of the fluid
-      (-fluidPort_out.mflow/(roh*A)^2)/2 + (-fluidPort_out.p/roh) + g*h_out + ((lambda*l*(-fluidPort_out.mflow/(roh*A))^2)/(d*2)) = (fluidPort_in.mflow/(roh*A)^2)/2 + (-fluidPort_in.p/roh) + g*h_in;
-      fluidPort_in.mflow+fluidPort_out.mflow=0;
+    // Bernoulli Calculation with Friction
+      (fluidPort_out.mflow/(roh*A)^2)/2 + ((fluidPort_out.p * (10 ^ 5))/roh) + g * h_out + ((lambda*l*(fluidPort_out.mflow/(roh*A))^2)/(d*2)) = (fluidPort_in.mflow/(roh*A)^2)/2 + ((fluidPort_in.p * (10 ^ 5))/roh) + g*h_in;
+      fluidPort_in.mflow + fluidPort_out.mflow=0;
       annotation(
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
         Diagram);
