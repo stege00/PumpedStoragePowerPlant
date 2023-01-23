@@ -22,6 +22,9 @@ package WaterPowerPlant
   <tr><td style=\"text-align: center;\">Generators</td>
   <td><ul><li>Basic Generator</li><li>Synchron Generator</li><li>Synchron Generator (3 Phases)</li><li>DC Generator</li></ul></td>
   </tr>
+  <tr><td style=\"text-align: center;\">Miscellaneous</td>
+  <td><ul><li>ElectricalLoad</li><li>Pipe</li><li>Pipe_with_lambda</li><li>Environment</li></ul></td>
+  </tr>
   
   </tbody></table>
   
@@ -127,24 +130,28 @@ package WaterPowerPlant
       Modelica.Units.SI.AngularVelocity omega;
       flow Modelica.Units.SI.Torque M;
       annotation(
-        Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {255, 1, 5}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}));
+        Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {255, 1, 5}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}),
+        Documentation(info = "<html><head></head><body>A simple port for connecting components.<div><br></div><div><ul><li>Effort Variable: Angular Velocity</li><li>Flow Variable: Torque</li></ul></div></body></html>"));
     end RotationalPort;
 
     connector ElectricalPort
       Modelica.Units.SI.Voltage v;
       flow Modelica.Units.SI.Current i;
       annotation(
-        Icon(graphics = {Ellipse(fillColor = {255, 255, 0}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}));
+        Icon(graphics = {Ellipse(fillColor = {255, 255, 0}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -20}})}),
+        Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">A simple port for connecting components.</span><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><br></div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><ul><li>Effort Variable: Voltage</li><li>Flow Variable: Current</li></ul></div></body></html>"));
     end ElectricalPort;
 
     connector FluidPort
       Modelica.Units.SI.Pressure p;
       flow Modelica.Units.SI.MassFlowRate mflow;
       annotation(
-        Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}));
+        Icon(graphics = {Ellipse(origin = {0, -0.5}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-20, 20}, {20, -19}})}),
+        Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">A simple port for connecting components.</span><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><br></div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><ul><li>Effort Variable: Pressure</li><li>Flow Variable: Mass flow rate</li></ul></div></body></html>"));
     end FluidPort;
     annotation(
-      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {20, 0}, lineColor = {64, 64, 64}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-10, 70}, {10, 70}, {40, 20}, {80, 20}, {80, -20}, {40, -20}, {10, -70}, {-10, -70}, {-10, 70}}), Polygon(fillColor = {102, 102, 102}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-100, 20}, {-60, 20}, {-30, 70}, {-10, 70}, {-10, -70}, {-30, -70}, {-60, -20}, {-100, -20}, {-100, 20}})}));
+      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {20, 0}, lineColor = {64, 64, 64}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-10, 70}, {10, 70}, {40, 20}, {80, 20}, {80, -20}, {40, -20}, {10, -70}, {-10, -70}, {-10, 70}}), Polygon(fillColor = {102, 102, 102}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-100, 20}, {-60, 20}, {-30, 70}, {-10, 70}, {-10, -70}, {-30, -70}, {-60, -20}, {-100, -20}, {-100, 20}})}),
+      Documentation(info = "<html><head></head><body>Collection of Ports/Interfaces</body></html>"));
   end Interfaces;
 
   package Examples
@@ -153,34 +160,34 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-61, 43}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
       WaterPowerPlant.Components.Tanks.OpenTank Tank2(altitude = 300, levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {68, 8}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
-  WaterPowerPlant.Components.Pipe pipe(h_in = 700, h_out = 300)  annotation(
+      WaterPowerPlant.Components.Pipe pipe(h_in = 700, h_out = 300) annotation(
         Placement(visible = true, transformation(origin = {-2, -20}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
     equation
       connect(pipe.fluidPort_in, Tank1.fluidPort) annotation(
         Line(points = {{-20, -20}, {-62, -20}, {-62, 28}}));
-  connect(pipe.fluidPort_out, Tank2.fluidPort) annotation(
+      connect(pipe.fluidPort_out, Tank2.fluidPort) annotation(
         Line(points = {{16, -20}, {68, -20}, {68, -8}}));
     protected
-  annotation(
+      annotation(
         Icon(graphics = {Polygon(lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}}), Ellipse(extent = {{-100, 100}, {100, -100}})}),
         Documentation(info = "<html><head></head><body>A simple example, showing the influence of different altitudes on the resulting water levels.<div>For equal altitudes of the tanks, the water level balances out.</div></body></html>"));
     end TwoTankSysten;
 
     model Environment
-    WaterPowerPlant.Components.Tanks.OpenTank upperTank(A = 100, altitude = 800)  annotation(
+      WaterPowerPlant.Components.Tanks.OpenTank upperTank(A = 100, altitude = 800) annotation(
         Placement(visible = true, transformation(origin = {-32, 14}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
-  WaterPowerPlant.Components.Tanks.OpenTank lowerTank(A = 100, altitude = 100, levelInitial = 0)  annotation(
+      WaterPowerPlant.Components.Tanks.OpenTank lowerTank(A = 100, altitude = 100, levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {67, -19}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-  WaterPowerPlant.Components.Environment environment(area = 100, inlet = 20, rain = 0)  annotation(
+      WaterPowerPlant.Components.Environment environment(area = 100, inlet = 20, rain = 0) annotation(
         Placement(visible = true, transformation(origin = {-69, 71}, extent = {{-21, -21}, {21, 21}}, rotation = 0)));
-  WaterPowerPlant.Components.Pipe pipe annotation(
+      WaterPowerPlant.Components.Pipe pipe annotation(
         Placement(visible = true, transformation(origin = {14, -48}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
     equation
       connect(upperTank.fluidPort, environment.fluidPort) annotation(
         Line(points = {{-32, -4}, {-68, -4}, {-68, 54}}));
-  connect(pipe.fluidPort_out, lowerTank.fluidPort) annotation(
+      connect(pipe.fluidPort_out, lowerTank.fluidPort) annotation(
         Line(points = {{32, -48}, {66, -48}, {66, -32}}));
-  connect(pipe.fluidPort_in, upperTank.fluidPort) annotation(
+      connect(pipe.fluidPort_in, upperTank.fluidPort) annotation(
         Line(points = {{-4, -48}, {-32, -48}, {-32, -4}}));
       annotation(
         Icon(graphics = {Ellipse(extent = {{-100, 100}, {100, -100}}), Polygon(lineColor = {0, 0, 255}, fillColor = {0, 0, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}})}),
@@ -262,7 +269,7 @@ package WaterPowerPlant
       annotation(
         Diagram,
         Icon(graphics = {Polygon(lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}}), Ellipse(extent = {{-100, 100}, {100, -100}})}),
-  Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">An example with complete chain of effects. Needed to test the 3 Phases Synchron Machine.</span></body></html>"));
+        Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">An example with complete chain of effects. Needed to test the 3 Phases Synchron Machine.</span></body></html>"));
     end Generator_synchron_3Phases;
 
     model Example_Kavernenkraftwerk_Saeckingen
@@ -286,17 +293,17 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {81, -75}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
       WaterPowerPlant.Components.Turbines.Turbine_Francis turbine_Francis2(n_turbine = 10, radius = 1.072) annotation(
         Placement(visible = true, transformation(origin = {-36, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
-  WaterPowerPlant.Components.ElectrialLoad Load1 annotation(
+      WaterPowerPlant.Components.ElectrialLoad Load1 annotation(
         Placement(visible = true, transformation(origin = {-92, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-  WaterPowerPlant.Components.ElectrialLoad Load2 annotation(
+      WaterPowerPlant.Components.ElectrialLoad Load2 annotation(
         Placement(visible = true, transformation(origin = {-50, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-  WaterPowerPlant.Components.ElectrialLoad Load3 annotation(
+      WaterPowerPlant.Components.ElectrialLoad Load3 annotation(
         Placement(visible = true, transformation(origin = {-12, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-  WaterPowerPlant.Components.ElectrialLoad Load4 annotation(
+      WaterPowerPlant.Components.ElectrialLoad Load4 annotation(
         Placement(visible = true, transformation(origin = {26, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-  Components.Pipe pipe2(d = 5.5, h_in = 300, h_out = 300, l = 2000) annotation(
+      Components.Pipe pipe2(d = 5.5, h_in = 300, h_out = 300, l = 2000) annotation(
         Placement(visible = true, transformation(origin = {81, -47}, extent = {{-15, -15}, {15, 15}}, rotation = -90)));
-  Components.Pipe pipe1(d = 4.3, h_in = 700, h_out = 300, l = 400) annotation(
+      Components.Pipe pipe1(d = 4.3, h_in = 700, h_out = 300, l = 400) annotation(
         Placement(visible = true, transformation(origin = {-58, 50}, extent = {{-12, -12}, {12, 12}}, rotation = -90)));
     equation
       connect(turbine_Francis4.rotationalPort_out, generator_Synchron4.rotationalPort_in) annotation(
@@ -353,31 +360,32 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {76, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       WaterPowerPlant.Components.Tanks.OpenTank lower_reservoir(A = 1000000000, Nozzle = 23.758, altitude = 300, levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {54, -46}, extent = {{-12, -12}, {12, 12}}, rotation = 0)));
-  Components.Pipe pipe1(h_in = 700, h_out = 300)  annotation(
+      Components.Pipe pipe1(h_in = 700, h_out = 300) annotation(
         Placement(visible = true, transformation(origin = {-44, 24}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  Components.Pipe pipe2(h_in = 300, h_out = 300)  annotation(
+      Components.Pipe pipe2(h_in = 300, h_out = 300) annotation(
         Placement(visible = true, transformation(origin = {12, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
     equation
-  connect(generator_Synchron.rotationalPort_in, turbine_Francis.rotationalPort_out) annotation(
+      connect(generator_Synchron.rotationalPort_in, turbine_Francis.rotationalPort_out) annotation(
         Line(points = {{28, 8}, {12.5, 8}, {12.5, 4}, {1, 4}}));
-  connect(electrialLoad.electricalPort_in, generator_Synchron.electricalPort_out) annotation(
+      connect(electrialLoad.electricalPort_in, generator_Synchron.electricalPort_out) annotation(
         Line(points = {{70, -14}, {52, -14}, {52, 8}}));
-  connect(upper_reservoir.fluidPort, environment.fluidPort) annotation(
+      connect(upper_reservoir.fluidPort, environment.fluidPort) annotation(
         Line(points = {{-64, 38}, {-64, 28}, {-80, 28}, {-80, 58}}));
-  connect(pipe1.fluidPort_in, upper_reservoir.fluidPort) annotation(
+      connect(pipe1.fluidPort_in, upper_reservoir.fluidPort) annotation(
         Line(points = {{-52, 24}, {-64, 24}, {-64, 38}}));
-  connect(pipe1.fluidPort_out, turbine_Francis.fluidPort_in) annotation(
+      connect(pipe1.fluidPort_out, turbine_Francis.fluidPort_in) annotation(
         Line(points = {{-34, 24}, {-34, 16.5}, {-26, 16.5}, {-26, 13}}));
-  connect(lower_reservoir.fluidPort, pipe2.fluidPort_out) annotation(
+      connect(lower_reservoir.fluidPort, pipe2.fluidPort_out) annotation(
         Line(points = {{54, -54}, {34, -54}, {34, -20}, {22, -20}}));
-  connect(pipe2.fluidPort_in, turbine_Francis.fluidPort_out) annotation(
+      connect(pipe2.fluidPort_in, turbine_Francis.fluidPort_out) annotation(
         Line(points = {{4, -20}, {-1, -20}, {-1, -4}}));
       annotation(
         Icon(graphics = {Polygon(lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}}), Ellipse(extent = {{-100, 100}, {100, -100}})}),
         Documentation(info = "<html><head></head><body>Reduced version of the digital twin of the powerplant säckingen. Parameters have been choosen to resemble the powerplant as closely as possible.<div><br></div><div>Technical reference data can be found&nbsp;<a href=\"https://www.schluchseewerk.de/wp-content/uploads/2020/06/zm_technische-daten_saeckingen.pdf\">here</a>.</div></body></html>"));
     end Example_KraftwerkSaeckingen_simple;
     annotation(
-      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
+      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}),
+      Documentation(info = "<html><head></head><body>A collection of examples to illustrate the usage of this modelica library.&nbsp;<div><br></div></body></html>"));
   end Examples;
 
   package Components
@@ -394,8 +402,8 @@ package WaterPowerPlant
         //Constants
         constant Modelica.Units.SI.Density roh = 1000;
         constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
-        constant Real k = -0.1282 / 1000;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
+        constant Real k = -0.1282/1000;
         //constant value: -1/7.8km (Scale height)
         //Variables
         Modelica.Units.SI.Area Nozzle_Area;
@@ -407,24 +415,24 @@ package WaterPowerPlant
         Modelica.Units.SI.Pressure relPressure;
         //Pressure considering altitutde
       equation
-        Nozzle_Area = (Nozzle / 2) ^ 2 * Modelica.Constants.pi;
-//Calculation of Nozzle Area
-        relPressure = p0 * exp(-k * (level + altitude));
-//Atmospheric pressure
-        g * level = fluidPort.p / roh - relPressure / roh - v * abs(v) * 0.5;
-        v = fluidPort.mflow / (Nozzle_Area * roh);
-        der(level) = v * Nozzle_Area / A;
+        Nozzle_Area = (Nozzle/2)^2*Modelica.Constants.pi;
+  //Calculation of Nozzle Area
+        relPressure = p0*exp(-k*(level + altitude));
+  //Atmospheric pressure
+        g*level = fluidPort.p/roh - relPressure/roh - v*abs(v)*0.5;
+        v = fluidPort.mflow/(Nozzle_Area*roh);
+        der(level) = v*Nozzle_Area/A;
         annotation(
           Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{45, 25}, {-45, -25}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body>Tank model taking into account the atomspheric pressure and altitude of the tank.<div>Only assumption is a isothermic atmosphere.</div><div><br></div><div>Outflow and water pressure are calculated with the Bernoulli equation.</div><div>While the additional atmospheric pressure caused by the altitude is calculated with the barometric formula for an isothermic atmosphere. Using a constant <i>k</i>&nbsp; dependent on the scale height to replace&nbsp;the negelcted thermic differences in different altitudes.</div></body></html>"));
       end OpenTank;
-
+  
       model OpenTankSimple
         /* 
-                      This is a simplified version of the OpenTank Model.
-                      Not taking in account the atmospheric pressure
-                      therefore neglecting the possibility of differnt height levels of tanks.
-                      */
+                              This is a simplified version of the OpenTank Model.
+                              Not taking in account the atmospheric pressure
+                              therefore neglecting the possibility of differnt height levels of tanks.
+                              */
         //Connectors
         WaterPowerPlant.Interfaces.FluidPort fluidPort annotation(
           Placement(visible = true, transformation(origin = {0, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-1, -69}, extent = {{-55, -55}, {55, 55}}, rotation = 0)));
@@ -443,18 +451,18 @@ package WaterPowerPlant
         Modelica.Units.SI.Height level(start = levelInitial);
         //Water level
       equation
-        Nozzle_Area = (Nozzle / 2) ^ 2 * Modelica.Constants.pi;
-//Calculation of Nozzle Area
-        g * level = fluidPort.p / roh - v * abs(v) * 0.5;
-        v = fluidPort.mflow / (Nozzle * roh);
-        der(level) = v * Nozzle / A;
+        Nozzle_Area = (Nozzle/2)^2*Modelica.Constants.pi;
+  //Calculation of Nozzle Area
+        g*level = fluidPort.p/roh - v*abs(v)*0.5;
+        v = fluidPort.mflow/(Nozzle*roh);
+        der(level) = v*Nozzle/A;
         annotation(
           Icon(graphics = {Line(origin = {-74, 30}, points = {{0, 0}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2), Text(extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body>This is a simplifierd version of
     <a href=\"modelica://WaterPowerPlant.Components.OpenTank\">WaterPowerPlant.Components.OpenTank</a>
     <div>Without taking the atmospheric pressure into account. Therefore neglecting the possibility of different altitudes of tanks.</div></body></html>"));
       end OpenTankSimple;
-
+  
       model Sink
         // Connectors
         WaterPowerPlant.Interfaces.FluidPort fluid_in annotation(
@@ -464,21 +472,22 @@ package WaterPowerPlant
         // Parameters
         parameter Modelica.Units.SI.Density roh = 1000;
         // Constants
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
       equation
-        P_sink = fluid_in.mflow / roh * fluid_in.p;
-// Hydraulic Power = 0, since p=0
+        P_sink = fluid_in.mflow/roh*fluid_in.p;
+  // Hydraulic Power = 0, since p=0
         fluid_in.p = p0;
-//Sink should absorb all inflow
+  //Sink should absorb all inflow
         annotation(
           Icon(graphics = {Line(origin = {0.01, 42.15}, points = {{49.9925, 3.84543}, {25.9925, -4.15457}, {-0.0075231, 3.84543}, {-24.0075, -4.15457}, {-50.0075, 3.84543}, {-50.0075, 3.84543}}, color = {0, 170, 255}, thickness = 1.5, smooth = Smooth.Bezier), Line(origin = {40.19, 0.19}, points = {{19.8066, 59.8066}, {-20.1934, -0.193375}, {-20.1934, -60.1934}}, thickness = 1.5), Line(origin = {-40.19, 0.19}, points = {{-19.8066, 59.8066}, {20.1934, -0.193375}, {20.1934, -60.1934}}, thickness = 1.5), Rectangle(fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-5, 20}, {5, -20}}), Polygon(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-10, 10}, {10, 10}, {0, -10}, {-10, 10}}), Text(origin = {0, -78}, extent = {{20, -24}, {-20, 24}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body>A simple hydaulic sink, which can be used in combination with the simplified Tank model (<a href=\"modelica://WaterPowerPlant.Components.OpenTankSimple\">WaterPowerPlant.Components.OpenTankSimple</a>).
         <div>It's used to create tests and examples for Turbine models and setups.</div></body></html>"));
       end Sink;
       annotation(
-        Icon(graphics = {Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2)}));
+        Icon(graphics = {Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(points = {{-18, 30}, {-18, 30}, {-18, 30}}), Polygon(origin = {0, -10}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-76, 50}, {-62, 42}, {-52, 38}, {-46, 36}, {-40, 36}, {-32, 36}, {-20, 40}, {-8, 44}, {8, 44}, {20, 40}, {32, 36}, {48, 36}, {58, 40}, {76, 50}, {60, -50}, {-60, -50}, {-76, 50}}), Line(origin = {0, 30.23}, points = {{-76, 9.76731}, {-40, -10.2327}, {0, 9.76731}, {40, -10.2327}, {76, 9.76731}, {76, 9.76731}}, color = {0, 170, 255}, thickness = 2, smooth = Smooth.Bezier), Line(origin = {0, 0.08}, points = {{-80, 60}, {-60, -60}, {60, -60}, {80, 60}, {80, 60}}, thickness = 2)}),
+        Documentation(info = "<html><head></head><body><table border=\"1\" cellspacing=\"0\" cellpadding=\"1\" style=\"font-family: 'MS Shell Dlg 2';\"><tbody><tr><td><strong>Name</strong></td><td><b>Input connectors</b></td><td><b>Output connectors</b></td><td><b>Usecase</b></td><td><strong>Link</strong></td></tr><tr><td><strong>OpenTank</strong></td><td><span class=\"Apple-tab-span\" style=\"white-space:pre\">	</span>-<blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"></blockquote></td><td>FluidPort</td><td>Showcase of hydrostatic force and lowering water leves.</td><td><a href=\"modelica:///WaterPowerPlant.Components.Turbines.Turbine_basic\">WaterPowerPlant.Components<u>.Tanks.OpenTank</u></a></td></tr><tr><td><b>OpenTankSimple</b></td><td><span class=\"Apple-tab-span\" style=\"white-space:pre\">	</span>-</td><td>FluidPort</td><td>Showcase of dependency on environment in combination with lowering water leves.</td><td><a href=\"modelica:///WaterPowerPlant.Components.Turbines.Turbine_advanced\">WaterPowerPlant.Components.<u>Tanks.OpenTankSimple</u></a></td></tr><tr><td><b>Sink</b></td><td>FluidPort</td><td>FluidPort</td><td>Showcase of Sink for \"burning\" of hydrodynamic energy.</td><td><a href=\"modelica:///WaterPowerPlant.Components.Turbines.Turbine_Pelton\">WaterPowerPlant.Components.<u>Tanks.Sink</u></a></td></tr></tbody></table></body></html>"));
     end Tanks;
-
+  
     package Turbines
       model Turbine_basic
         // Connectors
@@ -491,23 +500,23 @@ package WaterPowerPlant
         // Constants
         constant Modelica.Units.SI.Density roh_fluid = 1000;
         constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
         // Variables
         Modelica.Units.SI.Power P_turbine;
         Modelica.Units.SI.Height fall_height_water;
         //virtual fall height of the water after losses
       equation
-        fall_height_water = (fluidPort_in.p - p0) / (roh_fluid * g);
-        P_turbine = -eta_turbine * g * fall_height_water * fluidPort_in.mflow;
-// fluidPort_out
-        fluidPort_out.p = (1 - eta_turbine) * (fluidPort_in.p - p0) + p0;
+        fall_height_water = (fluidPort_in.p - p0)/(roh_fluid*g);
+        P_turbine = -eta_turbine*g*fall_height_water*fluidPort_in.mflow;
+  // fluidPort_out
+        fluidPort_out.p = (1 - eta_turbine)*(fluidPort_in.p - p0) + p0;
         fluidPort_out.mflow = -fluidPort_in.mflow;
         annotation(
           Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
           Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {96, -5}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {47.9401, -63.0993}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Text(origin = {-4, -86}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
-  Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The basic turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into power.<div>It provides two FluidPort connectors for inflow and outflow.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li></ul></div></div></div></body></html>"));
+          Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The basic turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into power.<div>It provides two FluidPort connectors for inflow and outflow.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li></ul></div></div></div></body></html>"));
       end Turbine_basic;
-
+  
       model Turbine_advanced1
         // Connectors
         WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
@@ -522,26 +531,26 @@ package WaterPowerPlant
         // Constants
         constant Modelica.Units.SI.Density roh_fluid = 1000;
         constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
         // Variables
         Modelica.Units.SI.Power P_turbine;
         Modelica.Units.SI.Height fall_height_water;
         //virtual fall height of the water after losses
       equation
-        fall_height_water = (fluidPort_in.p - p0) / (roh_fluid * g);
-        P_turbine = -eta_turbine * g * fall_height_water * fluidPort_in.mflow;
-// fluidPort_out
-        fluidPort_out.p = (1 - eta_turbine) * (fluidPort_in.p - p0) + p0;
+        fall_height_water = (fluidPort_in.p - p0)/(roh_fluid*g);
+        P_turbine = -eta_turbine*g*fall_height_water*fluidPort_in.mflow;
+  // fluidPort_out
+        fluidPort_out.p = (1 - eta_turbine)*(fluidPort_in.p - p0) + p0;
         fluidPort_out.mflow = -fluidPort_in.mflow;
-// rotationalPort_out
-        rotationalPort_out.omega = 2 * Modelica.Constants.pi * f0;
-        rotationalPort_out.M = P_turbine / rotationalPort_out.omega;
+  // rotationalPort_out
+        rotationalPort_out.omega = 2*Modelica.Constants.pi*f0;
+        rotationalPort_out.M = P_turbine/rotationalPort_out.omega;
         annotation(
           Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
           Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {96, -5}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {47.9401, -63.0993}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Text(origin = {-2, -82}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
-  Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The advanced turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into mechanical power.<div>It provides two FluidPort connectors for inflow and outflow.&nbsp;</div><div>Additionally it provides a RotationalPort to transfer the mechanical power to a generator.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li><li>f0 as the desired frequency of the output.</li></ul></div></div></div></body></html>"));
+          Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The advanced turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into mechanical power.<div>It provides two FluidPort connectors for inflow and outflow.&nbsp;</div><div>Additionally it provides a RotationalPort to transfer the mechanical power to a generator.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li><li>f0 as the desired frequency of the output.</li></ul></div></div></div></body></html>"));
       end Turbine_advanced1;
-
+  
       model Turbine_Pelton
         // Connectors
         WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
@@ -557,7 +566,7 @@ package WaterPowerPlant
         parameter Modelica.Units.SI.Area Nozzle_Area = 0.01 "Area of the Nozzle transforming the pressure to velocity";
         // Constants
         constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
         constant Modelica.Units.SI.Density roh_fluid = 1000;
         // Variables
         Modelica.Units.SI.Height fall_height_water;
@@ -568,25 +577,25 @@ package WaterPowerPlant
         Modelica.Units.SI.Force F_turbine;
         Modelica.Units.SI.Power P_turbine;
       equation
-        fall_height_water = abs((fluidPort_in.p - p0) / (roh_fluid * g));
-// transform. E_kin = E_pot
-        c_water = sqrt(2 * g * fall_height_water);
-// optimum speed for maximum Energy transfer. No Startup or Shutdown Simulation
-        v_turbine = c_water / 2;
-        F_turbine = roh_fluid * Nozzle_Area * c_water * (c_water - v_turbine) * (F_1 + F_1 * F_2);
-        P_turbine = F_turbine * v_turbine;
-// rotationalPort_out
-        rotationalPort_out.M = -F_turbine * radius;
-        -rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
-// fluidPort_out
+        fall_height_water = abs((fluidPort_in.p - p0)/(roh_fluid*g));
+  // transform. E_kin = E_pot
+        c_water = sqrt(2*g*fall_height_water);
+  // optimum speed for maximum Energy transfer. No Startup or Shutdown Simulation
+        v_turbine = c_water/2;
+        F_turbine = roh_fluid*Nozzle_Area*c_water*(c_water - v_turbine)*(F_1 + F_1*F_2);
+        P_turbine = F_turbine*v_turbine;
+  // rotationalPort_out
+        rotationalPort_out.M = -F_turbine*radius;
+        -rotationalPort_out.omega = P_turbine/rotationalPort_out.M;
+  // fluidPort_out
         fluidPort_out.p = p0;
         fluidPort_out.mflow = -fluidPort_in.mflow;
         annotation(
           Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
           Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {96, -5}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 1.75, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-0.06, 80.9}, rotation = 90, points = {{-25, 0}, {5, 0}}, color = {255, 0, 0}, thickness = 1.75, arrow = {Arrow.None, Arrow.Filled}), Text(origin = {-2, -84}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
-  Documentation(info = "<html><head></head><body>Model of a Pelton Turbine displaying the behaivior under normal conditions.<div>This model does not include simulations for startup or shutdown phases.<br><div><br></div><div>Transforms the pressure into the virtual fall height of the fluid. The potential energy is transformed into kinetic energy (through the Nozzle).</div><div>The blades of the turbine direct the water in an U-formed arc back, which serves as 2 force impacts and prepell the blades forward.&nbsp;</div><div>The efficiency of this operation is described by the parameters F_1 (first impact) and F_2 (second impact).</div><div>The optimum velocity of the blades is dependent on the kinetic energy of the water.&nbsp;</div><div><br></div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting mechanical power are:</div><div><ul><li>F_1 as degree of efficiency for the first force impact (between 0 and 1)</li><li>F_2 as degree of efficiency for the second force impact (between 0 and 1)</li><li>radius of the turbine</li><li>Nozzle_Area of the nozzle used to transform the potential into kinetic&nbsp;Energy</li></ul></div></div></body></html>"));
+          Documentation(info = "<html><head></head><body>Model of a Pelton Turbine displaying the behaivior under normal conditions.<div>This model does not include simulations for startup or shutdown phases.<br><div><br></div><div>Transforms the pressure into the virtual fall height of the fluid. The potential energy is transformed into kinetic energy (through the Nozzle).</div><div>The blades of the turbine direct the water in an U-formed arc back, which serves as 2 force impacts and prepell the blades forward.&nbsp;</div><div>The efficiency of this operation is described by the parameters F_1 (first impact) and F_2 (second impact).</div><div>The optimum velocity of the blades is dependent on the kinetic energy of the water.&nbsp;</div><div><br></div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting mechanical power are:</div><div><ul><li>F_1 as degree of efficiency for the first force impact (between 0 and 1)</li><li>F_2 as degree of efficiency for the second force impact (between 0 and 1)</li><li>radius of the turbine</li><li>Nozzle_Area of the nozzle used to transform the potential into kinetic&nbsp;Energy</li></ul></div></div></body></html>"));
       end Turbine_Pelton;
-
+  
       model Turbine_Francis
         // Connectors
         WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
@@ -598,10 +607,10 @@ package WaterPowerPlant
         // Parameters
         parameter Real eta_turbine = 0.85 "Degree of efficiency";
         parameter Modelica.Units.SI.Length radius = 1 "Radius of the turbine (Center - Inner perimeter)";
-        parameter Modelica.Units.SI.Frequency n_turbine = 500 / 60 "Desired working frequency of turbine";
+        parameter Modelica.Units.SI.Frequency n_turbine = 500/60 "Desired working frequency of turbine";
         // Constants
         constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
-        constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
+        constant Modelica.Units.SI.Pressure p0 = 1.033*10^5;
         constant Modelica.Units.SI.Density roh_fluid = 1000;
         // Variables
         Modelica.Units.SI.Height fall_height_water;
@@ -615,30 +624,30 @@ package WaterPowerPlant
         //velocity of the turbine at the inner perimeter
         Modelica.Units.SI.Power P_turbine;
       equation
-        fall_height_water = (fluidPort_in.p - p0) / (roh_fluid * g);
-        P_turbine = eta_turbine * g * fall_height_water * fluidPort_in.mflow;
-        fall_height_water_used = P_turbine / (fluidPort_in.mflow * g);
-        a_u = P_turbine / fluidPort_in.mflow;
-        u1 = radius * 2 * Modelica.Constants.pi * n_turbine;
-        c_u1 = a_u / u1;
-// rotationalPort_out
-        rotationalPort_out.M = -fluidPort_in.mflow * c_u1 * radius;
-        -rotationalPort_out.omega = P_turbine / rotationalPort_out.M;
-// fluidPort_out
-        (fall_height_water - fall_height_water_used) * roh_fluid * g + p0 = fluidPort_out.p;
+        fall_height_water = (fluidPort_in.p - p0)/(roh_fluid*g);
+        P_turbine = eta_turbine*g*fall_height_water*fluidPort_in.mflow;
+        fall_height_water_used = P_turbine/(fluidPort_in.mflow*g);
+        a_u = P_turbine/fluidPort_in.mflow;
+        u1 = radius*2*Modelica.Constants.pi*n_turbine;
+        c_u1 = a_u/u1;
+  // rotationalPort_out
+        rotationalPort_out.M = -fluidPort_in.mflow*c_u1*radius;
+        -rotationalPort_out.omega = P_turbine/rotationalPort_out.M;
+  // fluidPort_out
+        (fall_height_water - fall_height_water_used)*roh_fluid*g + p0 = fluidPort_out.p;
         fluidPort_out.mflow = -fluidPort_in.mflow;
         annotation(
           Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
           Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {96, -5}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 1.5, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 8), Line(origin = {47.19, -53.15}, points = {{7, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}, arrowSize = 8), Ellipse(origin = {52, -52}, extent = {{-2, 2}, {2, -2}}), Ellipse(origin = {52, -50}, fillPattern = FillPattern.Solid, extent = {{-4, 4}, {4, -4}}), Text(origin = {0, -84}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
-  Documentation(info = "<html><head></head><body>Model of a Francis Turbine displaying the behaivior under normal conditions.<div><div><br></div><div>Transforms the pressure into the virtual fall height of the fluid.&nbsp;</div><div>Calculates the resulting mechanical power through the&nbsp;Turbine equation used in 'Turbine_basic' and 'Turbine_advanced'.</div><div>The transformation of power to torque has been done on the basis of DI&nbsp;<span style=\"font-family: sans-serif; font-size: calc(var(--scale-factor) * 12px);\">Dr. techn. Klaus LEEB from HTBL Wien. <a href=\"http://www.math-tech.at/Beispiele/upload/leeb_Francis-Turbine.pdf\"> link</a></span></div><!--StartFragment--><!--EndFragment--><div><br></div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting mechanical power are:</div><div><ul><li>eta_turbine as degree of efficiency for the turbine (between 0 and 1)</li><li>radius of the turbine (Center - Inner perimeter)</li><li>n_turbine as the desired working frequency of the turbine</li></ul></div></div></body></html>"));
+          Documentation(info = "<html><head></head><body>Model of a Francis Turbine displaying the behaivior under normal conditions.<div><div><br></div><div>Transforms the pressure into the virtual fall height of the fluid.&nbsp;</div><div>Calculates the resulting mechanical power through the&nbsp;Turbine equation used in 'Turbine_basic' and 'Turbine_advanced'.</div><div>The transformation of power to torque has been done on the basis of DI&nbsp;<span style=\"font-family: sans-serif; font-size: calc(var(--scale-factor) * 12px);\">Dr. techn. Klaus LEEB from HTBL Wien. <a href=\"http://www.math-tech.at/Beispiele/upload/leeb_Francis-Turbine.pdf\"> link</a></span></div><!--StartFragment--><!--EndFragment--><div><br></div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting mechanical power are:</div><div><ul><li>eta_turbine as degree of efficiency for the turbine (between 0 and 1)</li><li>radius of the turbine (Center - Inner perimeter)</li><li>n_turbine as the desired working frequency of the turbine</li></ul></div></div></body></html>"));
       end Turbine_Francis;
       annotation(
         Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
         Documentation(info = "<html><head></head><body><div><b>Waterplant.Components.'Turbines'</b></div>This Sublibrary contains the different Turbines which have been modeled for various usecases:<div><br><div><table border=\"1\" cellspacing=\"0\" cellpadding=\"1\"><tbody><tr><td><strong>Name</strong></td><td><b>Input connectors</b></td><td><b>Output connectors</b></td><td><b>Usecase</b></td><td><strong>Link</strong></td></tr><tr><td><strong>Turbine_basic<br></strong></td><td>FluidPort<blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"></blockquote></td><td>FluidPort</td><td>Showcase of transformation of Pressure and Massflow to mechanical/electrical Power dependeding on the degree of efficiency</td><td><a href=\"modelica://WaterPowerPlant.Components.Turbines.Turbine_basic\">WaterPowerPlant.Components.Turbines.Turbine_basic</a></td></tr><tr><td><b>Turbine_advanced</b></td><td>FluidPort</td><td>FluidPort, RotationalPort</td><td>Showcase of transformation of Pressure and Massflow to mechanical Power (in the form of angular speed and torque) dependeding on the degree of efficiency</td><td><a href=\"modelica://WaterPowerPlant.Components.Turbines.Turbine_advanced\">WaterPowerPlant.Components.Turbines.Turbine_advanced</a></td></tr><tr><td><b>Turbine_Pelton</b></td><td>FluidPort</td><td>FluidPort,&nbsp;RotationalPort</td><td>Showcase of a Pelton turbine. Transforming Pressure and Massflow to mechanical Power (in the form of angular speed and torque). It is dependeding on various input parameters.</td><td><a href=\"modelica://WaterPowerPlant.Components.Turbines.Turbine_Pelton\">WaterPowerPlant.Components.Turbines.Turbine_Pelton</a></td></tr><tr><td><b>Turbine_Francis</b></td><td>FluidPort</td><td>FluidPort,&nbsp;RotationalPort</td><td>Showcase of a Francis turbine. Transforming Pressure and Massflow to mechanical Power (in the form of angular speed and torque). It is dependeding on various input parameters.</td><td><a href=\"modelica://WaterPowerPlant.Components.Turbines.Turbine_Francis\">WaterPowerPlant.Components.Turbines.Turbine_Francis</a></td></tr></tbody></table></div></div></body></html>"));
     end Turbines;
-
+  
     //------------------------------------------------------------------------------
-
+  
     package Generators
       model Generator_basic
         // Connectors
@@ -652,18 +661,18 @@ package WaterPowerPlant
         // Variables
         Modelica.Units.SI.Power P_mech, P_el;
       equation
-        P_mech = rotationalPort_in.M * rotationalPort_in.omega;
-// incoming power
-        P_el = -P_mech * eta_gen;
-// electr. power output
-// electricalPort_out
-        electricalPort_out.i = P_el / U0;
+        P_mech = rotationalPort_in.M*rotationalPort_in.omega;
+  // incoming power
+        P_el = -P_mech*eta_gen;
+  // electr. power output
+  // electricalPort_out
+        electricalPort_out.i = P_el/U0;
         electricalPort_out.v = U0;
         annotation(
           Icon(graphics = {Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-62, 21}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {-72, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-56, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-64, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-60, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-50, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-74, 25}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {1, 16}, fillPattern = FillPattern.Solid, extent = {{-51, 30}, {51, -30}}), Rectangle(origin = {-78, 19}, lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{4, 11}, {-4, -11}}), Polygon(origin = {1, 26}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(origin = {3, 24}, lineColor = {255, 255, 255}, lineThickness = 1, borderPattern = BorderPattern.Engraved, extent = {{-15, 20}, {15, -20}}, radius = 1), Text(origin = {0, -28}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body>Generator model taking into account the degree of efficiency.<div>Transforms the torque and angular speed into electrical power.</div><div><br></div><div>The basic generator is a simple Model of an generator transforming incoming torque and applied angular velocity into electrical power.<div>It provides one RotationalPort and one ElectricalPort connector.</div><div>The current of the ElectricalPort is calculated via a fixed voltage parameter.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the behavior are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li><li>U0 as the desired Voltage (e.g. the nominal Voltage of a power grid the generator should power)</li></ul></div></div></div></body></html>"));
       end Generator_basic;
-
+  
       model Generator_Synchron
         // Connectors
         WaterPowerPlant.Interfaces.ElectricalPort electricalPort_out annotation(
@@ -676,7 +685,7 @@ package WaterPowerPlant
         parameter Modelica.Units.SI.Impedance X_d = 1.5 "Reactance of the machine";
         parameter Modelica.Units.SI.Resistance R_e = 0.8 "Internal Resistances";
         parameter Real cos_phi = 0.8 "power factor of the machine";
-        parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi / 4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
+        parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi/4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
         // Variables
         Modelica.Units.SI.Frequency n_s;
         //working frequency of machine
@@ -688,27 +697,27 @@ package WaterPowerPlant
         Complex S;
         //Real star_config;
       equation
-//working frequency of machine is the same as frequency of rotational input
-        rotationalPort_in.omega / (2 * Modelica.Constants.pi) = n_s;
+  //working frequency of machine is the same as frequency of rotational input
+        rotationalPort_in.omega/(2*Modelica.Constants.pi) = n_s;
         if n_s > 0 then
-          n_s = f0 / p;
+          n_s = f0/p;
         else
           p = 1;
         end if;
-//-theta = rotationalPort_in.M / (2 * M_break / Modelica.Constants.pi);
+  //-theta = rotationalPort_in.M / (2 * M_break / Modelica.Constants.pi);
         U_s = U0;
-        rotationalPort_in.M = 3 * U_p * U_s * Modelica.Math.sin(theta) / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
-        P = -3 * U_s * U_p * Modelica.Math.sin(theta) / (X_d + R_e);
-        Q = (-3 * U_s / (X_d + R_e)) * (U_s - U_p * Modelica.Math.cos(theta));
-        S = P + Modelica.ComplexMath.j * Q;
-        S_abs = -sqrt(P * P + Q * Q);
+        rotationalPort_in.M = 3*U_p*U_s*Modelica.Math.sin(theta)/(2*Modelica.Constants.pi*n_s*X_d*cos_phi);
+        P = -3*U_s*U_p*Modelica.Math.sin(theta)/(X_d + R_e);
+        Q = (-3*U_s/(X_d + R_e))*(U_s - U_p*Modelica.Math.cos(theta));
+        S = P + Modelica.ComplexMath.j*Q;
+        S_abs = -sqrt(P*P + Q*Q);
         electricalPort_out.v = U_s;
-        electricalPort_out.i = P / U_s;
+        electricalPort_out.i = P/U_s;
         annotation(
           Icon(graphics = {Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-62, 21}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {-72, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-56, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-64, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-60, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-50, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-74, 25}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {1, 16}, fillPattern = FillPattern.Solid, extent = {{-51, 30}, {51, -30}}), Rectangle(origin = {-78, 19}, lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{4, 11}, {-4, -11}}), Polygon(origin = {1, 26}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(origin = {3, 24}, lineColor = {255, 255, 255}, lineThickness = 1, borderPattern = BorderPattern.Engraved, extent = {{-15, 20}, {15, -20}}, radius = 1), Text(origin = {0, -30}, extent = {{78, 7}, {-78, -7}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body><span style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">Generator model taking into account the reactance of the machine, internal resistances, the power factor cos(phi) and the pole wheel angle.</span><div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><br></div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">The Synchron generator is a Model of an ac generator transforming incoming torque and applied angular velocity into electrical power.</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">It uses the RMS representation of internal and external variables for calculation.</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">The calculation has been done on the basis of to Förster, Wolfgang 2020 \"Elektrische Antriebssysteme und Aktorik\".</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><div>It provides one RotationalPort and one ElectricalPort connector.</div><div>The nominal current of the ElectricalPort is calculated via a fixed nominal voltage parameter.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the behavior are:</div><div><ul><li>f0 as the frequency of the power grid</li><li>U0 as the desired nominal Voltage (e.g. the nominal Voltage of a power grid the generator should power)</li><li>X_d as the Reactance of the machine</li><li>R_e as different internal Resistances of the machine</li><li>cos_phi as cos(phi) the power factor of the machine</li><li>theta as the pole wheel angle. The pole wheel angle describes the working mode of the machine (-pi/2 to pi/2). A negative theta is synonymous to generator mode.</li></ul><div>Known issues: calculation of reactive power.</div></div></div></div></div></body></html>"));
       end Generator_Synchron;
-
+  
       model Generator_Synchron_3Phases
         // Connectors
         WaterPowerPlant.Interfaces.RotationalPort rotationalPort_in annotation(
@@ -725,7 +734,7 @@ package WaterPowerPlant
         parameter Modelica.Units.SI.Impedance X_d = 1.5 "Reactance of the machine";
         parameter Modelica.Units.SI.Resistance R_e = 0.8 "Resistance of excitation winding";
         parameter Real cos_phi = 0.8 "power factor of the machine";
-        parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi / 4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
+        parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi/4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
         // Variables
         Modelica.Units.SI.Frequency n_s;
         //working frequency of machine
@@ -743,27 +752,27 @@ package WaterPowerPlant
         Modelica.Units.SI.Power S_str_1, S_str_2, S_str_3, S_ges;
         //effective values
       equation
-//working frequency of machine is the same as frequency of rotational input
-        rotationalPort_in.omega / (2 * Modelica.Constants.pi) = n_s;
-        n_s = f0 / p;
-        omega = 2 * Modelica.Constants.pi * f0;
-        rotationalPort_in.M = -3 * U_p_eff * U0 * Modelica.Math.sin(theta) / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
-        M_break = 3 * U_p_eff * U0 / (2 * Modelica.Constants.pi * n_s * X_d * cos_phi);
-        U_p_1 = sqrt(2) * U_p_eff * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * (omega * time - theta));
-        U_p_2 = sqrt(2) * U_p_eff * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * (omega * time - theta + 2 * Modelica.Constants.pi / 3));
-        U_p_3 = sqrt(2) * U_p_eff * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * (omega * time - theta + 4 * Modelica.Constants.pi / 3));
-        U_str_1 = sqrt(2) * U0 * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * omega * time);
-        U_str_2 = sqrt(2) * U0 * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * (omega * time + 2 * Modelica.Constants.pi / 3));
-        U_str_3 = sqrt(2) * U0 * Modelica.ComplexMath.exp(Modelica.ComplexMath.j * (omega * time + 4 * Modelica.Constants.pi / 3));
-        I_str_1 = U_p_1 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
-        I_str_2 = U_p_2 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
-        I_str_3 = U_p_3 * Modelica.Math.sin(theta) / (X_d * cos_phi + R_e);
-        S_str_1 = -U0 * sqrt(I_str_1.re ^ 2 + I_str_1.im ^ 2);
-        P_str_1 = S_str_1 * cos_phi;
-        S_str_2 = -U0 * sqrt(I_str_2.re ^ 2 + I_str_2.im ^ 2);
-        P_str_2 = S_str_2 * cos_phi;
-        S_str_3 = -U0 * sqrt(I_str_3.re ^ 2 + I_str_3.im ^ 2);
-        P_str_3 = S_str_3 * cos_phi;
+  //working frequency of machine is the same as frequency of rotational input
+        rotationalPort_in.omega/(2*Modelica.Constants.pi) = n_s;
+        n_s = f0/p;
+        omega = 2*Modelica.Constants.pi*f0;
+        rotationalPort_in.M = -3*U_p_eff*U0*Modelica.Math.sin(theta)/(2*Modelica.Constants.pi*n_s*X_d*cos_phi);
+        M_break = 3*U_p_eff*U0/(2*Modelica.Constants.pi*n_s*X_d*cos_phi);
+        U_p_1 = sqrt(2)*U_p_eff*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time - theta));
+        U_p_2 = sqrt(2)*U_p_eff*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time - theta + 2*Modelica.Constants.pi/3));
+        U_p_3 = sqrt(2)*U_p_eff*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time - theta + 4*Modelica.Constants.pi/3));
+        U_str_1 = sqrt(2)*U0*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*omega*time);
+        U_str_2 = sqrt(2)*U0*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time + 2*Modelica.Constants.pi/3));
+        U_str_3 = sqrt(2)*U0*Modelica.ComplexMath.exp(Modelica.ComplexMath.j*(omega*time + 4*Modelica.Constants.pi/3));
+        I_str_1 = U_p_1*Modelica.Math.sin(theta)/(X_d*cos_phi + R_e);
+        I_str_2 = U_p_2*Modelica.Math.sin(theta)/(X_d*cos_phi + R_e);
+        I_str_3 = U_p_3*Modelica.Math.sin(theta)/(X_d*cos_phi + R_e);
+        S_str_1 = -U0*sqrt(I_str_1.re^2 + I_str_1.im^2);
+        P_str_1 = S_str_1*cos_phi;
+        S_str_2 = -U0*sqrt(I_str_2.re^2 + I_str_2.im^2);
+        P_str_2 = S_str_2*cos_phi;
+        S_str_3 = -U0*sqrt(I_str_3.re^2 + I_str_3.im^2);
+        P_str_3 = S_str_3*cos_phi;
         P_ges = P_str_1 + P_str_2 + P_str_3;
         S_ges = S_str_1 + S_str_2 + S_str_3;
         electricalPort_out1.v = U_str_1.re;
@@ -776,7 +785,7 @@ package WaterPowerPlant
           Icon(graphics = {Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-62, 21}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {-72, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-56, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-64, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-60, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-68, 21}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {-54, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-50, 17}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {-74, 25}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {1, 16}, fillPattern = FillPattern.Solid, extent = {{-51, 30}, {51, -30}}), Rectangle(origin = {-78, 19}, lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{4, 11}, {-4, -11}}), Polygon(origin = {1, 26}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(origin = {3, 24}, lineColor = {255, 255, 255}, lineThickness = 1, borderPattern = BorderPattern.Engraved, extent = {{-15, 20}, {15, -20}}, radius = 1), Text(origin = {66, 15}, extent = {{-10, -7}, {10, 7}}, textString = "2"), Text(origin = {66, 31}, extent = {{-10, -7}, {10, 7}}, textString = "1"), Text(origin = {66, -1}, extent = {{-10, -7}, {10, 7}}, textString = "3"), Text(origin = {-2, -26}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body><span style=\"font-size: 12px; font-family: 'MS Shell Dlg 2';\">Generator model taking into account the reactance of the machine, internal resistances, the power factor cos(phi) and the pole wheel angle.</span><div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><br></div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">The Synchron generator 3Phases is a Model of an AC generator transforming incoming torque and applied angular velocity into electrical power.</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><br></div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">It uses the complex representation of internal and external variables for calculation of time dependent and phase correct outputs.</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\">The calculation has been done on the basis of to Förster, Wolfgang 2020 \"Elektrische Antriebssysteme und Aktorik\".</div><div style=\"font-family: 'MS Shell Dlg 2'; font-size: 12px;\"><div>It provides one RotationalPort and three ElectricalPort connectors for a three phase alternating current power grid.</div><div>The current of the ElectricalPort is calculated via the alternating voltage. The real power is presented as nominal power.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the behavior are:</div><div><ul><li>f0 as the frequency of the power grid</li><li>U0 as the desired nominal Voltage (e.g. the nominal Voltage of a power grid the generator should power)</li><li>X_d as the Reactance of the machine</li><li>R_e as different internal Resistances of the machine</li><li>cos_phi as cos(phi) the power factor of the machine</li><li>theta as the pole wheel angle. The pole wheel angle describes the working mode of the machine (-pi/2 to pi/2). A negative theta is synonymous to generator mode</li></ul><div>Known issues: calculation of alternating power, calculation of reactive power.</div></div></div></div></div></body></html>"));
       end Generator_Synchron_3Phases;
-
+  
       model Generator_dc
         // Connectors
         WaterPowerPlant.Interfaces.RotationalPort rotationalPort_in annotation(
@@ -797,11 +806,10 @@ package WaterPowerPlant
         Modelica.Units.SI.Current I_a, I_e;
         Real n;
       equation
-        n=rotationalPort_in.omega/(2*Modelica.Constants.pi);
-        P_el = U0 * (I_a - I_e);
+        n = rotationalPort_in.omega/(2*Modelica.Constants.pi);
+        P_el = U0*(I_a - I_e);
         I_e = U0/R_e;
-        U0 = R_a*I_a+c1*n*psi+I_a*(R_w+R_k);
-      
+        U0 = R_a*I_a + c1*n*psi + I_a*(R_w + R_k);
         electricalPort_out.i = I_a - I_e;
         electricalPort_out.v = U0;
         annotation(
@@ -812,9 +820,9 @@ package WaterPowerPlant
         Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(fillPattern = FillPattern.Solid, extent = {{-60, 40}, {60, -40}}), Polygon(origin = {-2, 2}, lineColor = {255, 255, 0}, fillColor = {255, 255, 0}, fillPattern = FillPattern.Solid, lineThickness = 1.75, points = {{-3, 8}, {-5, -2}, {1, -2}, {-1, -20}, {9, 2}, {3, 2}, {7, 16}, {-1, 16}, {-3, 8}}), Rectangle(lineColor = {255, 255, 255}, lineThickness = 1.25, borderPattern = BorderPattern.Engraved, extent = {{-25, 30}, {25, -30}}, radius = 1)}),
         Documentation(info = "<html><head></head><body><div><b>Waterplant.Components.'Generators'</b></div>This Sublibrary contains the different Generators which have been modeled for various usecases:<div><br><div><table border=\"1\" cellspacing=\"0\" cellpadding=\"1\"><tbody><tr><td><strong>Name</strong></td><td><b>Input connectors</b></td><td><b>Output connectors</b></td><td><b>Usecase</b></td><td><strong>Link</strong></td></tr><tr><td><strong>Generator_basic<br></strong></td><td>RotationalPort<blockquote style=\"margin: 0px 0px 0px 40px; border: none; padding: 0px;\"></blockquote></td><td>ElectricalPort</td><td>Showcase of transformation of angular speed and torque to electrical Power&nbsp;(in the form of voltage and current)(in the form of voltage and current) dependeding on the degree of efficiency</td><td><a href=\"modelica://WaterPowerPlant.Components.Generators.Generator_basic\">WaterPowerPlant.Components.Generators.Generator_basic</a></td></tr><tr><td><b>Generator_Synchron</b></td><td>RotationalPort</td><td>ElectricalPort</td><td>Showcase of a synchron machine as generator as it is commonly used in powerplants. Transforms angular speed and torque to electrical Power (in the form of voltage and current) dependeding on various input parameters. Uses the RMS representation of internal and external variables for calculation.</td><td><a href=\"modelica://WaterPowerPlant.Components.Generators.Generator_Synchron\">WaterPowerPlant.Components.Generators.Generator_Synchron</a></td></tr><tr><td><b>Generator_Synchron_3Phases</b></td><td>RotationalPort</td><td>3 x ElectricalPort</td><td>Showcase of a synchron machine as generator as it is commonly used in powerplants. Transforms angular speed and torque to electrical Power (in the form of voltage and current) dependeding on various input parameters. Uses the the complex representation of internal and external variables for calculation of time dependent and phase correct outputs.</td><td><a href=\"modelica://WaterPowerPlant.Components.Generators.Generator_Synchron_3Phases\">WaterPowerPlant.Components.Generators.Generator_Synchron_3Phases</a></td></tr><tr><td><b>Generator_dc</b></td><td>RotationalPort</td><td>ElectricalPort</td><td>Showcase of a dc machine as generator as a dc shunt engine. Transforms angular speed and torque to electrical Power (in the form of voltage and current) dependeding on various input parameters.</td><td><a href=\"modelica://WaterPowerPlant.Components.Generators.Generator_dc\">WaterPowerPlant.Components.Generators.Generator_dc</a></td></tr></tbody></table></div></div></body></html>"));
     end Generators;
-
+  
     //-------------------------------------------------------------------------
-
+  
     model ElectrialLoad
       // Connectors
       WaterPowerPlant.Interfaces.ElectricalPort electricalPort_in annotation(
@@ -824,12 +832,12 @@ package WaterPowerPlant
       // Variables
       Modelica.Units.SI.Power P_load;
     equation
-      P_load = eta_load * electricalPort_in.v * electricalPort_in.i;
+      P_load = eta_load*electricalPort_in.v*electricalPort_in.i;
       annotation(
         Icon(graphics = {Rectangle(origin = {0, -13}, fillPattern = FillPattern.Solid, extent = {{-20, 39}, {20, -39}}), Line(origin = {-31, 42}, points = {{-31, 16}, {31, 16}, {31, -14}, {31, -16}, {31, -16}}, thickness = 2.5), Line(origin = {0.5, -65}, points = {{-0.5, 13}, {-0.5, -13}, {-20.5, -13}, {19.5, -13}, {19.5, -13}}, thickness = 2.5), Text(origin = {2, -90}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
         Documentation(info = "<html><head></head><body>The Electrical Load is a simple Model of an electric consumer transforming incoming current and applied voltage into used power.<div>It provides the needed connection for the output of the 'Generator' Models of this library.</div><div>Due to the fact that the amplitude and the shape of the voltage vary greatly between each generator type and instance, this model has no internal reference voltage.&nbsp;</div><div>This model uses only the incoming variables of the electrical input and is thus underdetermined by itself. It has been developed with the connection to the Generator models in mind, which provide the necessary variables.<br><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li></ul></div></div></body></html>"));
     end ElectrialLoad;
-
+  
     model Pipe
       //  Ports
       //  Parameters
@@ -847,36 +855,36 @@ package WaterPowerPlant
       Real lambda;
       //(start=0, nominal=1);
       Real Re;
-        Interfaces.FluidPort fluidPort_out annotation(
+      Interfaces.FluidPort fluidPort_out annotation(
         Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
-  Interfaces.FluidPort fluidPort_in annotation(
+      Interfaces.FluidPort fluidPort_in annotation(
         Placement(visible = true, transformation(origin = {-98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-90, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
       //Real fluidPort_in.mflow(start=0, nominal=1);
     equation
-// Calculation of Area of the pipe
-      A = (d / 2) ^ 2 * Modelica.Constants.pi;
-// Calculation of Reynolds Number
-      Re = (fluidPort_in.mflow / roh * A) ^ 2 * d / vis;
+  // Calculation of Area of the pipe
+      A = (d/2)^2*Modelica.Constants.pi;
+  // Calculation of Reynolds Number
+      Re = (fluidPort_in.mflow/roh*A)^2*d/vis;
       lambda = 0;
-// Hagen - Poiseuille (laminar flow)
+  // Hagen - Poiseuille (laminar flow)
       if Re <= 2000 then
-        lambda = 64 / max(Re, Modelica.Constants.small);
-// Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
+        lambda = 64/max(Re, Modelica.Constants.small);
+  // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
       elseif Re > 2000 and Re <= 4000 then
-        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / max(Re, Modelica.Constants.small) * sqrt(max(lambda, Modelica.Constants.small)));
-// v. Karman (turbolent flow, ks/d must be really high)
+        1/sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d + 18.7/max(Re, Modelica.Constants.small)*sqrt(max(lambda, Modelica.Constants.small)));
+  // v. Karman (turbolent flow, ks/d must be really high)
       elseif Re >= 4000 then
-        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+        1/sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d);
       end if;
-// Bernoulli Calculation with Friction
-      fluidPort_out.mflow / (roh * A) ^ 2 / 2 + fluidPort_out.p * 10 ^ 5 / roh + g * h_out + lambda * l * (fluidPort_out.mflow / (roh * A)) ^ 2 / (d * 2) = fluidPort_in.mflow / (roh * A) ^ 2 / 2 + fluidPort_in.p * 10 ^ 5 / roh + g * h_in;
+  // Bernoulli Calculation with Friction
+      fluidPort_out.mflow/(roh*A)^2/2 + fluidPort_out.p*10^5/roh + g*h_out + lambda*l*(fluidPort_out.mflow/(roh*A))^2/(d*2) = fluidPort_in.mflow/(roh*A)^2/2 + fluidPort_in.p*10^5/roh + g*h_in;
       fluidPort_in.mflow + fluidPort_out.mflow = 0;
       annotation(
         Icon(graphics = {Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, 1}, lineColor = {0, 0, 127}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-92, 23}, {92, -23}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
         Diagram,
         Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the v. Karman equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
     end Pipe;
-
+  
     model Pipe_with_lambda
       //  Ports
       WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
@@ -900,31 +908,31 @@ package WaterPowerPlant
       Real Re;
       //Real fluidPort_in.mflow(start=0, nominal=1);
     equation
-// Calculation of Area of the pipe
-      A = (d / 2) ^ 2 * Modelica.Constants.pi;
-// Calculation of Reynolds Number
-      Re = (fluidPort_in.mflow / roh * A) ^ 2 * d / vis;
-// Hagen - Poiseuille (laminar flow)
+  // Calculation of Area of the pipe
+      A = (d/2)^2*Modelica.Constants.pi;
+  // Calculation of Reynolds Number
+      Re = (fluidPort_in.mflow/roh*A)^2*d/vis;
+  // Hagen - Poiseuille (laminar flow)
       if Re <= 2000 then
-        lambda = 64 / max(Re, Modelica.Constants.small);
-// Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
+        lambda = 64/max(Re, Modelica.Constants.small);
+  // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
       elseif Re > 2000 and Re <= 4000 then
-        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / max(Re, Modelica.Constants.small) * sqrt(max(lambda, Modelica.Constants.small)));
-// v. Karman (turbolent flow, ks/d must be really high)
+        1/sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d + 18.7/max(Re, Modelica.Constants.small)*sqrt(max(lambda, Modelica.Constants.small)));
+  // v. Karman (turbolent flow, ks/d must be really high)
       elseif Re >= 4000 then
-        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+        1/sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d);
       else
         lambda = 0;
       end if;
-// Bernoulli Calculation with Friction
-      fluidPort_out.mflow / (roh * A) ^ 2 / 2 + fluidPort_out.p * 10 ^ 5 / roh + g * h_out + lambda * l * (fluidPort_out.mflow / (roh * A)) ^ 2 / (d * 2) = fluidPort_in.mflow / (roh * A) ^ 2 / 2 + fluidPort_in.p * 10 ^ 5 / roh + g * h_in;
+  // Bernoulli Calculation with Friction
+      fluidPort_out.mflow/(roh*A)^2/2 + fluidPort_out.p*10^5/roh + g*h_out + lambda*l*(fluidPort_out.mflow/(roh*A))^2/(d*2) = fluidPort_in.mflow/(roh*A)^2/2 + fluidPort_in.p*10^5/roh + g*h_in;
       fluidPort_in.mflow + fluidPort_out.mflow = 0;
       annotation(
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
         Diagram,
         Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the v. Karman equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
     end Pipe_with_lambda;
-
+  
     model Environment
       //Connestors
       WaterPowerPlant.Interfaces.FluidPort fluidPort annotation(
@@ -939,17 +947,19 @@ package WaterPowerPlant
       output Modelica.Units.SI.MassFlowRate sourceFlow;
       //sourceFlow is unidirectional flowing out of the Environment
     equation
-      sourceFlow = (inlet + rain * area / 1000 / 3600) * roh;
-//Conversion of the rain unit into SI massflowrate
+      sourceFlow = (inlet + rain*area/1000/3600)*roh;
+  //Conversion of the rain unit into SI massflowrate
       fluidPort.mflow = -sourceFlow;
-//flowing out of Environment
+  //flowing out of Environment
       annotation(
         Icon(graphics = {Ellipse(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-70, 20}, {70, -20}}, closure = EllipseClosure.Radial), Text(origin = {0, -30}, extent = {{-13, 8}, {13, -8}}, textString = "%name"), Polygon(origin = {0, 42}, fillColor = {179, 179, 179}, fillPattern = FillPattern.Sphere, points = {{-34, -37}, {58, -37}, {72, -25}, {74, -7}, {60, -1}, {50, -3}, {40, 3}, {36, 17}, {22, 21}, {10, 17}, {2, 23}, {-6, 31}, {-26, 37}, {-42, 35}, {-50, 33}, {-60, 23}, {-54, 11}, {-56, -1}, {-66, -5}, {-76, -13}, {-78, -29}, {-64, -37}, {-34, -37}}, smooth = Smooth.Bezier)}),
         Documentation(info = "<html><head></head><body>The Environment serves as a unidirectional flow source in the hydraulic domain.<div>Possible <b>Parameters</b> influencing the outflow are:</div><div><ul><li>Rain in l/m² (per hour)</li><li>Water inlet in m³/s</li><li>Tank size of the tank influenced by the Environment</li></ul></div></body></html>"));
     end Environment;
     annotation(
-      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
+      Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}),
+      Documentation(info = "<html><head></head><body><p>The Package includes three sub packages for&nbsp;<a href=\"modelica://WaterPowerPlant.Components.Tanks\">Tanks</a>,&nbsp;<a href=\"modelica://WaterPowerPlant.Components.Turbines\">Turbines</a>&nbsp;and&nbsp;<a href=\"modelica://WaterPowerPlant.Components.Generators\">Generators</a>.</p><table border=\"1\" cellspacing=\"0\" cellpadding=\"2\"><tbody><tr><th>Package&nbsp;</th><th>Included Components</th></tr><tr><td style=\"text-align: center;\">Tanks</td><td><ul><li>Tank model</li><li>Simplified Tank model</li><li>Sink</li></ul></td></tr><tr><td style=\"text-align: center;\">Turbines</td><td><ul><li>Basic Turbine</li><li>Advanced Turbine model</li><li>Pelton Turbine</li><li>Francis Turbine</li></ul></td></tr><tr><td style=\"text-align: center;\">Generators</td><td><ul><li>Basic Generator</li><li>Synchron Generator</li><li>Synchron Generator (3 Phases)</li><li>DC Generator</li></ul></td></tr><tr><td style=\"text-align: center;\">Miscellaneous</td><td><ul><li>ElectricalLoad</li><li>Pipe</li><li>Pipe_with_lambda</li><li>Environment</li></ul></td></tr></tbody></table></body></html>"));
   end Components;
   annotation(
-    Icon(graphics = {Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {0, 0, 255}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {69, 9}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-21, 19}, {21, -19}}), Polygon(origin = {10, -2}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 12}, {-12, -12}, {12, -8}, {-12, 12}}), Ellipse(origin = {19, 9}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-21, 19}, {21, -19}}), Polygon(origin = {10, 19}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 11}, {12, 9}, {-12, -11}, {-12, 11}, {-12, 11}}), Line(origin = {-35.7538, -2}, points = {{0, 0}}), Polygon(origin = {60, -2}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 12}, {-12, -12}, {12, -8}, {-12, 12}}), Polygon(origin = {60, 19}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 11}, {12, 9}, {-12, -11}, {-12, 11}, {-12, 11}}), Rectangle(origin = {2, -4}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-4, 32}, {4, -32}}), Polygon(origin = {-32, -3}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-22, 33}, {-12, 33}, {2, -21}, {14, 33}, {22, 33}, {6, -33}, {-4, -33}, {-22, 33}}), Polygon(origin = {-68, -3}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-22, 33}, {-12, 33}, {2, -21}, {14, 33}, {22, 33}, {6, -33}, {-4, -33}, {-22, 33}}), Rectangle(origin = {52, -4}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-4, 32}, {4, -32}})}));
+    Icon(graphics = {Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Rectangle(lineColor = {0, 0, 255}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {69, 9}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-21, 19}, {21, -19}}), Polygon(origin = {10, -2}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 12}, {-12, -12}, {12, -8}, {-12, 12}}), Ellipse(origin = {19, 9}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-21, 19}, {21, -19}}), Polygon(origin = {10, 19}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 11}, {12, 9}, {-12, -11}, {-12, 11}, {-12, 11}}), Line(origin = {-35.7538, -2}, points = {{0, 0}}), Polygon(origin = {60, -2}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 12}, {-12, -12}, {12, -8}, {-12, 12}}), Polygon(origin = {60, 19}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-12, 11}, {12, 9}, {-12, -11}, {-12, 11}, {-12, 11}}), Rectangle(origin = {2, -4}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-4, 32}, {4, -32}}), Polygon(origin = {-32, -3}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-22, 33}, {-12, 33}, {2, -21}, {14, 33}, {22, 33}, {6, -33}, {-4, -33}, {-22, 33}}), Polygon(origin = {-68, -3}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-22, 33}, {-12, 33}, {2, -21}, {14, 33}, {22, 33}, {6, -33}, {-4, -33}, {-22, 33}}), Rectangle(origin = {52, -4}, fillColor = {255, 255, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-4, 32}, {4, -32}})}),
+    Documentation(info = "<html><head></head><body>A library for simulating a water power plant.&nbsp;</body></html>"));
 end WaterPowerPlant;
