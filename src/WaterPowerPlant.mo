@@ -731,13 +731,13 @@ package WaterPowerPlant
       constant Modelica.Units.SI.Density roh = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
       constant Modelica.Units.SI.Pressure p0 = 1.033 * 10 ^ 5;
-      constant Real k = -0.1282 / 1000;       //constant value: -1/7.8km (Scale height)
+      constant Real k = -0.1282 / 1000;             //constant value: -1/7.8km (Scale height)
       //Variables
-      Modelica.Units.SI.Velocity v;       //Nozzle velocity
-      Modelica.Units.SI.Height level(start = levelInitial);       //Water level
+      Modelica.Units.SI.Velocity v;             //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);             //Water level
       Modelica.Units.SI.Pressure relPressure;   
-    //Pressure considering altitutde
-equation
+//Pressure considering altitutde
+    equation
       relPressure = p0 * exp(-k * (level + altitude)); //Atmospheric pressure
       g * level = fluidPort.p / roh - relPressure / roh - v * abs(v) * 0.5;
       v = fluidPort.mflow / (Nozzle * roh);
@@ -764,8 +764,8 @@ equation
       constant Modelica.Units.SI.Density roh = 1000;
       constant Modelica.Units.SI.Acceleration g = Modelica.Constants.g_n;
       //Variables
-      Modelica.Units.SI.Velocity v;       //Nozzle velocity
-      Modelica.Units.SI.Height level(start = levelInitial);     //Water level
+      Modelica.Units.SI.Velocity v;             //Nozzle velocity
+      Modelica.Units.SI.Height level(start = levelInitial);           //Water level
     equation
       g * level = fluidPort.p / roh - v * abs(v) * 0.5;
       v = fluidPort.mflow / (Nozzle * roh);
@@ -828,7 +828,7 @@ equation
       fall_height_water = (fluidPort_in.p-p0) / (roh_fluid * g);
       P_turbine = -eta_turbine * g * fall_height_water * fluidPort_in.mflow;
 // fluidPort_out
-      fluidPort_out.p = (1 - eta_turbine) *(fluidPort_in.p-p0)+p0;
+      fluidPort_out.p = (1 - eta_turbine) * (fluidPort_in.p - p0) + p0;
       fluidPort_out.mflow = -fluidPort_in.mflow;
 // rotationalPort_out
       rotationalPort_out.omega = 2 * Modelica.Constants.pi * f0;
@@ -939,8 +939,10 @@ equation
       // Variables
       Modelica.Units.SI.Power P_mech, P_el;
     equation
-      P_mech = rotationalPort_in.M * rotationalPort_in.omega; // incoming power
-      P_el = - P_mech * eta_gen; // electr. power output
+      P_mech = rotationalPort_in.M * rotationalPort_in.omega;
+// incoming power
+      P_el = -P_mech * eta_gen;
+// electr. power output
 // electricalPort_out
       electricalPort_out.i = P_el / v_net;
       electricalPort_out.v = v_net;
@@ -976,8 +978,9 @@ equation
       parameter Real cos_phi = 0.8 "power factor of the machine";
       parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi / 4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
       // Variables
-      Modelica.Units.SI.Frequency n_s;//working frequency of machine
-      Integer p;       //Number of required pole pairs
+      Modelica.Units.SI.Frequency n_s;
+  //working frequency of machine
+      Integer p;             //Number of required pole pairs
       //Modelica.Units.SI.Torque M_break;//Breakdown torque of the machine
       Modelica.Units.SI.Voltage U_s, U_p;
       Modelica.Units.SI.Power P, Q, S_abs;
@@ -986,7 +989,7 @@ equation
       
     equation
 //working frequency of machine is the same as frequency of rotational input
-      rotationalPort_in.omega/(2*Modelica.Constants.pi) = n_s;
+      rotationalPort_in.omega / (2 * Modelica.Constants.pi) = n_s;
       if n_s > 0 then
         n_s= f0 / p;
       else
@@ -1025,16 +1028,19 @@ equation
       parameter Real cos_phi = 0.8 "power factor of the machine";
       parameter Modelica.Units.SI.Angle theta = -Modelica.Constants.pi / 4 "pole wheel angle for desired working mode of machine - between -pi/2 and pi/2. A negative theta is synonymous to generator mode.";
       // Variables
-      Modelica.Units.SI.Frequency n_s;//working frequency of machine
-      Integer p;       //Number of required pole pairs
-      Modelica.Units.SI.AngularFrequency omega;//angular frequency of power grid
-      Modelica.Units.SI.Voltage U_p_eff;     //effictive Voltage of pole wheel
-      Modelica.Units.SI.Torque M_break;//Breakdown torque of the machine
+      Modelica.Units.SI.Frequency n_s;
+  //working frequency of machine
+      Integer p;             //Number of required pole pairs
+      Modelica.Units.SI.AngularFrequency omega;
+  //angular frequency of power grid
+      Modelica.Units.SI.Voltage U_p_eff;           //effictive Voltage of pole wheel
+      Modelica.Units.SI.Torque M_break;
+  //Breakdown torque of the machine
       Modelica.Units.SI.ComplexVoltage U_str_1,U_str_2,U_str_3, U_p_1,U_p_2,U_p_3;
       Modelica.Units.SI.ComplexCurrent I_str_1,I_str_2,I_str_3;
       Modelica.Units.SI.Power P_str_1, P_str_2, P_str_3, P_ges;
-      Modelica.Units.SI.Power S_str_1,S_str_2,S_str_3, S_ges;       //effective values
-
+      Modelica.Units.SI.Power S_str_1,S_str_2,S_str_3, S_ges;       
+//effective values
     equation
 //working frequency of machine is the same as frequency of rotational input
       rotationalPort_in.omega/(2*Modelica.Constants.pi) = n_s;
@@ -1115,8 +1121,8 @@ equation
       constant Modelica.Units.SI.Density roh = 1000;
       //Variables
       output Modelica.Units.SI.MassFlowRate sourceFlow;     
-    //sourceFlow is unidirectional flowing out of the Environment
-equation
+//sourceFlow is unidirectional flowing out of the Environment
+    equation
       sourceFlow = (inlet+rain*area/1000/3600)*roh; //Conversion of the rain unit into SI massflowrate
       fluidPort.mflow = - sourceFlow; //flowing out of Environment
     annotation(
@@ -1139,7 +1145,6 @@ equation
     equation
       P_sink = fluid_in.mflow/roh * fluid_in.p; // Hydraulic Power = 0, since p=0
       fluid_in.p = p0; //Sink should absorb all inflow
-      
       annotation(
         Icon(graphics = {Line(origin = {0.01, 42.15}, points = {{49.9925, 3.84543}, {25.9925, -4.15457}, {-0.0075231, 3.84543}, {-24.0075, -4.15457}, {-50.0075, 3.84543}, {-50.0075, 3.84543}}, color = {0, 170, 255}, thickness = 1.5, smooth = Smooth.Bezier), Line(origin = {40.19, 0.19}, points = {{19.8066, 59.8066}, {-20.1934, -0.193375}, {-20.1934, -60.1934}}, thickness = 1.5), Line(origin = {-40.19, 0.19}, points = {{-19.8066, 59.8066}, {20.1934, -0.193375}, {20.1934, -60.1934}}, thickness = 1.5), Rectangle(fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-5, 20}, {5, -20}}), Polygon(origin = {0, -30}, fillColor = {0, 170, 255}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-10, 10}, {10, 10}, {0, -10}, {-10, 10}}), Text(origin = {0, -78}, extent = {{20, -24}, {-20, 24}}, textString = "%name")}),
         Documentation(info = "<html><head></head><body>A simple hydaulic sink, which can be used in combination with the simplified Tank model (<a href=\"modelica://WaterPowerPlant.Components.OpenTankSimple\">WaterPowerPlant.Components.OpenTankSimple</a>).
@@ -1167,27 +1172,28 @@ equation
       Real lambda;
       Real Re;
     equation
-    // Calculation of Area of the pipe
-      A = (d/2)^2*Modelica.Constants.pi;
-    // Calculation of Reynolds Number
-      Re = (((fluidPort_in.mflow/roh*A)^2)*d)/vis;
+// Calculation of Area of the pipe
+      A = (d / 2) ^ 2 * Modelica.Constants.pi;
+// Calculation of Reynolds Number
+      Re = (fluidPort_in.mflow / roh * A) ^ 2 * d / vis;
       lambda = 0;
-    // Hagen - Poiseuille (laminar flow)
+// Hagen - Poiseuille (laminar flow)
       if Re <= 2000 then
-        lambda = 64/Re;
-    // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
+        lambda = 64 / Re;
+// Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
       elseif Re > 2000 and Re <= 4000 then
-        1/(lambda^0.25) = 1.74 - 2*Modelica.Math.log((2*(ks/1000)/d) + (18.7/Re*(lambda^0.25)));
-    // v. Karman (turbolent flow, ks/d must be really high)
+        1 / lambda ^ 0.25 = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / Re * lambda ^ 0.25);
+// v. Karman (turbolent flow, ks/d must be really high)
       elseif Re >= 4000 and not Re >= 0 then
-        1/(lambda^0.25) = 1.74 - 2*Modelica.Math.log(2*(ks/1000)/d);
+        1 / lambda ^ 0.25 = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
       end if;
-    // Bernoulli Calculation with Friction
-      (fluidPort_out.mflow/(roh*A)^2)/2 + ((fluidPort_out.p * (10 ^ 5))/roh) + g * h_out + ((lambda*l*(fluidPort_out.mflow/(roh*A))^2)/(d*2)) = (fluidPort_in.mflow/(roh*A)^2)/2 + ((fluidPort_in.p * (10 ^ 5))/roh) + g*h_in;
+// Bernoulli Calculation with Friction
+      fluidPort_out.mflow / (roh * A) ^ 2 / 2 + fluidPort_out.p * 10 ^ 5 / roh + g * h_out + lambda * l * (fluidPort_out.mflow / (roh * A)) ^ 2 / (d * 2) = fluidPort_in.mflow / (roh * A) ^ 2 / 2 + fluidPort_in.p * 10 ^ 5 / roh + g * h_in;
       fluidPort_in.mflow + fluidPort_out.mflow=0;
       annotation(
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
-        Diagram);
+        Diagram,
+  Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, with friction, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the Prandtl equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
     end Pipe;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
