@@ -701,17 +701,17 @@ package WaterPowerPlant
     end Test_Tank_Turbine_Pipe;
     
     model Test_Two_Tanks_Pipe
-      WaterPowerPlant.Components.OpenTank Tank1(altitude = 1000) annotation(
-        Placement(visible = true, transformation(origin = {-51, 35}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
-      WaterPowerPlant.Components.OpenTank Tank2 annotation(
-        Placement(visible = true, transformation(origin = {50, -6}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
-      WaterPowerPlant.Components.Pipe pipe_connect(d = 5, h_in = 1000, h_out = 0, ks = 0.025, l = 100) annotation(
-        Placement(visible = true, transformation(origin = {-14, -24}, extent = {{-28, -28}, {28, 28}}, rotation = 0)));
+    Components.OpenTank tank1(altitude = 1000, levelInitial = 1000)  annotation(
+        Placement(visible = true, transformation(origin = {-58, 54}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+ Components.Pipe pipe(h_in = 1000, h_out = 0)  annotation(
+        Placement(visible = true, transformation(origin = {0, -2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+ WaterPowerPlant.Components.OpenTank tank2(levelInitial = 0)  annotation(
+        Placement(visible = true, transformation(origin = {51, -29}, extent = {{-25, -25}, {25, 25}}, rotation = 0)));
     equation
-      connect(Tank1.fluidPort, pipe_connect.fluidPort_in) annotation(
-        Line(points = {{-52, 14}, {-36, 14}, {-36, -24}}));
-      connect(Tank2.fluidPort, pipe_connect.fluidPort_out) annotation(
-        Line(points = {{50, -26}, {8, -26}, {8, -24}}));
+      connect(tank1.fluidPort, pipe.fluidPort_in) annotation(
+        Line(points = {{-58, 48}, {-8, 48}, {-8, -2}}));
+ connect(pipe.fluidPort_out, tank2.fluidPort) annotation(
+        Line(points = {{8, -2}, {50, -2}, {50, -46}}));
     end Test_Two_Tanks_Pipe;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
@@ -1158,10 +1158,10 @@ package WaterPowerPlant
       WaterPowerPlant.Interfaces.FluidPort fluidPort_out annotation(
         Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {82, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
       //  Parameters
-      parameter Modelica.Units.SI.Diameter d = 5 "Diameter of the Pipe [m]";
-      parameter Modelica.Units.SI.Length l = 100 "Length of the Pipe [m]";
-      parameter Modelica.Units.SI.Height h_in = 800 "Height of the input/beginning of the Pipe [m]";
-      parameter Modelica.Units.SI.Height h_out = 100 "Height of the output/ending of the Pipe [m]";
+      parameter Modelica.Units.SI.Diameter d = 5 "Diameter of the Pipe";
+      parameter Modelica.Units.SI.Length l = 100 "Length of the Pipe";
+      parameter Modelica.Units.SI.Height h_in = 800 "Height of the input/beginning of the Pipe";
+      parameter Modelica.Units.SI.Height h_out = 100 "Height of the output/ending of the Pipe";
       parameter Real ks = 0.025 "Roughness of the steel pipe (new k=0.025mm, mortar lined, average finish k=0.1mm, heavy rust k=1mm) [mm]";
       //  Constants
       constant Modelica.Units.SI.Acceleration g = 9.83 "Acceleration of earth [m/s^2]";
@@ -1169,23 +1169,28 @@ package WaterPowerPlant
       constant Modelica.Units.SI.KinematicViscosity vis = 1.0087 "Kinematic Viscosity [m^2/s]";
       //  Variables
       Modelica.Units.SI.Area A;
-      Real lambda;
+      Real lambda;//(start=0, nominal=1);
       Real Re;
+      //Real fluidPort_in.mflow(start=0, nominal=1);
+      
     equation
 // Calculation of Area of the pipe
       A = (d / 2) ^ 2 * Modelica.Constants.pi;
 // Calculation of Reynolds Number
       Re = (fluidPort_in.mflow / roh * A) ^ 2 * d / vis;
-      lambda = 0;
+      
+     lambda = 0;
 // Hagen - Poiseuille (laminar flow)
       if Re <= 2000 then
-        lambda = 64 / Re;
+        lambda = 64 / max(Re, Modelica.Constants.small);
 // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
       elseif Re > 2000 and Re <= 4000 then
-        1 / lambda ^ 0.25 = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / Re * lambda ^ 0.25);
+        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / max(Re, Modelica.Constants.small) * sqrt(max(lambda, Modelica.Constants.small)));
+     
 // v. Karman (turbolent flow, ks/d must be really high)
-      elseif Re >= 4000 and not Re >= 0 then
-        1 / lambda ^ 0.25 = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+      elseif Re >= 4000 then
+        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+    
       end if;
 // Bernoulli Calculation with Friction
       fluidPort_out.mflow / (roh * A) ^ 2 / 2 + fluidPort_out.p * 10 ^ 5 / roh + g * h_out + lambda * l * (fluidPort_out.mflow / (roh * A)) ^ 2 / (d * 2) = fluidPort_in.mflow / (roh * A) ^ 2 / 2 + fluidPort_in.p * 10 ^ 5 / roh + g * h_in;
@@ -1193,8 +1198,61 @@ package WaterPowerPlant
       annotation(
         Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
         Diagram,
-  Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, with friction, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the Prandtl equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
+  Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the v. Karman equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
     end Pipe;
+    
+    model Pipe_with_lambda
+      //  Ports
+      WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
+        Placement(visible = true, transformation(origin = {-98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-82, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
+      WaterPowerPlant.Interfaces.FluidPort fluidPort_out annotation(
+        Placement(visible = true, transformation(origin = {98, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {82, 0}, extent = {{-52, -52}, {52, 52}}, rotation = 0)));
+      //  Parameters
+      parameter Modelica.Units.SI.Diameter d = 5 "Diameter of the Pipe";
+      parameter Modelica.Units.SI.Length l = 100 "Length of the Pipe";
+      parameter Modelica.Units.SI.Height h_in = 800 "Height of the input/beginning of the Pipe";
+      parameter Modelica.Units.SI.Height h_out = 100 "Height of the output/ending of the Pipe";
+      parameter Real ks = 0.025 "Roughness of the steel pipe (new k=0.025mm, mortar lined, average finish k=0.1mm, heavy rust k=1mm) [mm]";
+      //  Constants
+      constant Modelica.Units.SI.Acceleration g = 9.83 "Acceleration of earth [m/s^2]";
+      constant Modelica.Units.SI.Density roh = 1000 "Density of the Fluid [kg/m^3]";
+      constant Modelica.Units.SI.KinematicViscosity vis = 1.0087 "Kinematic Viscosity [m^2/s]";
+      //  Variables
+      Modelica.Units.SI.Area A;
+      Real lambda;//(start=0, nominal=1);
+      Real Re;
+      //Real fluidPort_in.mflow(start=0, nominal=1);
+      
+    equation
+    // Calculation of Area of the pipe
+      A = (d / 2) ^ 2 * Modelica.Constants.pi;
+    // Calculation of Reynolds Number
+      Re = (fluidPort_in.mflow / roh * A) ^ 2 * d / vis;
+      
+     
+    // Hagen - Poiseuille (laminar flow)
+      if Re <= 2000 then
+        lambda = 64 / max(Re, Modelica.Constants.small);
+    // Colebrook - White (mixture zone -rough approximation eg. formula is really dependent on the ks-value)
+      elseif Re > 2000 and Re <= 4000 then
+        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d + 18.7 / max(Re, Modelica.Constants.small) * sqrt(max(lambda, Modelica.Constants.small)));
+     
+    // v. Karman (turbolent flow, ks/d must be really high)
+      elseif Re >= 4000 then
+        1 / sqrt(max(lambda, Modelica.Constants.small)) = 1.74 - 2 * Modelica.Math.log(2 * (ks / 1000) / d);
+        
+      else
+        lambda = 0;
+    
+      end if;
+    // Bernoulli Calculation with Friction
+      fluidPort_out.mflow / (roh * A) ^ 2 / 2 + fluidPort_out.p * 10 ^ 5 / roh + g * h_out + lambda * l * (fluidPort_out.mflow / (roh * A)) ^ 2 / (d * 2) = fluidPort_in.mflow / (roh * A) ^ 2 / 2 + fluidPort_in.p * 10 ^ 5 / roh + g * h_in;
+      fluidPort_in.mflow + fluidPort_out.mflow=0;
+      annotation(
+        Icon(graphics = {Rectangle(lineColor = {0, 0, 127}, fillColor = {0, 0, 127}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, lineThickness = 0, extent = {{-80, 20}, {80, -20}}), Rectangle(origin = {0, 23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}}), Text(origin = {0, -38}, extent = {{24, 13}, {-24, -13}}, textString = "%name"), Rectangle(origin = {0, -23}, fillPattern = FillPattern.Solid, extent = {{-92, 3}, {92, -3}})}),
+        Diagram,
+    Documentation(info = "<html><head></head><body><div>A simple pipeline which, by means of the Bernoulli equation for compressible&nbsp;</div><div>media, determines the calculation of the differential pressure in the pipe.&nbsp;</div><div><br></div><div>The calculation is made depending on the wall roughness of the pipe, using the Hagen-Poiseiulle equation (laminar) or the Colebrook-White equation (mixed) or the v. Karman equation (turbulent).</div><div><br></div><div>Possible parameters are:</div><div><ul><li>d: Diameter of the pipe [m]</li><li>l: length of the pipe [m]</li><li>roh: Density of the medium [kg/m^3].</li><li>vis: Kinematic viscosity [m^2/s].</li></ul></div><div><br></div><div>The component is used by means of the interface \"FluidPort\".</div><div><br></div></body></html>"));
+    end Pipe_with_lambda;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, lineColor = {128, 128, 128}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-80, 0}, {-20, 60}}), Ellipse(origin = {10, 10}, fillColor = {128, 128, 128}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, 0}, {60, 60}}), Ellipse(origin = {10, 10}, fillColor = {76, 76, 76}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{-80, -80}, {-20, -20}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25), Ellipse(origin = {10, 10}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{0, -80}, {60, -20}})}));
   end Components;
