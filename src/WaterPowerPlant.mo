@@ -218,28 +218,28 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-75, 69}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
       WaterPowerPlant.Components.Tanks.OpenTank openTank1(A = 100000, Nozzle = 10, level(start = 0), levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {-31, -43}, extent = {{-17, -17}, {17, 17}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
+      WaterPowerPlant.Components.ElectricalLoad electricalLoad annotation(
         Placement(visible = true, transformation(origin = {61, -69}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
-      WaterPowerPlant.Components.Turbines.Turbine_advanced1 turbine_advanced1 annotation(
+      WaterPowerPlant.Components.Turbines.Turbine_advanced turbine_advanced annotation(
         Placement(visible = true, transformation(origin = {-47, 7}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad1 annotation(
+      WaterPowerPlant.Components.ElectricalLoad electricalLoad1 annotation(
         Placement(visible = true, transformation(origin = {73, -59}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad11 annotation(
+      WaterPowerPlant.Components.ElectricalLoad electricalLoad11 annotation(
         Placement(visible = true, transformation(origin = {85, -49}, extent = {{25, 25}, {-25, -25}}, rotation = 180)));
       WaterPowerPlant.Components.Generators.Generator_Synchron_3Phases generator_Synchron_3Phases annotation(
         Placement(visible = true, transformation(origin = {23, 19}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
     equation
-      connect(openTank.fluidPort, turbine_advanced1.fluidPort_in) annotation(
+      connect(openTank.fluidPort, turbine_advanced.fluidPort_in) annotation(
         Line(points = {{-75.23, 53.13}, {-61.23, 53.13}, {-61.23, 17.13}}));
-      connect(turbine_advanced1.fluidPort_out, openTank1.fluidPort) annotation(
+      connect(turbine_advanced.fluidPort_out, openTank1.fluidPort) annotation(
         Line(points = {{-31.99, -4.97}, {-30.99, -4.97}, {-30.99, -55.97}}));
-      connect(turbine_advanced1.rotationalPort_out, generator_Synchron_3Phases.rotationalPort_in) annotation(
+      connect(turbine_advanced.rotationalPort_out, generator_Synchron_3Phases.rotationalPort_in) annotation(
         Line(points = {{-30, 8}, {0, 8}, {0, 24}}));
-      connect(generator_Synchron_3Phases.electricalPort_out3, electrialLoad.electricalPort_in) annotation(
+      connect(generator_Synchron_3Phases.electricalPort_out3, electricalLoad.electricalPort_in) annotation(
         Line(points = {{40, 18}, {46, 18}, {46, -54}}));
-      connect(generator_Synchron_3Phases.electricalPort_out2, electrialLoad1.electricalPort_in) annotation(
+      connect(generator_Synchron_3Phases.electricalPort_out2, electricalLoad1.electricalPort_in) annotation(
         Line(points = {{40, 24}, {58, 24}, {58, -44}}));
-      connect(generator_Synchron_3Phases.electricalPort_out1, electrialLoad11.electricalPort_in) annotation(
+      connect(generator_Synchron_3Phases.electricalPort_out1, electricalLoad11.electricalPort_in) annotation(
         Line(points = {{40, 28}, {70, 28}, {70, -34}}));
     protected
       annotation(
@@ -253,20 +253,20 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-62, 50}, extent = {{-22, -22}, {22, 22}}, rotation = 0)));
       WaterPowerPlant.Components.Tanks.OpenTank openTank1(A = 10000000, Nozzle = 10, levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {37, -71}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-      WaterPowerPlant.Components.Turbines.Turbine_advanced1 turbine_advanced1 annotation(
+      WaterPowerPlant.Components.Turbines.Turbine_advanced turbine_advanced annotation(
         Placement(visible = true, transformation(origin = {-25, -15}, extent = {{-23, -23}, {23, 23}}, rotation = 0)));
       WaterPowerPlant.Components.Generators.Generator_basic generator_basic annotation(
         Placement(visible = true, transformation(origin = {38, 48}, extent = {{-24, -24}, {24, 24}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
+      WaterPowerPlant.Components.ElectricalLoad electricalLoad annotation(
         Placement(visible = true, transformation(origin = {82, 38}, extent = {{-24, -24}, {24, 24}}, rotation = 0)));
     equation
-      connect(openTank1.fluidPort, turbine_advanced1.fluidPort_out) annotation(
+      connect(openTank1.fluidPort, turbine_advanced.fluidPort_out) annotation(
         Line(points = {{37, -84}, {-7, -84}, {-7, -29}}));
-      connect(turbine_advanced1.fluidPort_in, openTank.fluidPort) annotation(
+      connect(turbine_advanced.fluidPort_in, openTank.fluidPort) annotation(
         Line(points = {{-42, -2}, {-62, -2}, {-62, 35}}));
-      connect(turbine_advanced1.rotationalPort_out, generator_basic.rotationalPort_in) annotation(
+      connect(turbine_advanced.rotationalPort_out, generator_basic.rotationalPort_in) annotation(
         Line(points = {{-4, -15}, {-13.8, -15}, {-13.8, 53}, {19, 53}}));
-      connect(generator_basic.electricalPort_out, electrialLoad.electricalPort_in) annotation(
+      connect(generator_basic.electricalPort_out, electricalLoad.electricalPort_in) annotation(
         Line(points = {{52, 53}, {31.5, 53}, {31.5, 52}, {67, 52}}));
       annotation(
         Icon(graphics = {Polygon(lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}}), Ellipse(extent = {{-100, 100}, {100, -100}})}),
@@ -294,13 +294,13 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {81, -75}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
       WaterPowerPlant.Components.Turbines.Turbine_Francis turbine_Francis2(n_turbine = 10, radius = 1.072) annotation(
         Placement(visible = true, transformation(origin = {-36, 4}, extent = {{-22, -22}, {22, 22}}, rotation = -90)));
-      WaterPowerPlant.Components.ElectrialLoad Load1 annotation(
+      WaterPowerPlant.Components.ElectricalLoad Load1 annotation(
         Placement(visible = true, transformation(origin = {-92, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad Load2 annotation(
+      WaterPowerPlant.Components.ElectricalLoad Load2 annotation(
         Placement(visible = true, transformation(origin = {-50, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad Load3 annotation(
+      WaterPowerPlant.Components.ElectricalLoad Load3 annotation(
         Placement(visible = true, transformation(origin = {-12, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad Load4 annotation(
+      WaterPowerPlant.Components.ElectricalLoad Load4 annotation(
         Placement(visible = true, transformation(origin = {26, -82}, extent = {{16, -16}, {-16, 16}}, rotation = 0)));
       Components.Pipe pipe2(d = 5.5, h_in = 300, h_out = 300, l = 2000) annotation(
         Placement(visible = true, transformation(origin = {81, -47}, extent = {{-15, -15}, {15, 15}}, rotation = -90)));
@@ -357,7 +357,7 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-14, 4}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
       WaterPowerPlant.Components.Generators.Generator_Synchron generator_Synchron(R_e = 0.005,U0(displayUnit = "kV") = 235000, X_d = 2, cos_phi = 0.76, theta(displayUnit = "rad") ) annotation(
         Placement(visible = true, transformation(origin = {42, 4}, extent = {{-18, -18}, {18, 18}}, rotation = 0)));
-      WaterPowerPlant.Components.ElectrialLoad electrialLoad annotation(
+      WaterPowerPlant.Components.ElectricalLoad electricalLoad annotation(
         Placement(visible = true, transformation(origin = {82, 2}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       WaterPowerPlant.Components.Tanks.OpenTank lower_reservoir(A = 1000000000, Nozzle = 5.8, altitude = 300, levelInitial = 0) annotation(
         Placement(visible = true, transformation(origin = {54, -46}, extent = {{-12, -12}, {12, 12}}, rotation = 0)));
@@ -368,7 +368,7 @@ package WaterPowerPlant
     equation
       connect(generator_Synchron.rotationalPort_in, turbine_Francis.rotationalPort_out) annotation(
         Line(points = {{28, 8}, {12.5, 8}, {12.5, 4}, {1, 4}}));
-      connect(electrialLoad.electricalPort_in, generator_Synchron.electricalPort_out) annotation(
+      connect(electricalLoad.electricalPort_in, generator_Synchron.electricalPort_out) annotation(
         Line(points = {{76, 8}, {52, 8}}));
       connect(upper_reservoir.fluidPort, environment.fluidPort) annotation(
         Line(points = {{-64, 38}, {-64, 28}, {-80, 28}, {-80, 58}}));
@@ -518,7 +518,7 @@ package WaterPowerPlant
           Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The basic turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into power.<div>It provides two FluidPort connectors for inflow and outflow.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li></ul></div></div></div></body></html>"));
       end Turbine_basic;
   
-      model Turbine_advanced1
+      model Turbine_advanced
         // Connectors
         WaterPowerPlant.Interfaces.FluidPort fluidPort_in annotation(
           Placement(visible = true, transformation(origin = {-92, 54}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-74, 56}, extent = {{-32, -32}, {32, 32}}, rotation = 0)));
@@ -550,7 +550,7 @@ package WaterPowerPlant
           Diagram(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}})}),
           Icon(graphics = {Ellipse(fillPattern = FillPattern.Solid, extent = {{-76, 76}, {76, -76}}), Polygon(origin = {-38, 29}, rotation = 90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-48, -5}, rotation = 135, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-30, -37}, rotation = 180, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {6, -47}, rotation = 225, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {38, -29}, rotation = -90, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {48, 5}, rotation = 315, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {30, 37}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Polygon(origin = {-6, 47}, rotation = 45, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, points = {{-2, 21}, {-20, -19}, {-12, -27}, {20, -3}, {18, 7}, {12, 17}, {6, 23}, {4, 25}, {2, 27}, {-2, 21}}), Ellipse(lineColor = {255, 255, 255}, fillColor = {255, 255, 255}, lineThickness = 4, extent = {{-20, 20}, {20, -20}}), Rectangle(origin = {88, -1}, fillColor = {89, 89, 89}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, extent = {{12, 9}, {-12, -9}}), Rectangle(origin = {82, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {86, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {90, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {94, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {96, -5}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 9}, {1, -9}}), Rectangle(origin = {78, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Rectangle(origin = {74, -1}, rotation = -30, fillColor = {39, 39, 39}, fillPattern = FillPattern.Solid, extent = {{-1, 13}, {1, -13}}), Polygon(origin = {71, -5}, fillPattern = FillPattern.Solid, points = {{3, 11}, {5, 9}, {5, 3}, {5, -1}, {5, -3}, {3, -9}, {-3, -9}, {-7, -5}, {-5, -1}, {3, 11}}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {-43, 56}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Line(origin = {47.9401, -63.0993}, points = {{-25, 0}, {25, 0}}, color = {255, 0, 0}, thickness = 2, arrow = {Arrow.None, Arrow.Filled}), Text(origin = {-2, -82}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
           Documentation(info = "<html><head></head><body>Turbine model taking into account the degree of efficiency.<div>Transforms the pressure into the virtual fall height of the fluid.</div><div>The resulting power of the turbine is calculated via a&nbsp;Turbine equation.</div><div><br></div><div>The advanced turbine is a simple Model of an turbine transforming incoming mass flow and applied pressure into mechanical power.<div>It provides two FluidPort connectors for inflow and outflow.&nbsp;</div><div>Additionally it provides a RotationalPort to transfer the mechanical power to a generator.</div><div><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li><li>f0 as the desired frequency of the output.</li></ul></div></div></div></body></html>"));
-      end Turbine_advanced1;
+      end Turbine_advanced;
   
       model Turbine_Pelton
         // Connectors
@@ -824,7 +824,7 @@ package WaterPowerPlant
   
     //-------------------------------------------------------------------------
   
-    model ElectrialLoad
+    model ElectricalLoad
       // Connectors
       WaterPowerPlant.Interfaces.ElectricalPort electricalPort_in annotation(
         Placement(visible = true, transformation(origin = {-56, 22}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-64, 58}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -837,7 +837,7 @@ package WaterPowerPlant
       annotation(
         Icon(graphics = {Rectangle(origin = {0, -13}, fillPattern = FillPattern.Solid, extent = {{-20, 39}, {20, -39}}), Line(origin = {-31, 42}, points = {{-31, 16}, {31, 16}, {31, -14}, {31, -16}, {31, -16}}, thickness = 2.5), Line(origin = {0.5, -65}, points = {{-0.5, 13}, {-0.5, -13}, {-20.5, -13}, {19.5, -13}, {19.5, -13}}, thickness = 2.5), Text(origin = {2, -90}, extent = {{24, 13}, {-24, -13}}, textString = "%name")}),
         Documentation(info = "<html><head></head><body>The Electrical Load is a simple Model of an electric consumer transforming incoming current and applied voltage into used power.<div>It provides the needed connection for the output of the 'Generator' Models of this library.</div><div>Due to the fact that the amplitude and the shape of the voltage vary greatly between each generator type and instance, this model has no internal reference voltage.&nbsp;</div><div>This model uses only the incoming variables of the electrical input and is thus underdetermined by itself. It has been developed with the connection to the Generator models in mind, which provide the necessary variables.<br><div>Possible&nbsp;<b>Parameters</b>&nbsp;influencing the resulting power are:</div><div><ul><li>eta as degree of efficiency (between 0 and 1)</li></ul></div></div></body></html>"));
-    end ElectrialLoad;
+    end ElectricalLoad;
   
     model Pipe
       //  Ports
