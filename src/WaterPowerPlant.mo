@@ -171,7 +171,7 @@ package WaterPowerPlant
         Placement(visible = true, transformation(origin = {-32, 14}, extent = {{-26, -26}, {26, 26}}, rotation = 0)));
   WaterPowerPlant.Components.Tanks.OpenTank lowerTank(A = 100, altitude = 100, levelInitial = 0)  annotation(
         Placement(visible = true, transformation(origin = {67, -19}, extent = {{-19, -19}, {19, 19}}, rotation = 0)));
-  WaterPowerPlant.Components.Environment environment(area = 100, inlet = 10, rain = 1)  annotation(
+  WaterPowerPlant.Components.Environment environment(area = 100, inlet = 20, rain = 0)  annotation(
         Placement(visible = true, transformation(origin = {-69, 71}, extent = {{-21, -21}, {21, 21}}, rotation = 0)));
   WaterPowerPlant.Components.Pipe pipe annotation(
         Placement(visible = true, transformation(origin = {14, -48}, extent = {{-20, -20}, {20, 20}}, rotation = 0)));
@@ -411,7 +411,7 @@ package WaterPowerPlant
     model Example_KraftwerkSaeckingen_simple
       WaterPowerPlant.Components.Tanks.OpenTank upper_reservoir(A = 120000, Nozzle = 4.3, altitude = 700, levelInitial = 17.5) annotation(
         Placement(visible = true, transformation(origin = {-64, 46}, extent = {{-12, -12}, {12, 12}}, rotation = 0)));
-      WaterPowerPlant.Components.Environment environment(area = 120000, inlet = 1, rain = 1) annotation(
+      WaterPowerPlant.Components.Environment environment(area = 120000, inlet = 60, rain = 0) annotation(
         Placement(visible = true, transformation(origin = {-80, 66}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
       WaterPowerPlant.Components.Turbines.Turbine_Francis turbine_Francis(n_turbine = 10, radius = 1.072) annotation(
         Placement(visible = true, transformation(origin = {-10, 6}, extent = {{-16, -16}, {16, 16}}, rotation = 0)));
