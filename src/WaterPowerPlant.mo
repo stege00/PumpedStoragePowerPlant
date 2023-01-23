@@ -374,7 +374,7 @@ package WaterPowerPlant
         Line(points = {{4, -20}, {-1, -20}, {-1, -4}}));
       annotation(
         Icon(graphics = {Polygon(lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-36, 60}, {64, 0}, {-36, -60}, {-36, 60}}), Ellipse(extent = {{-100, 100}, {100, -100}})}),
-        Documentation(info = "<html><head></head><body>Reduced version of the digital twin of the powerplant säckingen. Parameters have been choosen to resemble the powerplant as closely as possible.<a href=\"https://www.schluchseewerk.de/wp-content/uploads/2020/06/zm_technische-daten_saeckingen.pdf\"> link </a></body></html>"));
+        Documentation(info = "<html><head></head><body>Reduced version of the digital twin of the powerplant säckingen. Parameters have been choosen to resemble the powerplant as closely as possible.<div><br></div><div>Technical reference data can be found&nbsp;<a href=\"https://www.schluchseewerk.de/wp-content/uploads/2020/06/zm_technische-daten_saeckingen.pdf\">here</a>.</div></body></html>"));
     end Example_KraftwerkSaeckingen_simple;
     annotation(
       Icon(graphics = {Rectangle(lineColor = {200, 200, 200}, fillColor = {248, 248, 248}, fillPattern = FillPattern.HorizontalCylinder, extent = {{-100, -100}, {100, 100}}, radius = 25), Polygon(origin = {8, 14}, lineColor = {78, 138, 73}, fillColor = {78, 138, 73}, pattern = LinePattern.None, fillPattern = FillPattern.Solid, points = {{-58, 46}, {42, -14}, {-58, -74}, {-58, 46}}), Rectangle(lineColor = {128, 128, 128}, extent = {{-100, -100}, {100, 100}}, radius = 25)}));
